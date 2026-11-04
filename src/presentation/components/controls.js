@@ -30,10 +30,10 @@ const PAD_SVG = `
     <rect data-ctl="start" x="218" y="122" width="34" height="13" rx="6.5" class="pad-small"/>
   </g>
   <text x="180" y="166" class="pad-label">SELECT</text><text x="226" y="166" class="pad-label">START</text>
-  <circle data-ctl="x" cx="315" cy="80" r="19" class="pad-face" style="--c:#2D5DB3"/>
-  <circle data-ctl="a" cx="356" cy="121" r="19" class="pad-face" style="--c:#D62828"/>
-  <circle data-ctl="b" cx="315" cy="162" r="19" class="pad-face" style="--c:#F2B705"/>
-  <circle data-ctl="y" cx="274" cy="121" r="19" class="pad-face" style="--c:#2E9E4F"/>
+  <circle data-ctl="x" cx="315" cy="80" r="19" class="pad-face" style="--c:#7a96c8"/>
+  <circle data-ctl="a" cx="356" cy="121" r="19" class="pad-face" style="--c:#dc7d72"/>
+  <circle data-ctl="b" cx="315" cy="162" r="19" class="pad-face" style="--c:#e9c66e"/>
+  <circle data-ctl="y" cx="274" cy="121" r="19" class="pad-face" style="--c:#86b98a"/>
   <text x="315" y="86" class="pad-face-label">X</text><text x="356" y="127" class="pad-face-label">A</text>
   <text x="315" y="168" class="pad-face-label">B</text><text x="274" y="127" class="pad-face-label">Y</text>
   <text x="95" y="28" class="pad-label big">L</text><text x="318" y="28" class="pad-label big">R</text>

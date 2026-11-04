@@ -1,6 +1,6 @@
 # Virtual Visit
 
-_Virtually traveling the world_: a comic-style game for an SNES-type gamepad. Ride real trains in
+_Virtually traveling the world_: a calm, cosy comic-style exploration game for an SNES-type gamepad. Ride real trains in
 side-window videos while your guide tells you about the city, then walk each stop in Google
 Street View.
 
@@ -97,7 +97,7 @@ src/
 styles/            comic theme (main.css) and Hana (hana.css)
 ```
 
-All graphics are CSS or inline SVG; fonts come from Google Fonts.
+All graphics are CSS or inline SVG: warm pastel colours, soft brown ink outlines, rounded shapes and slow motion. Fonts (Fredoka, Zen Maru Gothic, Zen Kaku Gothic New) come from Google Fonts.
 
 ## Ride videos
 

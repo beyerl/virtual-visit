@@ -99,7 +99,7 @@ export function rideMapSvg(ride, network, color) {
     g += `<polyline points="${pl(offset(pts, Ln.off))}" fill="none" stroke="${color(Ln.line)}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" opacity="${Ln === L ? 0.45 : 0.28}"/>`;
   }
   const rp = offset(path.map(pt), L.off);
-  g += `<polyline points="${pl(rp)}" fill="none" stroke="#1b1f27" stroke-width="14" stroke-linejoin="round" stroke-linecap="round"/>`;
+  g += `<polyline points="${pl(rp)}" fill="none" stroke="#4a4039" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"/>`;
   g += `<polyline points="${pl(rp)}" fill="none" stroke="${color(L.line)}" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>`;
   const all = [...new Set(Object.values(lines).flatMap((Ln) => /** @type {string[]} */ (Ln.ids)))];
   const visible = all.filter((id) => inView(pt(id)));
@@ -136,14 +136,14 @@ export function rideMapSvg(ride, network, color) {
     .filter((id) => !path.includes(id))
     .forEach((id) => {
       const p = pt(id);
-      g += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.5" fill="#fff" stroke="#8a90a0" stroke-width="1.5"/>`;
+      g += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.5" fill="#fff" stroke="#b3aa9f" stroke-width="1.5"/>`;
     });
   path.forEach((id, k) => {
     const p = pt(id);
     const end = k === 0 || k === path.length - 1;
     g += end
-      ? `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="9" fill="#fff" stroke="#1b1f27" stroke-width="4"/>`
-      : `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="4.5" fill="#fff" stroke="#1b1f27" stroke-width="2"/>`;
+      ? `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="9" fill="#fff" stroke="#4a4039" stroke-width="4"/>`
+      : `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="4.5" fill="#fff" stroke="#4a4039" stroke-width="2"/>`;
   });
   place(path[0], 16, 800, "end-label", true);
   place(path[path.length - 1], 16, 800, "end-label", true);

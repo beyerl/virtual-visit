@@ -2,12 +2,13 @@
    talking mouth and a waving arm with a little flag. 150 × 210 px base. */
 
 vv-hana {
-  --skin: #f6d9c4;
-  --hair: #22201f;
-  --blush: #f2a0a0;
-  --jacket: #24427a;
-  --scarf: #c8323c;
-  --ol: 3px solid var(--ink);
+  --ink: #4a4039;
+  --skin: #f8e0cf;
+  --hair: #54423a;
+  --blush: #f3b2a8;
+  --jacket: #6584b3;
+  --scarf: #de8678;
+  --ol: 2px solid var(--ink);
   display: block;
   position: relative;
   width: 150px;
@@ -17,7 +18,7 @@ vv-hana {
 vv-hana .hana-fig {
   position: absolute;
   inset: 0;
-  animation: hana-bob 3.2s ease-in-out infinite;
+  animation: hana-bob 4.8s ease-in-out infinite;
   transform-origin: 50% 100%;
 }
 vv-hana .hair-back {
@@ -39,7 +40,7 @@ vv-hana .bangs::after {
 }
 vv-hana .clip {
   position: absolute; left: 96px; top: 26px; width: 15px; height: 15px; border-radius: 50%;
-  background: var(--scarf); border: 2.5px solid var(--ink);
+  background: var(--scarf); border: 2px solid var(--ink);
 }
 vv-hana .eye {
   position: absolute; top: 64px; width: 10px; height: 13px; background: var(--hair); border-radius: 50%;
@@ -53,11 +54,11 @@ vv-hana .cheek.l { left: 45px; }
 vv-hana .cheek.r { left: 91px; }
 vv-hana .mouth {
   position: absolute; left: 68px; top: 86px; width: 13px; height: 7px;
-  border: 2.5px solid #7a2e2e; border-top: none; border-radius: 0 0 12px 12px;
+  border: 2.5px solid #a0645a; border-top: none; border-radius: 0 0 12px 12px;
   transform-origin: 50% 0;
 }
 vv-hana[talking] .mouth {
-  background: #7a2e2e;
+  background: #a0645a;
   animation: hana-talk 0.18s steps(2) infinite alternate;
 }
 vv-hana .body {
@@ -66,17 +67,17 @@ vv-hana .body {
 }
 vv-hana .scarf {
   position: absolute; left: 57px; top: 104px; width: 36px; height: 17px; background: var(--scarf);
-  border-radius: 8px; border: 2.5px solid var(--ink); z-index: 1;
+  border-radius: 8px; border: 2px solid var(--ink); z-index: 1;
 }
 vv-hana .scarf::after {
   content: ""; position: absolute; left: 17px; top: 9px; width: 12px; height: 26px;
-  background: var(--scarf); border: 2.5px solid var(--ink); border-radius: 3px 3px 6px 6px; transform: rotate(-12deg);
+  background: var(--scarf); border: 2px solid var(--ink); border-radius: 3px 3px 6px 6px; transform: rotate(-12deg);
 }
-vv-hana .badge { position: absolute; left: 92px; top: 140px; width: 16px; height: 12px; background: #f7f3e8; border-radius: 2px; border: 2px solid var(--ink); }
+vv-hana .badge { position: absolute; left: 92px; top: 140px; width: 16px; height: 12px; background: #fffdf8; border-radius: 2px; border: 2px solid var(--ink); }
 vv-hana .arm {
   position: absolute; left: 112px; top: 62px; width: 17px; height: 62px; background: var(--jacket);
   border-radius: 8px; border: var(--ol); transform-origin: 50% 100%; transform: rotate(14deg);
-  animation: hana-wave 2.4s ease-in-out infinite;
+  animation: hana-wave 3.6s ease-in-out infinite;
 }
 vv-hana .arm::before {
   content: ""; position: absolute; left: -2px; top: -14px; width: 17px; height: 17px; border-radius: 50%;
@@ -84,21 +85,21 @@ vv-hana .arm::before {
 }
 vv-hana .flag-pole { position: absolute; left: 6px; top: -50px; width: 3px; height: 42px; background: var(--ink); }
 vv-hana .flag {
-  position: absolute; left: 9px; top: -50px; width: 32px; height: 21px; background: #fff; border: 2.5px solid var(--ink);
-  animation: hana-flag 0.9s ease-in-out infinite alternate; transform-origin: 0 50%;
+  position: absolute; left: 9px; top: -50px; width: 32px; height: 21px; background: #fff; border: 2px solid var(--ink);
+  animation: hana-flag 1.6s ease-in-out infinite alternate; transform-origin: 0 50%;
 }
 vv-hana .flag::after { content: ""; position: absolute; left: 9px; top: 3px; width: 11px; height: 11px; border-radius: 50%; background: var(--scarf); }
 
 /* walking: a bigger bounce, no waving */
-vv-hana.walking .hana-fig { animation: hana-walk 0.5s ease-in-out infinite alternate; }
-vv-hana.walking .arm { animation: hana-swing 0.5s ease-in-out infinite alternate; }
+vv-hana.walking .hana-fig { animation: hana-walk 0.75s ease-in-out infinite alternate; }
+vv-hana.walking .arm { animation: hana-swing 0.75s ease-in-out infinite alternate; }
 
-@keyframes hana-bob { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-4px) rotate(-1deg); } }
+@keyframes hana-bob { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-3px) rotate(-0.5deg); } }
 @keyframes hana-blink { 0%, 94%, 100% { transform: scaleY(1); } 96% { transform: scaleY(0.1); } }
 @keyframes hana-talk { from { height: 4px; } to { height: 11px; } }
 @keyframes hana-wave { 0%, 100% { transform: rotate(14deg); } 50% { transform: rotate(-8deg); } }
 @keyframes hana-flag { from { transform: skewY(0); } to { transform: skewY(-8deg) scaleX(0.92); } }
-@keyframes hana-walk { from { transform: translateY(0) rotate(-2deg); } to { transform: translateY(-10px) rotate(2deg); } }
+@keyframes hana-walk { from { transform: translateY(0) rotate(-1deg); } to { transform: translateY(-6px) rotate(1deg); } }
 @keyframes hana-swing { from { transform: rotate(30deg); } to { transform: rotate(-10deg); } }
 
 @media (prefers-reduced-motion: reduce) {

@@ -74,7 +74,7 @@ export class VvDayIntro extends StepScreen {
       <div class="sunburst"></div><div class="halftone"></div>
       ${this.hudHtml()}
       <div class="day-intro">
-        <div class="burst"><svg viewBox="0 0 200 200" aria-hidden="true"><polygon points="${burstPoints(100, 100, 96, 70, 14)}" fill="#F6C945" stroke="#1b1f27" stroke-width="6" stroke-linejoin="round"/></svg><span>${esc(day.num)}</span></div>
+        <div class="burst"><svg viewBox="0 0 200 200" aria-hidden="true"><polygon points="${burstPoints(100, 100, 96, 86, 18)}" fill="#f3dc9e" stroke="#4a4039" stroke-width="4" stroke-linejoin="round"/></svg><span>${esc(day.num)}</span></div>
         <h2 class="comic-heading day-title">${esc(day.title)}</h2>
         <div class="panel day-plan">
           <div class="plan-lines">${lines.map((l) => `<span class="line-pill" style="--line:${j.lines[l]?.color}">${esc(j.lines[l]?.name)}</span>`).join("")}</div>
@@ -331,8 +331,8 @@ const stamps = (j, day) =>
   j
     .stopsOf(day)
     .map((s, i) => {
-      const rot = ((i * 37) % 21) - 10;
-      const hue = s.kind === "dinner" ? "#C8323C" : ["#24427A", "#2E7D4F", "#8F3F9E", "#C2571A"][i % 4];
+      const rot = ((i * 37) % 9) - 4;
+      const hue = s.kind === "dinner" ? "#df7f72" : ["#6f8cb8", "#7fae8a", "#b08cc0", "#d39a6c"][i % 4];
       return `<div class="stamp-cell" style="--rot:${rot}deg;--ink:${hue};animation-delay:${i * 120}ms">
         <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--ink)" stroke-width="6"/><circle cx="60" cy="60" r="42" fill="none" stroke="var(--ink)" stroke-width="2" stroke-dasharray="3 4"/>${s.kind === "dinner" ? `<path d="M48 40 v40 M44 40 v14 a4 4 0 0 0 8 0 v-14 M72 40 q-8 10 0 22 v18" stroke="var(--ink)" stroke-width="4" fill="none" stroke-linecap="round"/>` : `<path d="M60 30 l7 15 16 2-12 11 3 16-14-8-14 8 3-16-12-11 16-2z" fill="var(--ink)"/>`}</svg>
         <span class="stamp-jp">${esc(s.jp)}</span><span class="stamp-name">${esc(s.name)}</span></div>`;
