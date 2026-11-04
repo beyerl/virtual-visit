@@ -1,5 +1,6 @@
 // Gamepads and the keyboard, as sets of held SNES buttons.
 
+import { isBindingActive } from "../domain/controls.js";
 import { Button } from "../domain/input.js";
 import { ButtonSource } from "../application/ports.js";
 
@@ -37,16 +38,30 @@ const SNES_USB = {
 const AXIS = 0.5;
 
 export class GamepadSource extends ButtonSource {
-  /** @param {Navigator} navigator */
-  constructor(navigator) {
+  /**
+   * @param {Navigator} navigator
+   * @param {() => import("../domain/controls.js").ControlMapData | null} [customMap] the player's controls, if set
+   */
+  constructor(navigator, customMap = () => null) {
     super();
     this.navigator = navigator;
+    this.customMap = customMap;
+  }
+
+  /** Connected pads, for setting controls. */
+  pads() {
+    return [...(this.navigator.getGamepads?.() ?? [])].filter((p) => !!p?.connected).map((p) => /** @type {Gamepad} */ (p));
   }
 
   held() {
     const out = new Set();
+    const custom = this.customMap();
     for (const pad of this.navigator.getGamepads?.() ?? []) {
       if (!pad?.connected) continue;
+      if (custom) {
+        for (const [button, b] of Object.entries(custom)) if (b && isBindingActive(b, pad)) out.add(button);
+        continue;
+      }
       const map = pad.mapping === "standard" ? STANDARD : SNES_USB;
       pad.buttons.forEach((b, i) => {
         const name = map[/** @type {keyof typeof map} */ (i)];

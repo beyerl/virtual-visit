@@ -41,6 +41,12 @@ Gamepads with Chrome's standard mapping are read by button position (as on an Xb
 B bottom, X top, Y left, like the SNES). Common USB SNES replicas without a standard mapping are
 supported too. Everything can also be clicked.
 
+**Main menu → Controls** sets the pad's controls: pick a control and press the pad button (or
+push the stick / D-pad direction) for it, or choose _Set up all buttons_ to go through all twelve
+in a row (Enter skips one, Esc stops, waiting 8 s skips). Each input belongs to one control only;
+assigning it elsewhere takes it away from the old one. _Automatic layout_ forgets the custom
+controls. They are saved in localStorage; the keyboard keys always stay the same.
+
 Browsers only play video with sound after a click or key press on the page (a gamepad press
 doesn't count). Without one, rides play muted and a badge says so: click once anywhere, then
 press X.
@@ -76,13 +82,15 @@ Domain-driven, with dependencies pointing inwards:
 ```
 src/
   domain/          journey (aggregate root) and its itinerary of steps, game state (entity),
-                   dialogue, input (SNES buttons, the L + R chord), geo, Google Maps links
+                   dialogue, input (SNES buttons, the L + R chord), controls (pad bindings),
+                   geo, Google Maps links
   application/     GameService (new game, load, advance, visit a stop, come back),
-                   InputService (buttons → actions, with repeat), ports (interfaces)
+                   InputService (buttons → actions, with repeat), ControlsService (custom
+                   controls, capturing the next pad input), ports (interfaces)
   infrastructure/  localStorage saves, gamepad / keyboard / pointer sources, the extension
                    link (postMessage), the YouTube IFrame player, the browser's location
   presentation/    web components: <vv-app> (screen flow), splash, menus, load, journey
-                   select, day intro, ride, walk, visit, wrap-up, pause, and the parts:
+                   select, controls, day intro, ride, walk, visit, wrap-up, pause, and the parts:
                    <vv-hana> (pure CSS), <vv-speech>, <vv-menu>, <vv-pad-hint>, <vv-route-map>
   content/         journeys: Tokyo (days, legs, Hana's lines, ride videos) and its rail map
   main.js          composition root, the only module touching browser globals

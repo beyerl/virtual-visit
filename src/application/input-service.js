@@ -8,10 +8,14 @@ export const REPEAT_DELAY = 380;
 export const REPEAT_INTERVAL = 140;
 
 export class InputService {
-  /** @param {{ sources: import("./ports.js").ButtonSource[], now: () => number }} deps */
-  constructor({ sources, now }) {
+  /**
+   * @param {{ sources: import("./ports.js").ButtonSource[], now: () => number,
+   *           controls?: { capturing: boolean, poll(): void } }} deps
+   */
+  constructor({ sources, now, controls }) {
     this.sources = sources;
     this.now = now;
+    this.controls = controls;
     /** @type {Set<string>} */
     this.before = new Set();
     /** @type {Map<string, number>} held repeating button -> when it fires next */
@@ -34,6 +38,14 @@ export class InputService {
   tick() {
     const now = this.now();
     const held = this.held();
+    if (this.controls?.capturing) {
+      // Setting a control: the press is for that, not for the screen.
+      this.controls.poll();
+      // Read again with the controls just set, so the held press doesn't fire.
+      this.before = this.held();
+      this.repeatAt.clear();
+      return;
+    }
     const fired = pressedBetween(this.before, held);
     for (const b of fired) if (REPEATING.has(b)) this.repeatAt.set(b, now + REPEAT_DELAY);
     for (const [b, at] of this.repeatAt) {

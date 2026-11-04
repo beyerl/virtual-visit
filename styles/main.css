@@ -364,3 +364,43 @@ vv-visit-screen.leaving { animation: leave 0.6s ease-in forwards; }
   vv-visit-screen .corner-speech { display: none; }
   .splash-note { display: none; }
 }
+
+/* ---------- controls ---------- */
+.controls-screen { position: absolute; inset: 0; display: grid; grid-template-rows: auto 1fr; gap: 3vh; padding: 5vh 5vw 9vh; }
+.controls-body { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 3vw; min-height: 0; align-items: start; }
+.pad-panel { padding: 1em; display: grid; gap: 0.8em; transform: rotate(-0.8deg); }
+.snes-pad { width: 100%; height: auto; display: block; }
+.pad-body { fill: #d9d9e0; stroke: var(--ink); stroke-width: 5; }
+.pad-well { fill: #c4c4cc; stroke: var(--ink); stroke-width: 2; opacity: 0.7; }
+.pad-well.face { fill: #b9b3cc; }
+.pad-shoulder { fill: #a8aab4; stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
+.pad-dpad { fill: #2c2f37; }
+.pad-dir { fill: #2c2f37; stroke: none; }
+.pad-small { fill: #5b5f6b; stroke: var(--ink); stroke-width: 3; }
+.pad-face { fill: var(--c); stroke: var(--ink); stroke-width: 4; }
+.pad-face-label { font: 900 16px var(--round); fill: #fff; text-anchor: middle; pointer-events: none; }
+.pad-label { font: 800 9px var(--round); fill: var(--ink); text-anchor: middle; letter-spacing: 0.06em; }
+.pad-label.big { font-size: 16px; }
+.snes-pad .on { fill: var(--yellow) !important; stroke: var(--red); stroke-width: 5; }
+.snes-pad .capturing { animation: pad-pulse 0.5s ease-in-out infinite alternate; }
+@keyframes pad-pulse { to { fill: var(--red); } }
+.controls-status { font-size: 0.85em; line-height: 1.5; }
+.controls-status .warn { color: var(--red); font-weight: 700; }
+.controls-panel { max-height: 72vh; overflow-y: auto; min-width: 0; }
+.controls-panel vv-menu { gap: 0.15em; }
+.controls-panel .menu-item { padding: 0.25em 0.7em; }
+.controls-panel .menu-label { font-size: 1.05em; }
+.ctl-row { display: grid; grid-template-columns: 5.2em 1fr auto; gap: 0.6em; align-items: baseline; }
+.ctl-name { font-family: var(--round); font-weight: 900; }
+.ctl-does { color: var(--muted); font-size: 0.85em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ctl-binding { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.8em; font-weight: 700; background: #fff; border: 2px solid var(--ink); border-radius: 4px; padding: 0 0.4em; }
+.ctl-binding.none { color: var(--red); border-color: var(--red); }
+.capture-prompt { position: absolute; inset: 0; z-index: 40; display: grid; place-items: center; background: rgba(27, 31, 39, 0.45); }
+.capture-box { padding: 1.2em 2em; display: grid; gap: 0.5em; justify-items: center; min-width: min(26rem, 80vw); transform: rotate(-1deg); animation: burst-in 0.3s cubic-bezier(.2, 1.6, .4, 1); }
+.capture-title { font-family: var(--display); font-size: 2.4em; letter-spacing: 0.05em; }
+.capture-title b { color: var(--red); font-weight: 400; }
+.capture-sub { font-weight: 700; color: var(--muted); }
+.capture-bar { width: 100%; height: 10px; border: 3px solid var(--ink); border-radius: 5px; overflow: hidden; background: #fff; }
+.capture-bar i { display: block; height: 100%; background: var(--yellow); }
+.capture-keys { font-size: 0.8em; color: var(--muted); }
+@media (max-width: 760px) { .controls-body { grid-template-columns: 1fr; overflow-y: auto; } }

@@ -3,6 +3,7 @@
 
 import { StepType } from "../../domain/journey.js";
 import { define } from "../base.js";
+import "./controls.js";
 import "./journey-screens.js";
 import "./menus.js";
 
@@ -23,6 +24,8 @@ export class VvApp extends HTMLElement {
     this.game = /** @type {any} */ (null);
     /** @type {import("../../application/ports.js").VisitLink} */
     this.link = /** @type {any} */ (null);
+    /** @type {import("../../application/controls-service.js").ControlsService} */
+    this.controls = /** @type {any} */ (null);
     this.version = "0";
     /** @type {import("../base.js").Screen | null} */
     this.screen = null;
@@ -32,11 +35,13 @@ export class VvApp extends HTMLElement {
 
   /**
    * @param {{ game: import("../../application/game-service.js").GameService, link: import("../../application/ports.js").VisitLink,
-   *           input: import("../../application/input-service.js").InputService, version: string }} deps
+   *           input: import("../../application/input-service.js").InputService,
+   *           controls: import("../../application/controls-service.js").ControlsService, version: string }} deps
    */
-  async start({ game, link, input, version }) {
+  async start({ game, link, input, controls, version }) {
     this.game = game;
     this.link = link;
+    this.controls = controls;
     this.version = version;
     input.listen((a) => (this.pause ?? this.screen)?.onAction(a));
     const back = await game.returnFromVisit();
@@ -62,6 +67,10 @@ export class VvApp extends HTMLElement {
 
   loadScreen() {
     this.show("vv-load-screen");
+  }
+
+  controlsScreen() {
+    this.show("vv-controls");
   }
 
   journeySelect() {
