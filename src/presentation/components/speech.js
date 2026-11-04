@@ -1,10 +1,10 @@
-// Hana with a comic speech bubble. Lines appear letter by letter; A shows the
+// The guide with a speech bubble (attribute `guide`: hana, wei, katya). Lines appear letter by letter; A shows the
 // whole line at once, or goes on to the next one. Fires "dialogue-end" after
 // the last line.
 
 import { Dialogue } from "../../domain/dialogue.js";
 import { define, lineHtml } from "../base.js";
-import "./hana.js";
+import "./guide.js";
 
 const TYPE_MS = 22;
 
@@ -19,7 +19,7 @@ export class VvSpeech extends HTMLElement {
   connectedCallback() {
     if (this.firstElementChild) return;
     this.innerHTML = `
-      <vv-hana></vv-hana>
+      <vv-guide who="${this.getAttribute("guide") || "hana"}"></vv-guide>
       <div class="bubble" hidden><div class="bubble-text"></div><div class="bubble-more" aria-hidden="true">▼</div></div>`;
   }
 
@@ -27,8 +27,8 @@ export class VvSpeech extends HTMLElement {
     clearInterval(this.timer);
   }
 
-  get hana() {
-    return /** @type {import("./hana.js").VvHana} */ (this.querySelector("vv-hana"));
+  get guide() {
+    return /** @type {import("./guide.js").VvGuide} */ (this.querySelector("vv-guide"));
   }
 
   get bubble() {
@@ -51,7 +51,7 @@ export class VvSpeech extends HTMLElement {
     const line = this.dialogue.current;
     if (line == null) {
       this.bubble.hidden = true;
-      this.hana.talking = false;
+      this.guide.talking = false;
       this.typing = false;
       this.dispatchEvent(new CustomEvent("dialogue-end", { bubbles: true }));
       return;
@@ -72,12 +72,12 @@ export class VvSpeech extends HTMLElement {
     let ni = 0;
     let ci = 0;
     this.typing = true;
-    this.hana.talking = true;
+    this.guide.talking = true;
     this.finishTyping = () => {
       clearInterval(this.timer);
       nodes.forEach((n, i) => (n.data = full[i]));
       this.typing = false;
-      this.hana.talking = false;
+      this.guide.talking = false;
       this.bubble.classList.add("typed");
     };
     this.bubble.classList.remove("typed");

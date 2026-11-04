@@ -43,6 +43,9 @@ class StepScreen extends Screen {
   get journey() {
     return /** @type {Journey} */ (this.props.journey);
   }
+  get guideId() {
+    return this.journey.guide?.id ?? "hana";
+  }
   get speech() {
     return /** @type {VvSpeech} */ (this.$("vv-speech"));
   }
@@ -81,7 +84,7 @@ export class VvDayIntro extends StepScreen {
           <ol class="plan-stops">${stops.map((s) => `<li class="${s.kind}">${esc(s.name)} <span class="jp">${esc(s.jp)}</span></li>`).join("")}</ol>
         </div>
       </div>
-      <vv-speech class="bottom-speech"></vv-speech>
+      <vv-speech guide="${this.guideId}" class="bottom-speech"></vv-speech>
       <vv-pad-hint></vv-pad-hint>`;
     this.hints([
       ["a", "Next"],
@@ -111,7 +114,7 @@ function burstPoints(cx = 100, cy = 100, r1 = 96, r2 = 70, n = 14) {
 }
 
 /**
- * A train ride: the side-window video full screen, Hana talking over it.
+ * A train ride: the side-window video full screen, the guide talking over it.
  * A = next bubble, Start = skip the ride, X = sound, Y = map. After the
  * (last) video, remaining bubbles can still be read, then on to the stop.
  */
@@ -129,7 +132,7 @@ export class VvRideScreen extends StepScreen {
       <div class="ride-caption panel caption"></div>
       <vv-route-map class="panel"></vv-route-map>
       <div class="sound-badge" data-button="x" hidden>🔇 Sound off: press <b>X</b> (or click once, then X)</div>
-      <vv-speech class="bottom-speech over-video"></vv-speech>
+      <vv-speech guide="${this.guideId}" class="bottom-speech over-video"></vv-speech>
       <vv-pad-hint></vv-pad-hint>`;
     this.hints([
       ["a", "Next"],
@@ -207,7 +210,7 @@ export class VvRideScreen extends StepScreen {
   }
 }
 
-/** On foot to the next stop: no train, Hana walks with us through a comic street. */
+/** On foot to the next stop: no train, the guide walks with us through a little street. */
 export class VvWalkScreen extends StepScreen {
   render() {
     const s = /** @type {import("../../domain/journey.js").Stop} */ (this.step.stop);
@@ -217,14 +220,14 @@ export class VvWalkScreen extends StepScreen {
         <div class="skyline far"></div>
         <div class="skyline near"></div>
         <div class="street"></div>
-        <vv-hana class="walking"></vv-hana>
+        <vv-guide class="walking" who="${this.guideId}"></vv-guide>
       </div>
       ${this.hudHtml()}
       <div class="panel caption walk-caption">
         <div class="line-name">${walkIcon()} On foot · ${esc(s.mins)} min</div>
         <div class="stations">${esc(s.walkLabel)}</div>
       </div>
-      <vv-speech class="bottom-speech no-hana"></vv-speech>
+      <vv-speech guide="${this.guideId}" class="bottom-speech no-hana"></vv-speech>
       <vv-pad-hint></vv-pad-hint>`;
     this.hints([
       ["a", "Next"],
@@ -264,7 +267,7 @@ export class VvVisitScreen extends StepScreen {
           ${s.cuisine ? `<div class="kind">${esc(s.cuisine)}</div>` : ""}
           <p>${esc(s.text)}</p>
           <div class="walk">${walkIcon()}<b>${esc(s.mins)} min walk</b> · ${esc(s.walkLabel)}</div>
-          ${s.tip ? `<div class="tip"><b>Hana's tip:</b> ${esc(s.tip)}</div>` : ""}
+          ${s.tip ? `<div class="tip"><b>${esc(this.journey.guide.short)}'s tip:</b> ${esc(s.tip)}</div>` : ""}
         </article>
         <div class="panel visit-actions">
           <vv-menu></vv-menu>
@@ -277,7 +280,7 @@ export class VvVisitScreen extends StepScreen {
           </div>
         </div>
       </div>
-      <vv-speech class="corner-speech"></vv-speech>
+      <vv-speech guide="${this.guideId}" class="corner-speech"></vv-speech>
       <vv-pad-hint></vv-pad-hint>`;
     const menu = /** @type {VvMenu} */ (this.$("vv-menu"));
     menu.setOptions(
@@ -365,7 +368,7 @@ export class VvWrapUp extends StepScreen {
         <div class="panel wrap-menu" hidden><vv-menu></vv-menu></div>
         ${journey ? `<div class="the-end">The End</div>` : ""}
       </div>
-      <vv-speech class="bottom-speech"></vv-speech>
+      <vv-speech guide="${this.guideId}" class="bottom-speech"></vv-speech>
       <vv-pad-hint></vv-pad-hint>`;
     const menu = /** @type {VvMenu} */ (this.$("vv-menu"));
     menu.setOptions(

@@ -1,0 +1,176 @@
+/* The travel guides in pure CSS: one figure (150 × 210 px), dressed per guide
+   with [who]. Blinking, bobbing, a talking mouth and a waving arm. */
+
+vv-guide {
+  --ink: #3b2418;
+  --skin: #f6d3b3;
+  --hair: #3b2418;
+  --blush: #ee9a7a;
+  --jacket: #3d7f86;
+  --scarf: #d2603f;
+  --ol: 3px solid var(--ink);
+  display: block;
+  position: relative;
+  width: 150px;
+  height: 210px;
+  flex: none;
+}
+vv-guide .guide-fig {
+  position: absolute;
+  inset: 0;
+  animation: guide-bob 4.8s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+vv-guide .hair-back {
+  position: absolute; left: 25px; top: 14px; width: 100px; height: 104px;
+  background: var(--hair); border-radius: 50px 50px 22px 22px; border: var(--ol);
+}
+vv-guide .neck { position: absolute; left: 66px; top: 96px; width: 18px; height: 18px; background: var(--skin); }
+vv-guide .face {
+  position: absolute; left: 35px; top: 24px; width: 80px; height: 84px;
+  background: var(--skin); border-radius: 42% 42% 46% 46%; border: var(--ol);
+}
+vv-guide .bangs {
+  position: absolute; left: 31px; top: 14px; width: 88px; height: 40px;
+  background: var(--hair); border-radius: 44px 44px 10px 30px;
+}
+vv-guide .bangs::after {
+  content: ""; position: absolute; right: 6px; top: 22px; width: 26px; height: 22px;
+  background: var(--hair); border-radius: 0 0 18px 4px;
+}
+vv-guide .clip {
+  position: absolute; left: 96px; top: 26px; width: 15px; height: 15px; border-radius: 50%;
+  background: var(--scarf); border: 2px solid var(--ink);
+}
+vv-guide .eye {
+  position: absolute; top: 64px; width: 10px; height: 13px; background: var(--hair); border-radius: 50%;
+  animation: guide-blink 4.6s infinite;
+}
+vv-guide .eye.l { left: 55px; }
+vv-guide .eye.r { left: 85px; }
+vv-guide .eye::after { content: ""; position: absolute; left: 2px; top: 2px; width: 3.5px; height: 3.5px; border-radius: 50%; background: #fff; }
+vv-guide .cheek { position: absolute; top: 81px; width: 13px; height: 7px; background: var(--blush); border-radius: 50%; opacity: 0.85; }
+vv-guide .cheek.l { left: 45px; }
+vv-guide .cheek.r { left: 91px; }
+vv-guide .mouth {
+  position: absolute; left: 68px; top: 86px; width: 13px; height: 7px;
+  border: 2.5px solid #8a3f2a; border-top: none; border-radius: 0 0 12px 12px;
+  transform-origin: 50% 0;
+}
+vv-guide[talking] .mouth {
+  background: #8a3f2a;
+  animation: guide-talk 0.18s steps(2) infinite alternate;
+}
+vv-guide .body {
+  position: absolute; left: 30px; top: 110px; width: 90px; height: 98px;
+  background: var(--jacket); border-radius: 40px 40px 10px 10px; border: var(--ol);
+}
+vv-guide .scarf {
+  position: absolute; left: 57px; top: 104px; width: 36px; height: 17px; background: var(--scarf);
+  border-radius: 8px; border: 2px solid var(--ink); z-index: 1;
+}
+vv-guide .scarf::after {
+  content: ""; position: absolute; left: 17px; top: 9px; width: 12px; height: 26px;
+  background: var(--scarf); border: 2px solid var(--ink); border-radius: 3px 3px 6px 6px; transform: rotate(-12deg);
+}
+vv-guide .badge { position: absolute; left: 92px; top: 140px; width: 16px; height: 12px; background: #fbf0d9; border-radius: 2px; border: 2px solid var(--ink); }
+vv-guide .arm {
+  position: absolute; left: 112px; top: 62px; width: 17px; height: 62px; background: var(--jacket);
+  border-radius: 8px; border: var(--ol); transform-origin: 50% 100%; transform: rotate(14deg);
+  animation: guide-wave 3.6s ease-in-out infinite;
+}
+vv-guide .arm::before {
+  content: ""; position: absolute; left: -2px; top: -14px; width: 17px; height: 17px; border-radius: 50%;
+  background: var(--skin); border: var(--ol);
+}
+vv-guide[who="hana"] .item {
+  position: absolute; left: 9px; top: -50px; width: 32px; height: 21px; background: #fff; border: 2px solid var(--ink);
+  animation: guide-flag 1.6s ease-in-out infinite alternate; transform-origin: 0 50%;
+}
+vv-guide[who="hana"] .item::after { content: ""; position: absolute; left: 9px; top: 3px; width: 11px; height: 11px; border-radius: 50%; background: var(--scarf); }
+
+/* walking: a bigger bounce, no waving */
+vv-guide.walking .guide-fig { animation: guide-walk 0.75s ease-in-out infinite alternate; }
+vv-guide.walking .arm { animation: guide-swing 0.75s ease-in-out infinite alternate; }
+
+@keyframes guide-bob { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-3px) rotate(-0.5deg); } }
+@keyframes guide-blink { 0%, 94%, 100% { transform: scaleY(1); } 96% { transform: scaleY(0.1); } }
+@keyframes guide-talk { from { height: 4px; } to { height: 11px; } }
+@keyframes guide-wave { 0%, 100% { transform: rotate(14deg); } 50% { transform: rotate(-8deg); } }
+@keyframes guide-flag { from { transform: skewY(0); } to { transform: skewY(-8deg) scaleX(0.92); } }
+@keyframes guide-walk { from { transform: translateY(0) rotate(-1deg); } to { transform: translateY(-6px) rotate(1deg); } }
+@keyframes guide-swing { from { transform: rotate(30deg); } to { transform: rotate(-10deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  vv-guide .guide-fig, vv-guide .arm, vv-guide .item, vv-guide .eye { animation: none !important; }
+}
+
+/* parts only some guides wear */
+vv-guide .hat, vv-guide .braid, vv-guide .glasses { display: none; }
+
+/* Hana: the flag pole */
+vv-guide[who="hana"] .item::before { content: ""; position: absolute; left: -5px; top: 0; width: 3px; height: 42px; background: var(--ink); }
+
+/* ---------- Wei (Beijing): short hair, round glasses, mandarin collar, a kite ---------- */
+vv-guide[who="wei"] { --hair: #2a1a12; --jacket: #b5452e; --scarf: #8a2f1f; --skin: #f1cda8; }
+vv-guide[who="wei"] .hair-back { top: 16px; height: 62px; border-radius: 48px 48px 24px 24px; }
+vv-guide[who="wei"] .bangs { height: 30px; top: 14px; border-radius: 44px 44px 18px 18px; }
+vv-guide[who="wei"] .bangs::after { right: 50px; top: 18px; width: 30px; height: 14px; border-radius: 0 0 14px 10px; }
+vv-guide[who="wei"] .clip { display: none; }
+vv-guide[who="wei"] .glasses { display: block; position: absolute; left: 47px; top: 58px; width: 56px; height: 24px; }
+vv-guide[who="wei"] .glasses::before, vv-guide[who="wei"] .glasses::after {
+  content: ""; position: absolute; top: 0; width: 20px; height: 20px; border: 2.5px solid var(--ink); border-radius: 50%;
+}
+vv-guide[who="wei"] .glasses::before { left: 0; }
+vv-guide[who="wei"] .glasses::after { right: 0; box-shadow: -14px 6px 0 -9px var(--ink); }
+vv-guide[who="wei"] .scarf { left: 60px; top: 104px; width: 30px; height: 12px; border-radius: 4px; }
+vv-guide[who="wei"] .scarf::after { display: none; }
+vv-guide[who="wei"] .badge { background: #f4c55a; border-radius: 50%; width: 12px; height: 12px; left: 72px; top: 132px; }
+vv-guide[who="wei"] .item {
+  position: absolute; left: -8px; top: -58px; width: 34px; height: 34px; transform: rotate(45deg);
+  background: linear-gradient(45deg, #f4c55a 50%, #d2603f 50%); border: 2.5px solid var(--ink);
+  animation: guide-kite 2.6s ease-in-out infinite alternate;
+}
+vv-guide[who="wei"] .item::after {
+  content: ""; position: absolute; left: 30px; top: 30px; width: 30px; height: 4px; transform-origin: 0 50%; rotate: 10deg;
+  background: repeating-linear-gradient(90deg, var(--ink) 0 6px, transparent 6px 9px);
+}
+@keyframes guide-kite { from { transform: rotate(40deg) translateY(0); } to { transform: rotate(52deg) translateY(-4px); } }
+
+/* ---------- Katya (Moscow): knitted hat with pompom, blond braid, an ice cream ---------- */
+vv-guide[who="katya"] { --hair: #e0ad55; --jacket: #3d8a8c; --scarf: #f4c55a; --skin: #f8dcc4; --blush: #f09a86; }
+vv-guide[who="katya"] .hat {
+  display: block; position: absolute; left: 29px; top: 4px; width: 92px; height: 42px; z-index: 2;
+  background: repeating-linear-gradient(90deg, #d2603f 0 8px, #b84e31 8px 10px);
+  border: 3px solid var(--ink); border-radius: 46px 46px 8px 8px;
+  box-shadow: inset 0 -9px 0 #f6e6c4;
+}
+vv-guide[who="katya"] .pompom {
+  position: absolute; left: 34px; top: -16px; width: 20px; height: 20px; border-radius: 50%;
+  background: #f6e6c4; border: 3px solid var(--ink);
+}
+vv-guide[who="katya"] .clip { display: none; }
+vv-guide[who="katya"] .hair-back { height: 86px; }
+vv-guide[who="katya"] .bangs { top: 34px; height: 22px; border-radius: 10px 10px 18px 18px; }
+vv-guide[who="katya"] .bangs::after { display: none; }
+vv-guide[who="katya"] .braid {
+  display: block; position: absolute; left: 34px; top: 84px; width: 16px; height: 76px; z-index: 3;
+  background: repeating-linear-gradient(170deg, var(--hair) 0 9px, #b9843a 9px 11px);
+  border: 2.5px solid var(--ink); border-radius: 8px 8px 10px 10px; transform: rotate(8deg);
+}
+vv-guide[who="katya"] .braid::after {
+  content: ""; position: absolute; left: 1px; bottom: -10px; width: 10px; height: 8px; background: #d2603f; border: 2px solid var(--ink); border-radius: 3px;
+}
+vv-guide[who="katya"] .item {
+  position: absolute; left: -6px; top: -44px; width: 0; height: 0;
+  border-left: 12px solid transparent; border-right: 12px solid transparent; border-top: 30px solid #d9a35a;
+  filter: drop-shadow(0 0 0 var(--ink));
+}
+vv-guide[who="katya"] .item::before {
+  content: ""; position: absolute; left: -16px; top: -52px; width: 30px; height: 26px; border-radius: 50% 50% 40% 40%;
+  background: #fbf0d9; border: 2.5px solid var(--ink);
+}
+vv-guide[who="katya"] .item::after {
+  content: ""; position: absolute; left: -12px; top: -32px; width: 24px; height: 30px;
+  background: repeating-linear-gradient(45deg, transparent 0 5px, rgba(59, 36, 24, 0.35) 5px 6px); clip-path: polygon(0 0, 100% 0, 50% 100%);
+}

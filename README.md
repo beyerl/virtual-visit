@@ -6,16 +6,24 @@ Street View.
 
 **Play:** https://beyerl.github.io/virtual-visit/
 
-Currently available: **Tokyo with Hana**, 3 days, 15 train rides, 18 stops (from the static page
-in `reference/tokyo-with-hana.html`).
+Currently available, each with its own guide:
+
+- **Tokyo with Hana**: 3 days, 15 train rides, 18 stops (from the static page in
+  `reference/tokyo-with-hana.html`).
+- **Beijing with Wei**: 3 days, 11 train rides, 15 stops, from Qianmen along the imperial axis
+  to the Forbidden City, the temples and hutongs, and out to the Great Wall at Badaling.
+  Google has little official Street View in mainland China, so most Beijing stops are user
+  photospheres (every walk start has one within 250 m).
+- **Moscow with Katya**: 3 days, 11 train rides, 15 stops, from the Sapsan arrival to Red
+  Square, the Arbat, Gorky Park, VDNKh, the Sparrow Hills and around the Central Circle.
 
 ## How a journey goes
 
 1. Title screen → **Start new game** or **Load game**.
 2. Choose a journey.
-3. Each day starts with Hana's plan for the day. Then, for every stop:
+3. Each day starts with the guide's plan for the day. Then, for every stop:
    - a **train ride**: a side-window (車窓 / 側面展望) YouTube video, cut to the stretch we ride,
-     with Hana's speech bubbles about the place we're going to (on foot, a short walk scene
+     with the guide's speech bubbles about the place we're going to (on foot, a short walk scene
      instead);
    - the **stop in Street View**, at the start of the walking route, facing the way to go.
      Press **L + R together** when you've seen enough, and the next ride starts.
@@ -91,10 +99,10 @@ src/
                    link (postMessage), the YouTube IFrame player, the browser's location
   presentation/    web components: <vv-app> (screen flow), splash, menus, load, journey
                    select, controls, day intro, ride, walk, visit, wrap-up, pause, and the parts:
-                   <vv-hana> (pure CSS), <vv-speech>, <vv-menu>, <vv-pad-hint>, <vv-route-map>
-  content/         journeys: Tokyo (days, legs, Hana's lines, ride videos) and its rail map
+                   <vv-guide> (Hana, Wei, Katya in pure CSS), <vv-speech>, <vv-menu>, <vv-pad-hint>, <vv-route-map>
+  content/         journeys: Tokyo, Beijing, Moscow (days, legs, guide lines, ride videos), Tokyo's rail map
   main.js          composition root, the only module touching browser globals
-styles/            comic theme (main.css) and Hana (hana.css)
+styles/            theme (main.css) and the guides (guides.css)
 ```
 
 All graphics are CSS or inline SVG: a golden-hour sky over stepped pixel hills, parchment panels in dark wood frames, earthy terracotta / ochre / leaf green / teal, hard pixel shadows. Fonts (Pixelify Sans, Zen Maru Gothic, Zen Kaku Gothic New) come from Google Fonts.

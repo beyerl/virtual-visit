@@ -12,7 +12,7 @@ export const TOKYO = {
   title: "Tokyo",
   jp: "東京",
   tagline: "3 days · 15 train rides · 18 stops",
-  guide: "Mori Hana",
+  guide: { id: "hana", name: "Mori Hana", short: "Hana" },
   available: true,
   lines: {
     shin: { name: "Tōkaidō Shinkansen", color: "#1A4A94" },

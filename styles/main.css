@@ -117,7 +117,7 @@ vv-speech .bubble-more {
 vv-speech .bubble.typed .bubble-more { opacity: 1; animation: nudge 0.8s steps(2, end) infinite alternate; }
 vv-speech .bubble.typed.last .bubble-more { color: var(--blue); }
 @keyframes nudge { to { transform: translateY(4px); } }
-vv-speech.no-hana vv-hana { display: none; }
+vv-speech.no-hana vv-guide { display: none; }
 vv-speech.no-hana .bubble { margin-bottom: 0; }
 vv-speech.no-hana .bubble::before { display: none; }
 
@@ -323,7 +323,7 @@ vv-route-map.folded { transform: translateX(calc(100% + 3vw)); }
   background-size: 140px 10px; background-repeat: repeat-x; background-position: 0 50%; animation: road 3.6s linear infinite;
 }
 @keyframes road { to { background-position: -140px 50%; } }
-.walk-scene vv-hana { position: absolute; left: 12vw; bottom: 14vh; transform: scale(1.3); transform-origin: 50% 100%; }
+.walk-scene vv-guide { position: absolute; left: 12vw; bottom: 14vh; transform: scale(1.3); transform-origin: 50% 100%; }
 .walk-caption { position: absolute; left: 2vw; top: calc(2vh + 2.6em); padding: 0.6em 1em; transform: rotate(-0.4deg); }
 
 /* ---------- visit ---------- */
@@ -371,7 +371,7 @@ vv-visit-screen.leaving { animation: leave 0.6s ease-in forwards; }
 
 /* ---------- small screens ---------- */
 @media (max-width: 760px), (max-height: 520px) {
-  vv-hana { transform: scale(0.7); transform-origin: 0 100%; margin-right: -44px; margin-top: -63px; }
+  vv-guide { transform: scale(0.7); transform-origin: 0 100%; margin-right: -44px; margin-top: -63px; }
   vv-speech .bubble { margin-bottom: 70px; max-width: 72vw; font-size: 1em; }
   .visit { grid-template-columns: 1fr; overflow-y: auto; bottom: 2vh; }
   .plan-stops { columns: 1; }
@@ -437,3 +437,15 @@ vv-route-map polyline { filter: saturate(0.8); }
 .journey-card { border: 4px solid var(--wood); box-shadow: var(--frame), var(--shadow); }
 .journey-card.selected { box-shadow: inset 0 0 0 3px #e0a540, var(--shadow); }
 .journey-art { border-color: var(--wood); background: linear-gradient(#9fd3c7, #fbf0d9 85%); }
+
+/* Main menu: the globe instead of a guide (guides belong to their city). */
+.menu-globe { position: absolute; right: 7vw; bottom: 12vh; width: min(34vh, 30vw); filter: drop-shadow(0 6px 0 var(--ink-soft)); }
+.menu-globe svg { width: 100%; height: auto; overflow: visible; }
+/* Journey cards: the guide, small, next to their name. */
+.journey-guide { display: flex; align-items: center; gap: 0.4em; }
+.journey-guide vv-guide { width: 42px; height: 58px; flex: none; }
+.journey-guide vv-guide .guide-fig { transform: scale(0.28); transform-origin: 0 0; inset: auto; width: 150px; height: 210px; animation: none; }
+/* Four journey cards side by side. */
+.journey-cards { gap: 2vw; }
+.journey-card { width: min(19rem, 21vw); min-width: 12rem; padding: 0.8em 1em 1.1em; }
+.journey-name { font-size: 2em; }

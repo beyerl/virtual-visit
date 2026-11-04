@@ -6,7 +6,7 @@ import { describeStep, formatDate, progress } from "../describe.js";
 import { CITY_SVG, GLOBE_SVG } from "./globe.js";
 import "./menu.js";
 import "./pad-hint.js";
-import "./speech.js";
+import "./guide.js";
 
 /** @typedef {import("./menu.js").VvMenu} VvMenu */
 /** @typedef {import("./pad-hint.js").VvPadHint} VvPadHint */
@@ -43,7 +43,7 @@ export class VvMainMenu extends Screen {
         <div class="panel menu-panel">
           <vv-menu></vv-menu>
         </div>
-        <vv-speech class="corner-speech"></vv-speech>
+        <div class="menu-globe">${GLOBE_SVG}</div>
         <vv-pad-hint></vv-pad-hint>
         <div class="version">v${esc(this.app.version)}</div>
       </div>`;
@@ -68,8 +68,6 @@ export class VvMainMenu extends Screen {
       ["dpad", "Choose"],
       ["a", "OK"],
     ];
-    const speech = /** @type {import("./speech.js").VvSpeech} */ (this.$("vv-speech"));
-    speech.play([saves.length ? "{Okaeri!} Welcome back! Start a new trip, or pick up where we left off?" : "{Konnichiwa!} Where shall we go today?"]);
   }
 
   onAction(/** @type {string} */ action) {
@@ -170,7 +168,7 @@ export class VvJourneySelect extends Screen {
               <div class="journey-art">${CITY_SVG[j.id] ?? ""}</div>
               <div class="journey-name">${esc(j.title)} <span class="jp">${esc(/** @type {any} */ (j).jp)}</span></div>
               <div class="journey-tag">${esc(/** @type {any} */ (j).tagline)}</div>
-              ${j.steps.length ? `<div class="journey-guide">with ${esc(/** @type {any} */ (j).guide)}</div>` : `<div class="stamp">Coming soon</div>`}
+              ${j.steps.length ? `<div class="journey-guide"><vv-guide who="${j.guide.id}"></vv-guide>with ${esc(j.guide.name)}</div>` : `<div class="stamp">Coming soon</div>`}
             </div>`,
             )
             .join("")}

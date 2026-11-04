@@ -23,11 +23,14 @@ test("itinerary: each day opens, every leg is a transit then a visit, wrap-ups c
   assert.equal(tokyo.step(1).rides[0].video.id, "kgBAVQmAJRA", "the journey starts on the Shinkansen");
 });
 
-test("content: every ride has a video and a known line; every stop has walk points", () => {
-  for (const d of tokyo.days) {
+test("content: every journey has a guide; every ride a video and a known line; every stop walk points", () => {
+  const available = JOURNEYS.filter((j) => j.steps.length);
+  assert.deepEqual(available.map((j) => j.id), ["tokyo", "beijing", "moscow"]);
+  assert.deepEqual(available.map((j) => j.guide.id), ["hana", "wei", "katya"]);
+  for (const j of available) for (const d of j.days) {
     for (const r of d.legs.flatMap((l) => l.rides ?? []).concat(d.home?.rides ?? [])) {
       assert.match(r.video.id, /^[\w-]{11}$/, r.name);
-      assert.ok(tokyo.lines[r.line], r.line);
+      assert.ok(j.lines[r.line], `${j.id} ${r.line}`);
       if (r.video.end) assert.ok(r.video.end > (r.video.start ?? 0));
     }
     for (const l of d.legs) {
@@ -87,4 +90,13 @@ test("maps links: the route URL draws walking directions; the panorama URL faces
   assert.match(panoramaUrl("35.6812,139.7649", "35.6797,139.7546"), /map_action=pano&viewpoint=35.6812,139.7649&heading=2\d\d$/);
   assert.equal(bearing("0,0", "1,0"), 0);
   assert.equal(bearing("0,0", "0,1"), 90);
+});
+
+test("content: taglines count the rides and stops", () => {
+  for (const j of JOURNEYS.filter((x) => x.steps.length)) {
+    const rides = j.days.reduce((n, _, i) => n + j.ridesOf(i).length, 0);
+    const stops = j.steps.filter((s) => s.type === StepType.VISIT).length;
+    assert.match(j.tagline, new RegExp(`${rides} train rides · ${stops} stops`), j.id);
+    assert.equal(new Set(j.steps.map((s) => s.id)).size, j.steps.length, `${j.id}: unique step ids`);
+  }
 });

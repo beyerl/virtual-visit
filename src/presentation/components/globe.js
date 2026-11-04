@@ -48,6 +48,30 @@ export const CITY_SVG = {
   <path d="M120 92 H176" stroke="#3b2418" stroke-width="2"/>
   <path d="M0 128 H200" stroke="#3b2418" stroke-width="3.5"/>
 </svg>`,
+  beijing: `
+<svg viewBox="0 0 200 140" aria-hidden="true">
+  <circle cx="160" cy="34" r="16" fill="#f2c45a" stroke="#3b2418" stroke-width="3.5"/>
+  <path d="M60 128 V112 H140 V128" fill="#d2603f" stroke="#3b2418" stroke-width="3.5"/>
+  <path d="M50 112 L100 96 L150 112 Z" fill="#3d8a8c" stroke="#3b2418" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M70 96 V84 H130 V96" fill="#d2603f" stroke="#3b2418" stroke-width="3.5"/>
+  <path d="M60 84 L100 70 L140 84 Z" fill="#3d8a8c" stroke="#3b2418" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M80 70 V60 H120 V70" fill="#d2603f" stroke="#3b2418" stroke-width="3.5"/>
+  <path d="M72 60 L100 44 L128 60 Z" fill="#3d8a8c" stroke="#3b2418" stroke-width="3.5" stroke-linejoin="round"/>
+  <circle cx="100" cy="40" r="4" fill="#f2c45a" stroke="#3b2418" stroke-width="2.5"/>
+  <path d="M0 128 H200" stroke="#3b2418" stroke-width="3.5"/>
+</svg>`,
+  moscow: `
+<svg viewBox="0 0 200 140" aria-hidden="true">
+  <path d="M84 128 V84 H116 V128" fill="#f6e6c4" stroke="#3b2418" stroke-width="3.5"/>
+  <path d="M100 30 C118 46 124 62 116 84 H84 C76 62 82 46 100 30 Z" fill="#d2603f" stroke="#3b2418" stroke-width="3.5"/>
+  <path d="M92 44 C100 56 100 70 96 84 M108 44 C100 56 100 70 104 84" stroke="#f2c45a" stroke-width="3" fill="none"/>
+  <path d="M100 30 V18" stroke="#3b2418" stroke-width="3"/>
+  <path d="M48 128 V94 H70 V128" fill="#f6e6c4" stroke="#3b2418" stroke-width="3.5"/>
+  <path d="M59 62 C72 72 74 84 70 94 H48 C44 84 46 72 59 62 Z" fill="#3d8a8c" stroke="#3b2418" stroke-width="3.5"/>
+  <path d="M130 128 V98 H152 V128" fill="#f6e6c4" stroke="#3b2418" stroke-width="3.5"/>
+  <path d="M141 68 C154 78 156 88 152 98 H130 C126 88 128 78 141 68 Z" fill="#7fb356" stroke="#3b2418" stroke-width="3.5"/>
+  <path d="M0 128 H200" stroke="#3b2418" stroke-width="3.5"/>
+</svg>`,
   kyoto: `
 <svg viewBox="0 0 200 140" aria-hidden="true">
   <path d="M70 128 V100 H130 V128" fill="#e48a52" stroke="#3b2418" stroke-width="4"/>
