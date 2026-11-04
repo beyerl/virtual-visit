@@ -1,0 +1,546 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Tokyo with Hana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: a single subway-map spine per day; rides are coloured line segments with station-number badges, sights are stops off the line, Hana talks in bubbles beside it. */
+:root{
+  --paper:#F2F4F6; --card:#FFFFFF; --ink:#1B1F27; --muted:#5B6372; --rule:#D7DCE3;
+  --ai:#24427A;          /* ai-iro indigo, Hana's jacket + accent */
+  --ai-soft:#E3E9F4;
+  --beni:#C8323C;        /* scarf red */
+  --skin:#F6D9C4; --hair:#22201F; --blush:#F2A0A0;
+  --bubble:#FFFFFF; --bubble-ink:#1B1F27;
+  /* real Tokyo line colours */
+  --jy:#80C241; --g:#F39700; --m:#E60012; --a:#E85298; --z:#8F76D6; --jc:#F15A22; --u:#1A65B0; --jk:#00B2E5; --shin:#1A4A94;
+  --display:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Arial Rounded MT Bold",system-ui,sans-serif;
+  --body:"Zen Kaku Gothic New","Hiragino Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#12151C; --card:#1A1F29; --ink:#E9ECF2; --muted:#9AA3B3; --rule:#2C3342;
+  --ai:#7E9FDB; --ai-soft:#1F2A40; --beni:#E0565F; --bubble:#232A37; --bubble-ink:#E9ECF2; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#12151C; --card:#1A1F29; --ink:#E9ECF2; --muted:#9AA3B3; --rule:#2C3342;
+  --ai:#7E9FDB; --ai-soft:#1F2A40; --beni:#E0565F; --bubble:#232A37; --bubble-ink:#E9ECF2; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:24px 64px}
+a{color:var(--ai)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--ai);outline-offset:2px;border-radius:6px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0}
+
+/* ---------- Hana (pure CSS) ---------- */
+.hana{position:relative;width:150px;height:210px;flex:none}
+.hana .hair-back{position:absolute;left:25px;top:14px;width:100px;height:104px;background:var(--hair);border-radius:50px 50px 22px 22px}
+.hana .neck{position:absolute;left:66px;top:96px;width:18px;height:18px;background:var(--skin)}
+.hana .face{position:absolute;left:35px;top:24px;width:80px;height:84px;background:var(--skin);border-radius:42% 42% 46% 46%}
+.hana .bangs{position:absolute;left:31px;top:14px;width:88px;height:40px;background:var(--hair);border-radius:44px 44px 10px 30px}
+.hana .bangs::after{content:"";position:absolute;right:6px;top:22px;width:26px;height:22px;background:var(--hair);border-radius:0 0 18px 4px}
+.hana .clip{position:absolute;left:96px;top:26px;width:14px;height:14px;border-radius:50%;background:var(--beni);box-shadow:inset -3px -3px 0 rgba(0,0,0,.18)}
+.hana .eye{position:absolute;top:66px;width:9px;height:12px;background:var(--hair);border-radius:50%}
+.hana .eye.l{left:55px}.hana .eye.r{left:86px}
+.hana .eye::after{content:"";position:absolute;left:2px;top:2px;width:3px;height:3px;border-radius:50%;background:#fff}
+.hana .cheek{position:absolute;top:82px;width:13px;height:7px;background:var(--blush);border-radius:50%;opacity:.8}
+.hana .cheek.l{left:46px}.hana .cheek.r{left:91px}
+.hana .mouth{position:absolute;left:69px;top:86px;width:12px;height:7px;border:2.5px solid #A04848;border-top:none;border-radius:0 0 12px 12px}
+.hana .body{position:absolute;left:30px;top:110px;width:90px;height:100px;background:var(--ai);border-radius:40px 40px 10px 10px}
+.hana .scarf{position:absolute;left:58px;top:106px;width:34px;height:16px;background:var(--beni);border-radius:8px}
+.hana .scarf::after{content:"";position:absolute;left:18px;top:10px;width:12px;height:26px;background:var(--beni);border-radius:3px 3px 6px 6px;transform:rotate(-12deg)}
+.hana .badge{position:absolute;left:92px;top:140px;width:16px;height:12px;background:#F7F3E8;border-radius:2px}
+.hana .arm{position:absolute;left:112px;top:62px;width:16px;height:62px;background:var(--ai);border-radius:8px;transform-origin:50% 100%;transform:rotate(14deg);animation:wave 2.4s ease-in-out infinite}
+.hana .arm::before{content:"";position:absolute;left:0;top:-12px;width:16px;height:16px;border-radius:50%;background:var(--skin)}
+.hana .flag-pole{position:absolute;left:7px;top:-46px;width:2px;height:42px;background:var(--muted)}
+.hana .flag{position:absolute;left:9px;top:-46px;width:30px;height:20px;background:#fff;border:1px solid var(--rule)}
+.hana .flag::after{content:"";position:absolute;left:9px;top:4px;width:11px;height:11px;border-radius:50%;background:var(--beni)}
+@keyframes wave{0%,100%{transform:rotate(14deg)}50%{transform:rotate(-6deg)}}
+@media (prefers-reduced-motion: reduce){.hana .arm{animation:none}}
+.hana.mini{width:64px;height:64px;overflow:hidden;border-radius:50%;background:var(--ai-soft)}
+.hana.mini>.inner{transform:scale(.62);transform-origin:0 0;position:absolute;left:-7px;top:0;width:150px;height:210px}
+.hana.mini .arm{display:none}
+
+/* ---------- speech bubbles ---------- */
+.say{display:flex;gap:14px;align-items:flex-start}
+.bubble{position:relative;background:var(--bubble);color:var(--bubble-ink);border:2px solid var(--ink);border-radius:22px;padding:14px 18px;min-width:0;font-family:var(--display);font-weight:500;line-height:1.55;box-shadow:4px 4px 0 var(--ink)}
+.bubble::before{content:"";position:absolute;left:-12px;top:22px;width:20px;height:20px;background:var(--bubble);border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(45deg)}
+.bubble p{margin:0}.bubble p+p{margin-top:.5em}
+.bubble .jp{color:var(--beni);font-weight:700}
+
+/* ---------- hero ---------- */
+.hero{display:flex;gap:20px;align-items:flex-end;flex-wrap:wrap;padding-block:12px 28px;border-bottom:2px solid var(--ink)}
+.hero .hana{margin-bottom:-2px}
+.hero .bubble{flex:1 1 320px;margin-bottom:60px;font-size:1.05rem}
+.hero .bubble::before{top:auto;bottom:22px}
+.kicker{font-family:var(--mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:900;margin-bottom:10px}
+h1 .jp{color:var(--beni)}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;padding-block:18px;font-size:.88rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+nav.days{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);display:flex;gap:8px;padding-block:10px;border-bottom:1px solid var(--rule)}
+nav.days a{font-family:var(--display);font-weight:700;text-decoration:none;color:var(--ink);padding:6px 14px;border:2px solid var(--ink);border-radius:999px;font-size:.92rem}
+nav.days a:hover{background:var(--ink);color:var(--paper)}
+
+/* ---------- days ---------- */
+section.day{padding-block:40px 8px;scroll-margin-top:60px}
+.day-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.day-head .num{font-family:var(--mono);font-weight:600;font-size:.85rem;color:var(--paper);background:var(--ink);padding:2px 10px;border-radius:4px}
+.day-head h2{font-size:clamp(1.4rem,3.6vw,1.9rem);font-weight:900}
+.day-intro{margin-bottom:26px}
+
+ol.route{list-style:none;margin:0;padding:0;position:relative}
+ol.route>li{position:relative;padding-left:48px;padding-bottom:22px}
+ol.route>li::before{content:"";position:absolute;left:17px;top:0;bottom:0;width:6px;background:var(--rule);border-radius:3px}
+ol.route>li:last-child::before{bottom:auto;height:24px}
+
+/* ride */
+li.ride::before{background:var(--line)!important}
+.ride-box{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;padding:12px 0}
+.line-name{font-family:var(--display);font-weight:700;display:flex;align-items:center;gap:8px}
+.line-name .chip{width:14px;height:14px;border-radius:3px;background:var(--line)}
+.stations{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:.95rem}
+.st{display:inline-flex;align-items:center;gap:6px}
+.code{font-family:var(--mono);font-weight:600;font-size:.72rem;line-height:1;display:inline-grid;place-items:center;min-width:34px;height:30px;padding:0 4px;border:3.5px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink)}
+.arrow{color:var(--muted)}
+.mins{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--body);font-weight:700;font-size:.85rem;text-decoration:none;padding:6px 12px;border-radius:999px;border:2px solid currentColor;color:var(--ai);background:transparent;white-space:nowrap}
+.btn:hover{background:var(--ai);color:var(--card)}
+.btn.yt{color:var(--beni)}.btn.yt:hover{background:var(--beni);color:var(--card)}
+.btn svg{width:14px;height:14px;fill:currentColor;flex:none}
+
+/* sight */
+li.sight .pin{position:absolute;left:8px;top:16px;width:24px;height:24px;border-radius:50%;background:var(--card);border:5px solid var(--ink)}
+/* dinner: a red chōchin lantern instead of a round pin */
+li.dinner .pin{left:7px;top:12px;width:26px;height:32px;border:none;border-radius:45%;background:var(--beni);box-shadow:inset 0 -6px 0 rgba(0,0,0,.18),inset 0 6px 0 rgba(0,0,0,.18)}
+li.dinner .pin::before,li.dinner .pin::after{content:"";position:absolute;left:7px;width:12px;height:4px;background:var(--ink);border-radius:1px}
+li.dinner .pin::before{top:-3px}li.dinner .pin::after{bottom:-3px}
+li.dinner .sight-card{border-color:var(--beni);border-width:2px}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--beni);font-weight:600}
+.kind{font-size:.88rem;color:var(--muted);margin-top:-6px}
+.btn.inside{color:var(--beni)}.btn.inside:hover{background:var(--beni);color:var(--card)}
+.sight-card{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:16px 18px;display:grid;gap:10px;min-width:0}
+.sight-card h3{font-size:1.2rem;font-weight:700}
+.sight-card h3 small{display:block;font-family:var(--body);font-weight:500;font-size:.85rem;color:var(--muted);margin-top:2px}
+.sight-card p{margin:0;max-width:65ch}
+.walk{display:flex;align-items:center;gap:8px;font-size:.88rem;color:var(--muted);flex-wrap:wrap}
+.walk b{color:var(--ink);font-weight:700}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.tip{display:flex;gap:10px;align-items:flex-start;margin-top:4px}
+.tip .bubble{font-size:.92rem;padding:10px 14px;box-shadow:3px 3px 0 var(--ink)}
+.tip .bubble::before{top:16px;width:16px;height:16px;left:-10px}
+
+li.station-stop .pin{position:absolute;left:4px;top:10px;width:32px;height:32px;border-radius:8px;background:var(--card);border:4px solid var(--ink)}
+li.station-stop h3{font-size:1.05rem;padding-top:12px}
+
+/* route map excerpts */
+.ride-map{margin:0 0 8px;max-width:560px}
+.ride-map svg{display:block;width:100%;height:auto;background:var(--card);border:1px solid var(--rule);border-radius:12px}
+.ride-map figcaption{font-family:var(--mono);font-size:.74rem;color:var(--muted);margin-top:6px}
+.ride-map text{font-family:var(--body);fill:var(--ink);paint-order:stroke;stroke:var(--card);stroke-width:4px;stroke-linejoin:round}
+.ride-map text.ctx{fill:var(--muted)}
+.ride-map text.note{fill:var(--muted);font-style:italic}
+
+footer{margin-top:40px;padding-top:18px;border-top:2px solid var(--ink);color:var(--muted);font-size:.88rem}
+footer .say{margin-bottom:16px;color:var(--ink)}
+
+@media (max-width:520px){
+  .hana:not(.mini){width:120px;height:170px}
+  .hana:not(.mini)>*{transform-origin:0 0}
+  .hero .hana{transform:scale(.8);transform-origin:left bottom;margin-right:-30px}
+  .hero .bubble{margin-bottom:12px}
+  .hero .bubble::before{display:none}
+  .say .hana.mini{width:48px;height:48px}
+  .say .hana.mini>.inner{transform:scale(.46);left:-5px}
+}
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="hana" aria-hidden="true">
+      <div class="hair-back"></div><div class="neck"></div><div class="body"></div><div class="badge"></div>
+      <div class="scarf"></div><div class="face"></div><div class="bangs"></div><div class="clip"></div>
+      <div class="eye l"></div><div class="eye r"></div><div class="cheek l"></div><div class="cheek r"></div><div class="mouth"></div>
+      <div class="arm"><div class="flag-pole"></div><div class="flag"></div></div>
+    </div>
+    <div class="bubble">
+      <div class="kicker">Virtual holiday · 3 days · from your sofa</div>
+      <h1>Tokyo with Hana <span class="jp">東京</span></h1>
+      <p><span class="jp">Irasshaimase!</span> I'm Mori Hana, your travel assistant. For the next three days we travel Tokyo the honest way: every day starts at Tokyo Station, we ride real trains, and we walk the last stretch on foot.</p>
+      <p>Each ride has a train video so you can sit in the front car with me. Each sight has a Google Maps walking route and a free Street View link, so you can look around as if you were standing there.</p>
+    </div>
+  </header>
+
+  <div class="legend" aria-label="Line colours">
+    <span><i class="dot" style="background:var(--jy)"></i>JR Yamanote</span>
+    <span><i class="dot" style="background:var(--jc)"></i>JR Chūō Rapid</span>
+    <span><i class="dot" style="background:var(--jk)"></i>JR Keihin-Tōhoku</span>
+    <span><i class="dot" style="background:var(--m)"></i>Marunouchi</span>
+    <span><i class="dot" style="background:var(--g)"></i>Ginza</span>
+    <span><i class="dot" style="background:var(--a)"></i>Toei Asakusa</span>
+    <span><i class="dot" style="background:var(--z)"></i>Hanzōmon</span>
+    <span><i class="dot" style="background:var(--u)"></i>Yurikamome</span>
+  </div>
+
+  <nav class="days" aria-label="Days">
+    <a href="#arrival">Arrival</a><a href="#day1">Day 1</a><a href="#day2">Day 2</a><a href="#day3">Day 3</a>
+  </nav>
+
+  <main id="trip"></main>
+
+  <footer>
+    <div class="say">
+      <div class="hana mini" aria-hidden="true"><div class="inner"></div></div>
+      <div class="bubble"><p><span class="jp">Otsukaresama deshita!</span> Thank you for travelling with me. Street View images are taken on different days, so sometimes the weather changes between two clicks. That is part of the fun.</p></div>
+    </div>
+    <p>How the links work: “Walk in Street View” opens Google Maps walking directions and drops you into Street View where the walk begins, usually the station exit, facing the way to go. The route stays drawn on the small map in the corner, so you can click forward along it. Close Street View to see the full directions list. “Ride video” opens a YouTube search for front-view (前面展望) recordings of that exact stretch, so you can pick a current, high-quality ride. Travel times are typical daytime values.</p>
+  </footer>
+</div>
+
+<script>
+const ICON = {
+  walk:'<svg viewBox="0 0 24 24"><path d="M13.5 5.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM9.8 8.9 7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3A7.3 7.3 0 0 0 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>',
+  eye:'<svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5zM12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>',
+  play:'<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>'
+};
+const yt = q => 'https://www.youtube.com/results?search_query=' + encodeURIComponent(q);
+const walk = (o,d) => `https://www.google.com/maps/dir/?api=1&origin=${o}&destination=${d}&travelmode=walking`;
+const placeLink = (n,id) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(n)}&query_place_id=${id}`;
+ICON.door='<svg viewBox="0 0 24 24"><path d="M5 21V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v17h2v2H3v-2h2zm2 0h10V5H7v16zm6-10h2v2h-2v-2z"/></svg>';
+const sv = (p,h) => `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${p}` + (h!=null?`&heading=${h}`:'');
+
+const HANA_MINI = '<div class="hana mini" aria-hidden="true"><div class="inner"></div></div>';
+
+/* item types: station | ride | sight */
+const TRIP = [
+ { id:'arrival', num:'Arrival', title:'Tokyo Station, 東京駅',
+   intro:'<p>Welcome to Tokyo Station! More than 3,000 trains a day stop here, and the red-brick Marunouchi building from 1914 is our home base. Watch the bullet train glide in, then step outside with me to see the facade.</p>',
+   items:[
+    {t:'ride', line:'--shin', name:'Tōkaidō Shinkansen', from:['SGW','Shinagawa'], to:['TYO','Tokyo'], mins:'final approach',
+     q:'Tokaido Shinkansen arriving Tokyo Station 東海道新幹線 東京駅 到着'},
+    {t:'sight', name:'Marunouchi Station Building', jp:'丸の内駅舎',
+     text:'The restored red-brick facade with its two domes. Turn around in Street View and you look straight down Gyōkō-dōri toward the Imperial Palace, which is exactly where we go next.',
+     walkLabel:'Marunouchi Central Exit → station plaza', mins:2,
+     o:'35.6812,139.7649', d:'35.6815,139.7640', pano:'35.6815,139.7640', h:95,
+     tip:'Look up at the dome ceilings inside the north and south exits. The eight zodiac animals are hidden in the plaster.'}
+   ]},
+ { id:'day1', num:'Day 1', title:'Palace, Ginza, old Asakusa',
+   intro:'<p><span class="jp">Ikimashō!</span> Today we go from the quiet palace moat to the busiest shopping crossing, and then back in time to Tokyo\'s oldest temple. We finish under the tallest tower in Japan.</p>',
+   items:[
+    {t:'station', name:'Start: Tokyo Station, Marunouchi Central Exit'},
+    {t:'sight', name:'Imperial Palace & Nijūbashi', jp:'皇居・二重橋',
+     text:'Walk straight up Gyōkō-dōri to the gravel plaza of Kōkyo Gaien. The double bridge with the Fushimi watchtower behind it is the classic view of the palace.',
+     walkLabel:'Tokyo Station → Seimon Ishibashi viewpoint', mins:15,
+     o:'35.6812,139.7649', d:'35.6797,139.7546', pano:'35.6797,139.7546', h:270,
+     tip:'The pine trees on the plaza are black pines, more than 2,000 of them. They are trimmed by hand.'},
+    {t:'ride', line:'--m', name:'Tokyo Metro Marunouchi Line', from:['M17','Tokyo'], to:['M16','Ginza'], mins:'2 min',
+     q:'丸ノ内線 前面展望 東京 銀座 Marunouchi Line front view'},
+    {t:'sight', name:'Ginza 4-chōme Crossing', jp:'銀座四丁目交差点',
+     text:'The Wakō clock tower on the corner has watched over Ginza since 1932. On weekend afternoons Chūō-dōri closes to cars and becomes a pedestrian street.',
+     walkLabel:'Ginza Station exit A9 → Wakō clock tower', mins:3,
+     o:'35.6719,139.7639', d:'35.6717,139.7650', pano:'35.6714,139.7648', h:30,
+     tip:'Wakō\'s shop windows change with the seasons. Click through a few Street View dates and compare them.'},
+    {t:'ride', line:'--g', name:'Tokyo Metro Ginza Line', from:['G09','Ginza'], to:['G19','Asakusa'], mins:'17 min',
+     q:'銀座線 前面展望 銀座 浅草 Ginza Line front view'},
+    {t:'sight', name:'Kaminarimon & Sensō-ji', jp:'雷門・浅草寺',
+     text:'The Thunder Gate with its giant red lantern, then 250 m of Nakamise snack stalls up to the main hall. Sensō-ji was founded in 628 and is the oldest temple in Tokyo.',
+     walkLabel:'Asakusa Station exit 1 → Kaminarimon → main hall', mins:8,
+     o:'35.7107,139.7975', d:'35.7148,139.7967', pano:'35.7110,139.7963', h:0,
+     tip:'Ningyō-yaki, little cakes filled with red bean paste, are baked right in front of you on Nakamise. You can almost smell them through the screen.'},
+    {t:'ride', line:'--a', name:'Toei Asakusa Line', from:['A18','Asakusa'], to:['A20','Oshiage'], mins:'3 min',
+     q:'都営浅草線 前面展望 浅草 押上 Asakusa Line front view'},
+    {t:'sight', name:'Tokyo Skytree', jp:'東京スカイツリー',
+     text:'634 m tall, chosen because 6-3-4 can be read as “Musashi”, the old name of this region. Stand at the foot and tilt your Street View camera all the way up.',
+     walkLabel:'Oshiage Station exit B3 → Skytree base', mins:5,
+     o:'35.7102,139.8133', d:'35.7101,139.8107', pano:'35.7096,139.8098', h:60,
+     tip:'Walk a few minutes south to the Kitajukken River bridges. The tower reflected in the water is a favourite photo spot.'},
+    {t:'dinner', name:'Daruma Monjayaki Skytree', jp:'だるま もんじゃ焼き', kind:'Monjayaki · Tokyo Solamachi',
+     text:'Monjayaki is a runny savoury pancake from this side of the city. You fry it yourself on the iron plate in the table and scrape it off with tiny spatulas. The restaurant is inside Solamachi at the foot of the tower.',
+     walkLabel:'Skytree base → Solamachi restaurant floors', mins:4,
+     o:'35.7101,139.8107', d:'35.7101,139.8122', place:'ChIJUaJR8NaOGGAR48j6xkTvMeY',
+     tip:'Wait until the edges go crispy before you scrape. Tokyo people call that crust “o-koge”, and it is the best part.'},
+    {t:'ride', line:'--z', name:'Tokyo Metro Hanzōmon Line (home)', from:['Z14','Oshiage'], to:['Z08','Ōtemachi'], mins:'15 min',
+     q:'半蔵門線 前面展望 押上 大手町 Hanzomon Line front view'},
+    {t:'station', name:'Walk 5 min underground back to Tokyo Station'}
+   ]},
+ { id:'day2', num:'Day 2', title:'Forest shrine, crossings, skyscrapers',
+   intro:'<p>Today we ride the green Yamanote loop to the west side. A forest shrine, the kawaii street, the famous scramble, and Shinjuku at dusk. Wear comfortable virtual shoes!</p>',
+   items:[
+    {t:'station', name:'Start: Tokyo Station, JR Yamanote platforms 4/5'},
+    {t:'ride', line:'--jy', name:'JR Yamanote Line (inner loop)', from:['JY01','Tokyo'], to:['JY19','Harajuku'], mins:'27 min',
+     q:'山手線 内回り 前面展望 東京 原宿 Yamanote Line front view'},
+    {t:'sight', name:'Meiji Jingū', jp:'明治神宮',
+     text:'Pass under the 12 m wooden torii and follow the gravel path through a planted forest of 100,000 trees to the shrine of Emperor Meiji. Google walked these paths with the Street View trekker.',
+     walkLabel:'Harajuku Station → Ōtorii → main shrine', mins:12,
+     o:'35.6702,139.7027', d:'35.6764,139.6993', pano:'35.6700,139.6996', h:330,
+     tip:'Look for the wall of sake barrels on the way in. Opposite are wine barrels from Burgundy.'},
+    {t:'sight', name:'Takeshita Street', jp:'竹下通り',
+     text:'350 m of crêpe stands, rainbow candy floss and street fashion, just across the road from the station.',
+     walkLabel:'Meiji Jingū → Takeshita Street', mins:12,
+     o:'35.6764,139.6993', d:'35.6716,139.7035', pano:'35.6714,139.7036', h:110,
+     tip:'Street View here is best on a weekend date. Then the street is packed from wall to wall.'},
+    {t:'ride', line:'--jy', name:'JR Yamanote Line', from:['JY19','Harajuku'], to:['JY20','Shibuya'], mins:'2 min',
+     q:'山手線 前面展望 原宿 渋谷 Yamanote Line Harajuku Shibuya'},
+    {t:'sight', name:'Hachikō & Shibuya Scramble', jp:'ハチ公・渋谷スクランブル交差点',
+     text:'Say hello to the bronze Akita dog who waited for his owner for ten years, then cross the scramble with up to 3,000 people per green light.',
+     walkLabel:'Hachikō Exit → statue → crossing', mins:3,
+     o:'35.6590,139.7010', d:'35.6595,139.7004', pano:'35.6594,139.7005', h:300,
+     tip:'Search YouTube for a Shibuya crossing live camera after this. It feels like standing on the corner.'},
+    {t:'ride', line:'--jy', name:'JR Yamanote Line', from:['JY20','Shibuya'], to:['JY17','Shinjuku'], mins:'7 min',
+     q:'山手線 前面展望 渋谷 新宿 Yamanote Line Shibuya Shinjuku'},
+    {t:'sight', name:'Tokyo Metropolitan Government Building', jp:'東京都庁',
+     text:'The twin towers by Kenzō Tange. The 45th-floor observation decks are free in real life too, and on clear days you can see Mount Fuji.',
+     walkLabel:'Shinjuku West Exit → City Hall', mins:10,
+     o:'35.6910,139.6990', d:'35.6894,139.6917', pano:'35.6898,139.6925', h:230},
+    {t:'sight', name:'Omoide Yokochō & Kabukichō', jp:'思い出横丁・歌舞伎町',
+     text:'Squeeze through “Memory Lane”, a tiny alley of yakitori counters under red lanterns, then cross under the tracks to Kabukichō and look for Godzilla peeking over the Hotel Gracery.',
+     walkLabel:'City Hall → Omoide Yokochō → Kabukichō', mins:15,
+     o:'35.6894,139.6917', d:'35.6950,139.7020', pano:'35.6930,139.6996', h:20,
+     tip:'Switch Street View to an evening date if you can find one. The lanterns are the whole point.'},
+    {t:'dinner', name:'Sasamoto', jp:'ささもと', kind:'Motsu-yaki & yakitori · Omoide Yokochō',
+     text:'Back to Memory Lane for dinner on the way to the station. Sasamoto is a counter of a few stools facing the grill, serving grilled offal skewers and stew since just after the war.',
+     walkLabel:'Kabukichō → under the tracks → Omoide Yokochō', mins:7,
+     o:'35.6950,139.7020', d:'35.6930,139.6995', place:'ChIJDXX7JG6NGGARwENQK5p69iU',
+     tip:'Say “o-makase de” and the master picks the skewers for you. Shoulders touch at the counter here, so say “sumimasen” as you squeeze in.'},
+    {t:'ride', line:'--jc', name:'JR Chūō Line Rapid (home)', from:['JC05','Shinjuku'], to:['JC01','Tokyo'], mins:'14 min',
+     q:'中央線快速 前面展望 新宿 東京 Chuo Line Rapid front view'},
+    {t:'station', name:'Back at Tokyo Station, platform 1 or 2'}
+   ]},
+ { id:'day3', num:'Day 3', title:'Across the bay, under the tower, into the lights',
+   intro:'<p>Our last day! We ride the driverless Yurikamome over Rainbow Bridge, so please sit in the front car with me. Then Tokyo Tower and the electric glow of Akihabara.</p>',
+   items:[
+    {t:'station', name:'Start: Tokyo Station, JR Yamanote platform 5'},
+    {t:'ride', line:'--jy', name:'JR Yamanote Line', from:['JY01','Tokyo'], to:['JY29','Shimbashi'], mins:'4 min',
+     q:'山手線 前面展望 東京 新橋 Yamanote Line Tokyo Shimbashi'},
+    {t:'station', name:'Transfer: Shimbashi Station, 2 min walk to the Yurikamome', walk:['35.6663,139.7583','35.6650,139.7600']},
+    {t:'ride', line:'--u', name:'Yurikamome (driverless)', from:['U01','Shimbashi'], to:['U06','Odaiba-kaihinkōen'], mins:'13 min',
+     q:'ゆりかもめ 前面展望 新橋 お台場海浜公園 Yurikamome front view'},
+    {t:'sight', name:'Odaiba Seaside Park', jp:'お台場海浜公園',
+     text:'A sandy beach in the middle of Tokyo Bay with Rainbow Bridge and the city skyline across the water, and a small replica of the Statue of Liberty.',
+     walkLabel:'Odaiba-kaihinkōen Station → beach promenade', mins:8,
+     o:'35.6297,139.7787', d:'35.6276,139.7718', pano:'35.6280,139.7722', h:20,
+     tip:'Turn Street View north. The bridge you just rode over is right in front of you.'},
+    {t:'sight', name:'Fuji TV Building & DiverCity', jp:'フジテレビ・ダイバーシティ',
+     text:'The steel lattice TV headquarters with a titanium sphere hanging in it, then a life-size giant robot statue in front of the DiverCity mall.',
+     walkLabel:'Seaside Park → Fuji TV → DiverCity plaza', mins:12,
+     o:'35.6276,139.7718', d:'35.6250,139.7757', pano:'35.6253,139.7758', h:180},
+    {t:'ride', line:'--u', name:'Yurikamome', from:['U07','Daiba'], to:['U01','Shimbashi'], mins:'15 min',
+     q:'ゆりかもめ 前面展望 台場 新橋 Yurikamome Daiba Shimbashi'},
+    {t:'ride', line:'--a', name:'Toei Asakusa Line', from:['A10','Shimbashi'], to:['A09','Daimon'], mins:'2 min',
+     q:'都営浅草線 前面展望 新橋 大門 Asakusa Line Shimbashi Daimon'},
+    {t:'sight', name:'Zōjō-ji & Tokyo Tower', jp:'増上寺・東京タワー',
+     text:'Walk through the 400-year-old Sangedatsumon gate into the temple grounds. The orange-and-white Tokyo Tower rises right behind the main hall.',
+     walkLabel:'Daimon Station exit A6 → Sangedatsumon → Tokyo Tower', mins:12,
+     o:'35.6567,139.7552', d:'35.6586,139.7454', pano:'35.6574,139.7488', h:270,
+     tip:'Beside the main hall are rows of small stone Jizō statues with red caps and pinwheels. They spin in the wind.'},
+    {t:'ride', line:'--jk', name:'JR Keihin-Tōhoku Line (rapid)', from:['JK23','Hamamatsuchō'], to:['JK28','Akihabara'], mins:'7 min',
+     q:'京浜東北線 快速 前面展望 浜松町 秋葉原 Keihin-Tohoku front view'},
+    {t:'sight', name:'Akihabara Electric Town', jp:'秋葉原電気街',
+     text:'Neon signs, arcade towers and multi-storey electronics stores along Chūō-dōri. Sunday afternoons, the main street is car-free.',
+     walkLabel:'Electric Town Exit → Chūō-dōri', mins:4,
+     o:'35.6987,139.7712', d:'35.7004,139.7713', pano:'35.7003,139.7712', h:0,
+     tip:'Pop into a crane game arcade in Street View. Some ground floors have indoor panoramas.'},
+    {t:'ride', line:'--jy', name:'JR Yamanote Line (home)', from:['JY03','Akihabara'], to:['JY01','Tokyo'], mins:'4 min',
+     q:'山手線 前面展望 秋葉原 東京 Yamanote Line Akihabara Tokyo'},
+    {t:'dinner', name:'Kaitenzushi Nemuro Hanamaru', jp:'回転寿司 根室花まる KITTE丸の内', kind:'Conveyor-belt sushi · KITTE 5F',
+     text:'Our farewell dinner is upstairs in the old central post office. Fish is flown in from Nemuro in Hokkaido, and plates circle past on the belt or are made to order.',
+     walkLabel:'Marunouchi South Exit → KITTE → 5th floor', mins:3,
+     o:'35.6807,139.7653', d:'35.6795,139.7649', place:'ChIJuzydSvqLGGARXTqdIJs_08Y',
+     tip:'There is usually a queue, so take a ticket from the machine at the entrance. The plate colour tells you the price.'},
+    {t:'sight', name:'Farewell from KITTE garden', jp:'KITTEガーデン',
+     text:'The free rooftop garden of the old post office building looks straight down onto the Tokyo Station platforms and the lit-up red-brick building. Our trip ends where it began.',
+     walkLabel:'Marunouchi South Exit → KITTE', mins:2,
+     o:'35.6807,139.7653', d:'35.6797,139.7648', pano:'35.6806,139.7652', h:45,
+     tip:'Sayōnara, and see you again! Count the trains below: you will see the green Yamanote every few minutes.'}
+   ]}
+];
+
+/* ---------- simplified rail network (approx. real positions) ---------- */
+const S={
+ tokyo:[35.6812,139.7671,'Tokyo'],yurakucho:[35.6750,139.7630,'Yūrakuchō'],shimbashi:[35.6660,139.7585,'Shimbashi'],
+ hamamatsucho:[35.6555,139.7570,'Hamamatsuchō'],tamachi:[35.6457,139.7476,'Tamachi'],takanawa:[35.6355,139.7407,'Takanawa Gateway'],
+ shinagawa:[35.6285,139.7388,'Shinagawa'],osaki:[35.6197,139.7286,'Ōsaki'],gotanda:[35.6262,139.7236,'Gotanda'],
+ meguro:[35.6339,139.7157,'Meguro'],ebisu:[35.6467,139.7101,'Ebisu'],shibuya:[35.6580,139.7016,'Shibuya'],
+ harajuku:[35.6702,139.7027,'Harajuku'],yoyogi:[35.6831,139.7020,'Yoyogi'],shinjuku:[35.6896,139.7006,'Shinjuku'],
+ shinokubo:[35.7012,139.7000,'Shin-Ōkubo'],takadanobaba:[35.7128,139.7038,'Takadanobaba'],mejiro:[35.7212,139.7066,'Mejiro'],
+ ikebukuro:[35.7295,139.7109,'Ikebukuro'],otsuka:[35.7318,139.7286,'Ōtsuka'],sugamo:[35.7334,139.7393,'Sugamo'],
+ komagome:[35.7365,139.7470,'Komagome'],tabata:[35.7381,139.7608,'Tabata'],nishinippori:[35.7320,139.7668,'Nishi-Nippori'],
+ nippori:[35.7278,139.7710,'Nippori'],uguisudani:[35.7213,139.7781,'Uguisudani'],ueno:[35.7138,139.7773,'Ueno'],
+ okachimachi:[35.7075,139.7748,'Okachimachi'],akihabara:[35.6984,139.7731,'Akihabara'],kanda:[35.6918,139.7709,'Kanda'],
+ shinjukusanchome:[35.6908,139.7048,'Shinjuku-sanchōme'],gyoemmae:[35.6884,139.7108,'Shinjuku-gyoemmae'],
+ yotsuyasanchome:[35.6880,139.7200,'Yotsuya-sanchōme'],yotsuya:[35.6860,139.7300,'Yotsuya'],akasakamitsuke:[35.6770,139.7370,'Akasaka-mitsuke'],
+ kokkai:[35.6740,139.7451,'Kokkai-gijidōmae'],kasumigaseki:[35.6740,139.7505,'Kasumigaseki'],ginza:[35.6717,139.7640,'Ginza'],
+ otemachi:[35.6862,139.7637,'Ōtemachi'],awajicho:[35.6956,139.7672,'Awajichō'],ochanomizu:[35.6996,139.7653,'Ochanomizu'],
+ hongosanchome:[35.7069,139.7604,'Hongō-sanchōme'],
+ omotesando:[35.6652,139.7123,'Omote-sandō'],gaiemmae:[35.6706,139.7178,'Gaiemmae'],aoyama1:[35.6728,139.7240,'Aoyama-itchōme'],
+ tameike:[35.6736,139.7414,'Tameike-sannō'],toranomon:[35.6703,139.7499,'Toranomon'],kyobashi:[35.6767,139.7701,'Kyōbashi'],
+ nihombashi:[35.6820,139.7745,'Nihombashi'],mitsukoshimae:[35.6862,139.7731,'Mitsukoshimae'],suehirocho:[35.7026,139.7716,'Suehirochō'],
+ uenohirokoji:[35.7077,139.7727,'Ueno-hirokōji'],inaricho:[35.7114,139.7826,'Inarichō'],tawaramachi:[35.7110,139.7907,'Tawaramachi'],
+ asakusa:[35.7110,139.7976,'Asakusa'],
+ mita:[35.6480,139.7480,'Mita'],daimon:[35.6567,139.7552,'Daimon'],higashiginza:[35.6694,139.7671,'Higashi-ginza'],
+ takaracho:[35.6750,139.7717,'Takarachō'],ningyocho:[35.6863,139.7822,'Ningyōchō'],higashinihombashi:[35.6923,139.7849,'Higashi-nihombashi'],
+ asakusabashi:[35.6973,139.7863,'Asakusabashi'],kuramae:[35.7038,139.7905,'Kuramae'],honjo:[35.7086,139.8042,'Honjo-azumabashi'],
+ oshiage:[35.7105,139.8130,'Oshiage'],
+ kudanshita:[35.6955,139.7515,'Kudanshita'],jimbocho:[35.6960,139.7577,'Jimbōchō'],suitengumae:[35.6829,139.7856,'Suitengūmae'],
+ kiyosumi:[35.6820,139.7990,'Kiyosumi-shirakawa'],sumiyoshi:[35.6890,139.8156,'Sumiyoshi'],kinshicho:[35.6970,139.8150,'Kinshichō'],
+ shiodome:[35.6623,139.7612,'Shiodome'],takeshiba:[35.6542,139.7615,'Takeshiba'],hinode:[35.6490,139.7620,'Hinode'],
+ shibaurafuto:[35.6410,139.7555,'Shibaura-futō'],odaibakaihin:[35.6297,139.7787,'Odaiba-kaihinkōen'],daiba:[35.6253,139.7713,'Daiba'],
+ cruiseterm:[35.6190,139.7735,'Cruise Terminal']
+};
+const LINES={
+ JY:{c:'--jy',n0:1,loop:true,off:0,ids:'tokyo kanda akihabara okachimachi ueno uguisudani nippori nishinippori tabata komagome sugamo otsuka ikebukuro mejiro takadanobaba shinokubo shinjuku yoyogi harajuku shibuya ebisu meguro gotanda osaki shinagawa takanawa tamachi hamamatsucho shimbashi yurakucho'},
+ JK:{c:'--jk',n0:20,off:5,ids:'shinagawa takanawa tamachi hamamatsucho shimbashi yurakucho tokyo kanda akihabara okachimachi ueno'},
+ JC:{c:'--jc',n0:1,off:-5,ids:'tokyo kanda ochanomizu yotsuya shinjuku'},
+ M:{c:'--m',n0:8,off:0,ids:'shinjuku shinjukusanchome gyoemmae yotsuyasanchome yotsuya akasakamitsuke kokkai kasumigaseki ginza tokyo otemachi awajicho ochanomizu hongosanchome'},
+ G:{c:'--g',n0:1,off:0,ids:'shibuya omotesando gaiemmae aoyama1 akasakamitsuke tameike toranomon shimbashi ginza kyobashi nihombashi mitsukoshimae kanda suehirocho uenohirokoji ueno inaricho tawaramachi asakusa'},
+ A:{c:'--a',n0:8,off:0,ids:'mita daimon shimbashi higashiginza takaracho nihombashi ningyocho higashinihombashi asakusabashi kuramae asakusa honjo oshiage'},
+ Z:{c:'--z',n0:6,off:0,ids:'kudanshita jimbocho otemachi mitsukoshimae suitengumae kiyosumi sumiyoshi kinshicho oshiage'},
+ U:{c:'--u',n0:1,off:0,ids:'shimbashi shiodome takeshiba hinode shibaurafuto odaibakaihin daiba cruiseterm'}
+};
+for(const [p,L] of Object.entries(LINES)){
+  L.ids=L.ids.split(' '); L.code={};
+  L.ids.forEach((id,k)=>L.code[p+String(L.n0+k).padStart(2,'0')]=id);
+}
+const KX=90.4,KY=111; // km per degree at Tokyo's latitude
+const km=id=>[(S[id][1]-139.75)*KX,(35.68-S[id][0])*KY];
+
+function routeIds(L,a,b){
+  const ids=L.ids,n=ids.length,ia=ids.indexOf(a),ib=ids.indexOf(b),out=[];
+  if(L.loop){
+    const fwd=(ib-ia+n)%n, dir=fwd<=n-fwd?1:-1, steps=dir>0?fwd:n-fwd;
+    for(let k=0;k<=steps;k++) out.push(ids[(ia+dir*k+n)%n]);
+    return out;
+  }
+  const d=ib>=ia?1:-1; for(let k=ia;k!==ib+d;k+=d) out.push(ids[k]); return out;
+}
+function offset(pts,d){
+  if(!d) return pts;
+  return pts.map((p,i)=>{const a=pts[Math.max(0,i-1)],b=pts[Math.min(pts.length-1,i+1)];
+    const dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy)||1;return[p[0]-dy/l*d,p[1]+dx/l*d]});
+}
+const pl=pts=>pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+
+/* compass heading from walk start toward its destination, so Street View opens facing the way to go */
+function bearing(o,d){
+  const [la1,lo1]=o.split(',').map(Number),[la2,lo2]=d.split(',').map(Number),r=Math.PI/180;
+  const y=Math.sin((lo2-lo1)*r)*Math.cos(la2*r),
+        x=Math.cos(la1*r)*Math.sin(la2*r)-Math.sin(la1*r)*Math.cos(la2*r)*Math.cos((lo2-lo1)*r);
+  return Math.round((Math.atan2(y,x)/r+360)%360);
+}
+/* Google Maps walking directions, opened straight into Street View at the start point
+   (facing the destination); the route stays drawn on the mini-map in the corner. */
+function walkSV(o,d){
+  return `https://www.google.com/maps/dir/${o}/${d}/@${o},3a,75y,${bearing(o,d)}h,90t/data=!4m2!4m1!3e2`;
+}
+function rideMap(r){
+  const pre=c=>(c.match(/^[A-Z]+/)||[''])[0];
+  const L=LINES[pre(r.from[0])]; if(!L||pre(r.to[0])!==pre(r.from[0])) return '';
+  const a=L.code[r.from[0]], b=L.code[r.to[0]]; if(!a||!b) return '';
+  const path=routeIds(L,a,b), K=path.map(km);
+  const W=480,H=270,ar=W/H,pad=0.9;
+  let x0=Math.min(...K.map(p=>p[0]))-pad,x1=Math.max(...K.map(p=>p[0]))+pad,
+      y0=Math.min(...K.map(p=>p[1]))-pad,y1=Math.max(...K.map(p=>p[1]))+pad;
+  let w=Math.max(x1-x0,3.4),h=Math.max(y1-y0,1.9);
+  if(w/h>ar) h=w/ar; else w=h*ar;
+  const cx=(x0+x1)/2,cy=(y0+y1)/2; x0=cx-w/2; y0=cy-h/2;
+  const s=W/w, pt=id=>{const k=km(id);return[(k[0]-x0)*s,(k[1]-y0)*s]};
+  const inView=p=>p[0]>-4&&p[0]<W+4&&p[1]>-4&&p[1]<H+4;
+  let g='';
+  // context lines
+  for(const [p,Ln] of Object.entries(LINES)){
+    const pts=Ln.ids.map(pt); if(Ln.loop) pts.push(pts[0]);
+    g+=`<polyline points="${pl(offset(pts,Ln.off))}" fill="none" stroke="var(${Ln.c})" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" opacity="${Ln===L?.45:.3}"/>`;
+  }
+  // rainbow bridge note
+  const sb=pt('shibaurafuto'),ok=pt('odaibakaihin');
+  if(inView(sb)&&inView(ok)) g+=`<text class="note" x="${((sb[0]+ok[0])/2).toFixed(1)}" y="${((sb[1]+ok[1])/2+20).toFixed(1)}" font-size="12" text-anchor="middle">Rainbow Bridge</text>`;
+  // highlighted route
+  const rp=offset(path.map(pt),L.off);
+  g+=`<polyline points="${pl(rp)}" fill="none" stroke="var(--card)" stroke-width="13" stroke-linejoin="round" stroke-linecap="round"/>`;
+  g+=`<polyline points="${pl(rp)}" fill="none" stroke="var(${L.c})" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>`;
+  // stations
+  const all=[...new Set(Object.values(LINES).flatMap(Ln=>Ln.ids))];
+  const visible=all.filter(id=>inView(pt(id)));
+  const boxes=[];
+  visible.forEach(id=>{const p=pt(id);boxes.push([p[0]-7,p[1]-7,14,14])});
+  const hit=bx=>bx[0]<2||bx[1]<2||bx[0]+bx[2]>W-2||bx[1]+bx[3]>H-2||boxes.some(o=>bx[0]<o[0]+o[2]&&bx[0]+bx[2]>o[0]&&bx[1]<o[1]+o[3]&&bx[1]+bx[3]>o[1]);
+  let labels='';
+  const place=(id,size,weight,cls,force)=>{
+    const p=pt(id),t=S[id][2],tw=t.length*size*.56+4,gap=size>13?12:9;
+    const cand=[[p[0]+gap,p[1]+size*.35,'start',[p[0]+gap,p[1]-size/2,tw,size]],
+                [p[0]-gap,p[1]+size*.35,'end',[p[0]-gap-tw,p[1]-size/2,tw,size]],
+                [p[0],p[1]-gap-2,'middle',[p[0]-tw/2,p[1]-gap-size,tw,size]],
+                [p[0],p[1]+gap+size-2,'middle',[p[0]-tw/2,p[1]+gap-2,tw,size]]];
+    let c=cand.find(c=>!hit(c[3])); if(!c){ if(!force) return; c=cand[0]; }
+    boxes.push(c[3]);
+    labels+=`<text class="${cls}" x="${c[0].toFixed(1)}" y="${c[1].toFixed(1)}" font-size="${size}" font-weight="${weight}" text-anchor="${c[2]}">${t}</text>`;
+  };
+  visible.filter(id=>!path.includes(id)).forEach(id=>{const p=pt(id);
+    g+=`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.5" fill="var(--card)" stroke="var(--muted)" stroke-width="1.5"/>`});
+  path.forEach((id,k)=>{const p=pt(id),end=k===0||k===path.length-1;
+    g+=end?`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="8" fill="var(--card)" stroke="var(--ink)" stroke-width="3.5"/>`
+          :`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="4.5" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/>`});
+  place(path[0],15,700,'',true); place(path[path.length-1],15,700,'',true);
+  path.slice(1,-1).forEach(id=>place(id,12,500,'',false));
+  visible.filter(id=>!path.includes(id)).forEach(id=>place(id,11,400,'ctx',false));
+  // scale bar + north
+  const bar=s; g+=`<g transform="translate(14 ${H-16})"><line x1="0" y1="0" x2="${bar.toFixed(1)}" y2="0" stroke="var(--ink)" stroke-width="2"/><line x1="0" y1="-4" x2="0" y2="4" stroke="var(--ink)" stroke-width="2"/><line x1="${bar.toFixed(1)}" y1="-4" x2="${bar.toFixed(1)}" y2="4" stroke="var(--ink)" stroke-width="2"/></g>`;
+  labels+=`<text x="14" y="${H-24}" font-size="11" font-weight="500">1 km</text><text x="${W-14}" y="22" font-size="12" font-weight="700" text-anchor="end">N ↑</text>`;
+  const stops=path.length-1;
+  return `<figure class="ride-map"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Map: ${r.name} from ${S[a][2]} to ${S[b][2]}">${g}${labels}</svg>
+    <figcaption>${stops} stop${stops>1?'s':''} · ${S[a][2]} → ${S[b][2]} · simplified map, north up</figcaption></figure>`;
+}
+function render(){
+  const main=document.getElementById('trip');
+  main.innerHTML = TRIP.map(day=>`
+   <section class="day" id="${day.id}">
+     <div class="day-head"><span class="num">${day.num}</span><h2>${day.title}</h2></div>
+     <div class="say day-intro">${HANA_MINI}<div class="bubble">${day.intro}</div></div>
+     <ol class="route">${day.items.map(item).join('')}</ol>
+   </section>`).join('');
+  // fill every mini Hana with the full figure
+  const full=document.querySelector('.hero .hana').innerHTML;
+  document.querySelectorAll('.hana.mini .inner').forEach(n=>n.innerHTML=full);
+}
+function item(i){
+  if(i.t==='station') return `<li class="station-stop"><span class="pin"></span><h3>${i.name}</h3>${i.walk?`<div class="actions" style="margin-top:8px"><a class="btn" target="_blank" rel="noopener" href="${walkSV(i.walk[0],i.walk[1])}">${ICON.eye}Walk in Street View</a></div>`:''}</li>`;
+  if(i.t==='dinner') return `<li class="sight dinner"><span class="pin" aria-hidden="true"></span>
+    <article class="sight-card">
+      <div class="eyebrow">Evening · dinner</div>
+      <h3>${i.name}<small lang="ja">${i.jp}</small></h3>
+      <div class="kind">${i.kind}</div>
+      <p>${i.text}</p>
+      <div class="walk">${ICON.walk.replace('<svg','<svg width="16" height="16" fill="currentColor"')}<b>${i.mins} min walk</b> · ${i.walkLabel}</div>
+      <div class="actions">
+        <a class="btn" target="_blank" rel="noopener" href="${walkSV(i.o,i.d)}">${ICON.eye}Walk in Street View</a>
+        <a class="btn inside" target="_blank" rel="noopener" href="${placeLink(i.name,i.place)}">${ICON.door}Look inside</a>
+      </div>
+      ${i.tip?`<div class="say tip">${HANA_MINI}<div class="bubble"><p>${i.tip}</p></div></div>`:''}
+    </article></li>`;
+  if(i.t==='ride') return `<li class="ride" style="--line:var(${i.line})">
+     <div class="ride-box">
+       <span class="line-name"><i class="chip"></i>${i.name}</span>
+       <span class="stations">
+         <span class="st"><span class="code">${i.from[0]}</span>${i.from[1]}</span><span class="arrow">→</span>
+         <span class="st"><span class="code">${i.to[0]}</span>${i.to[1]}</span>
+         <span class="mins">${i.mins}</span>
+       </span>
+       <a class="btn yt" target="_blank" rel="noopener" href="${yt(i.q)}">${ICON.play}Ride video</a>
+     </div>${rideMap(i)}</li>`;
+  return `<li class="sight"><span class="pin"></span>
+    <article class="sight-card">
+      <h3>${i.name}<small lang="ja">${i.jp}</small></h3>
+      <p>${i.text}</p>
+      <div class="walk">${ICON.walk.replace('<svg','<svg width="16" height="16" fill="currentColor"')}<b>${i.mins} min walk</b> · ${i.walkLabel}</div>
+      <div class="actions">
+        <a class="btn" target="_blank" rel="noopener" href="${walkSV(i.o,i.d)}">${ICON.eye}Walk in Street View</a>
+      </div>
+      ${i.tip?`<div class="say tip">${HANA_MINI}<div class="bubble"><p>${i.tip}</p></div></div>`:''}
+    </article></li>`;
+}
+render();
+</script>
+
+</body></html>
