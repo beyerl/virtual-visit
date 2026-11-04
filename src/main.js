@@ -12,7 +12,7 @@ import { LocalStorageSaves } from "./infrastructure/local-storage-saves.js";
 import { LocalStorageValue } from "./infrastructure/local-storage-value.js";
 import "./presentation/components/app.js";
 
-export const VERSION = "0.3.0";
+export const VERSION = "0.4.0";
 
 const link = new ExtensionVisitLink(window);
 const game = new GameService({

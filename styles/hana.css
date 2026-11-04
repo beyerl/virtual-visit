@@ -2,13 +2,13 @@
    talking mouth and a waving arm with a little flag. 150 × 210 px base. */
 
 vv-hana {
-  --ink: #4a4039;
-  --skin: #f8e0cf;
-  --hair: #54423a;
-  --blush: #f3b2a8;
-  --jacket: #6584b3;
-  --scarf: #de8678;
-  --ol: 2px solid var(--ink);
+  --ink: #3b2418;
+  --skin: #f6d3b3;
+  --hair: #3b2418;
+  --blush: #ee9a7a;
+  --jacket: #3d7f86;
+  --scarf: #d2603f;
+  --ol: 3px solid var(--ink);
   display: block;
   position: relative;
   width: 150px;
@@ -54,11 +54,11 @@ vv-hana .cheek.l { left: 45px; }
 vv-hana .cheek.r { left: 91px; }
 vv-hana .mouth {
   position: absolute; left: 68px; top: 86px; width: 13px; height: 7px;
-  border: 2.5px solid #a0645a; border-top: none; border-radius: 0 0 12px 12px;
+  border: 2.5px solid #8a3f2a; border-top: none; border-radius: 0 0 12px 12px;
   transform-origin: 50% 0;
 }
 vv-hana[talking] .mouth {
-  background: #a0645a;
+  background: #8a3f2a;
   animation: hana-talk 0.18s steps(2) infinite alternate;
 }
 vv-hana .body {
@@ -73,7 +73,7 @@ vv-hana .scarf::after {
   content: ""; position: absolute; left: 17px; top: 9px; width: 12px; height: 26px;
   background: var(--scarf); border: 2px solid var(--ink); border-radius: 3px 3px 6px 6px; transform: rotate(-12deg);
 }
-vv-hana .badge { position: absolute; left: 92px; top: 140px; width: 16px; height: 12px; background: #fffdf8; border-radius: 2px; border: 2px solid var(--ink); }
+vv-hana .badge { position: absolute; left: 92px; top: 140px; width: 16px; height: 12px; background: #fbf0d9; border-radius: 2px; border: 2px solid var(--ink); }
 vv-hana .arm {
   position: absolute; left: 112px; top: 62px; width: 17px; height: 62px; background: var(--jacket);
   border-radius: 8px; border: var(--ol); transform-origin: 50% 100%; transform: rotate(14deg);
