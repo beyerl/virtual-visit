@@ -7,6 +7,23 @@ Autotracker, from [OpenGameArt](https://opengameart.org/content/happy-adventure-
 under [CC0](https://creativecommons.org/publicdomain/zero/1.0/) (public domain). File:
 `audio/music/happy-adventure.mp3`.
 
+## Guide voices
+
+Recorded with local text-to-speech (`tools/voice/`):
+
+- [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) by hexgrad, Apache 2.0: Hana, Wei,
+  Valentina, Thiago, Maya, Kemar and Amani.
+- [Piper](https://github.com/OHF-Voice/piper1-gpl) voices from
+  [rhasspy/piper-voices](https://huggingface.co/rhasspy/piper-voices):
+  - `en_US-l2arctic-medium` (Omar), trained on the
+    [L2-ARCTIC](https://psi.engr.tamu.edu/l2-arctic-corpus/) corpus, CC BY-NC 4.0 (non-commercial);
+  - `en_GB-vctk-medium` (Thandi), trained on the
+    [VCTK](https://datashare.ed.ac.uk/handle/10283/3443) corpus (CSTR, University of Edinburgh), CC BY 4.0;
+  - `ru_RU-irina-medium` (Katya), trained on RHVoice's Irina voice data
+    ([RHVoice](https://github.com/RHVoice/RHVoice); the voice card gives no licence);
+  - `ru_RU-denis-medium` (Batbayar), CC0.
+- Pronunciations from [espeak-ng](https://github.com/espeak-ng/espeak-ng).
+
 ## Map data
 
 The ride maps' stations and roads (`src/content/ride-routes.js`) are from

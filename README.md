@@ -53,10 +53,10 @@ Ulaanbaatar), the stops use user photospheres; every walk starts within 15 m of 
      Press **L + R together** when you've seen enough, and the next ride starts.
 4. After each day, and after the whole journey, a wrap-up with stamps for every stop.
 
-In Tokyo, Hana also **speaks** every speech bubble (in English, with a Japanese accent). Her voice
-stops when you go on to the next bubble or skip, and the ride video turns down while she talks.
-Browsers only play sound after a click or a key press, so with only a gamepad she stays silent
-until then.
+Every guide also **speaks** their speech bubbles: in English, with the accent of their city, in a
+voice of their gender. The voice stops when you go on to the next bubble or skip, and the ride
+video turns down while the guide talks. Browsers only play sound after a click or a key press, so
+with only a gamepad the guides stay silent until then.
 
 The game saves itself after every step and every move in Street View (localStorage). **Load
 game** lists the saves; a game saved in Street View resumes where you stood.
@@ -121,17 +121,37 @@ after the first click or key press.
 
 ## Guide voices
 
-Hana's lines are pre-recorded with local text-to-speech: [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M)
-(via kokoro-onnx, on the CPU) with its Japanese female voice `jf_alpha` reading English. The
-Japanese words in {braces} and the Japanese place names are turned into Japanese phonemes, so they
-sound Japanese. Each line is a 24 kHz mono 32 kbit/s MP3 in `audio/hana/`, named by a hash of its
-text, so a changed line gets new audio. After changing Tokyo's lines, run:
+The guides' lines are pre-recorded with local text-to-speech, on the CPU:
+[Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) (via kokoro-onnx) and
+[Piper](https://github.com/OHF-Voice/piper1-gpl). Each guide reads English with the accent of
+their city, in a voice of their gender, young where there is a choice:
+
+| Guide | City | Voice | How the accent comes about |
+| --- | --- | --- | --- |
+| Hana | Tokyo | Kokoro `jf_alpha` | Japanese woman reading English |
+| Wei | Beijing | Kokoro `zm_yunxi` | Chinese man reading English |
+| Valentina | Bogotá | Kokoro `ef_dora` | Spanish woman reading English |
+| Thiago | Rio | Kokoro `pm_alex` | Brazilian man reading English |
+| Maya | New York | Kokoro `af_heart` | American woman |
+| Kemar | Kingston | Kokoro `am_puck` | espeak's Caribbean English pronunciation, young American man |
+| Omar | Cairo | Piper L2-ARCTIC, speaker ABA | trained on a man whose first language is Arabic |
+| Thandi | Cape Town | Piper VCTK, speaker p314 | trained on a woman of 26 from Cape Town |
+| Katya | Moscow | Piper `ru_RU-irina` | Russian voice; English fitted into Russian sounds |
+| Batbayar | Ulaanbaatar | Piper `ru_RU-denis` | Russian voice (there is no Mongolian one); Mongolian words read as Mongolian |
+| Amani | Nairobi | Kokoro `bf_emma` | English fitted into Swahili sounds (five vowels, non-rhotic) |
+
+"Fitted" means the English is rewritten with only the sounds of the guide's language, as a
+learner would say it (no "th" or "w" in Russian: "the weather" becomes "ze vezer"). Words in the
+guide's language ({braces}, and accented names like Bogotá) are said the local way. Each line is
+a 24 kHz mono 32 kbit/s MP3 in `audio/<guide>/`, named by a hash of its text, so a changed line
+gets new audio. After changing a guide's lines, run:
 
 ```sh
-.venv-voice/bin/python tools/voice/generate.py --guide hana   # setup: see the script's docstring
+.venv-voice/bin/python tools/voice/generate.py --guide katya   # or --all; setup: see the script's docstring
 ```
 
 It voices only new or changed lines, removes stale files and rewrites `src/content/voices.js`.
+Who speaks and how is in `tools/voice/guides.py`.
 
 ## Architecture
 

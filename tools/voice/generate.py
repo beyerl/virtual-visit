@@ -7,18 +7,20 @@ as voiceKey() in src/domain/voice.js). Lines that already have audio are
 skipped, files of lines that are gone are removed, and src/content/voices.js
 lists what there is.
 
-The voice is Kokoro-82M (kokoro-onnx, runs on the CPU) with one of its
-Japanese female voices reading English: a young woman's voice with a Japanese
-accent. The Japanese words in {braces} are written in romaji; they are turned
-into Japanese phonemes here, so they sound Japanese rather than read as
-English.
+Each guide reads English with the accent of their city; tools/voice/guides.py
+says which voice and how. Two engines run on the CPU: Kokoro-82M (kokoro-onnx)
+and Piper.
 
 Setup (once):
-    python3 -m venv .venv-voice && .venv-voice/bin/pip install kokoro-onnx soundfile
+    python3 -m venv .venv-voice && .venv-voice/bin/pip install kokoro-onnx piper-tts soundfile
     mkdir -p ~/.cache/kokoro && cd ~/.cache/kokoro && for f in kokoro-v1.0.int8.onnx voices-v1.0.bin; do
       curl -LO https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/$f; done
+    Piper voices (the models named in guides.py) go to ~/.cache/piper, from
+    https://huggingface.co/rhasspy/piper-voices, e.g.
+      mkdir -p ~/.cache/piper && cd ~/.cache/piper && for e in .onnx .onnx.json; do
+      curl -LO https://huggingface.co/rhasspy/piper-voices/resolve/main/ru/ru_RU/irina/medium/ru_RU-irina-medium$e; done
 Needs node and ffmpeg. Run from the repository root:
-    .venv-voice/bin/python tools/voice/generate.py --guide hana
+    .venv-voice/bin/python tools/voice/generate.py --guide katya     (or --all)
 """
 
 import argparse
@@ -29,59 +31,15 @@ import sys
 import unicodedata
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from guides import ENGLISH_BRACED, GUIDES, Guide, Kokoro, Piper  # noqa: E402
+from phonetics import devoice_finals, fit, normalize, pinyin_to_ipa, romaji_phrase, romaji_to_ipa  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[2]
-MODEL_DIR = Path.home() / ".cache" / "kokoro"
-
-# Braced words that are English (or names said the English way), and how to say some of them.
-ENGLISH = {
-    "L + R": "L and R",
-    "G09": "G zero nine",
-    "Tokyo Skytree": None,
-    "scramble": None,
-    "Tokyo Metropolitan Government Building": None,
-    "Rainbow Bridge": None,
-    "Odaiba Seaside Park": None,
-    "Fuji TV": None,
-    "Tokyo Tower": None,
-}
-
-
-# Japanese names in the plain English text: said the Japanese way. Value: the romaji to say (None: as written).
-JAPANESE = {
-    w: None
-    for w in "Akiba Akihabara Akita Asakusa Chūō Daimon Edo Fushimi Fuji Ginza Gyōkō-dōri Hachikō Hana Hanzōmon Harajuku "
-    "Kenzō Marunouchi Meiji Mori Nemuro Ochanomizu Odaiba Sensō-ji Shibuya Shinagawa Shinjuku Shinkansen Solamachi "
-    "Sumida Takeshita Tange Tokugawa Yamanote Yotsuya Yurikamome Ōtemachi KITTE".split()
-} | {"Tokyo": "Tōkyō", "Hokkaido": "Hokkaidō", "Shimbashi": "Shinbashi"}
-
-ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split()
-TENS = "_ _ twenty thirty forty fifty sixty seventy eighty ninety".split()
-
-
-def two_digits(n: int) -> str:
-    return ONES[n] if n < 20 else TENS[n // 10] + ("-" + ONES[n % 10] if n % 10 else "")
-
-
-def year_words(m: re.Match) -> str:
-    """1603 -> sixteen oh three, 1868 -> eighteen sixty-eight, 1600s -> sixteen hundreds."""
-    y, plural = int(m.group(1)), m.group(2)
-    hi, lo = divmod(y, 100)
-    if lo == 0:
-        words = two_digits(hi) + " hundred"
-    elif lo < 10:
-        words = two_digits(hi) + " oh " + ONES[lo]
-    else:
-        words = two_digits(hi) + " " + two_digits(lo)
-    if plural:
-        words = words[:-1] + "ies" if words.endswith("y") else words + "s"
-    return words
-
-
-def normalize(plain: str) -> str:
-    """Years and digit-by-digit numbers the way they are said."""
-    plain = re.sub(r"\b(1[0-9]{3})(s)?\b", year_words, plain)
-    plain = re.sub(r"\b\d(?:-\d)+\b", lambda m: ", ".join(ONES[int(d)] for d in m.group(0).split("-")), plain)
-    return plain
+KOKORO_DIR = Path.home() / ".cache" / "kokoro"
+PIPER_DIR = Path.home() / ".cache" / "piper"
+JAPANESE_EVERYWHERE = {"Okaeri!"}  # the welcome-back line every guide shares
+CYRILLIC = re.compile(r"[Ѐ-ӿ]")
 
 
 def voice_key(line: str) -> str:
@@ -92,122 +50,188 @@ def voice_key(line: str) -> str:
     return f"{h:08x}"
 
 
-# ---------- romaji -> IPA (Kokoro's Japanese phoneme set) ----------
-
-VOWELS = {"a": "a", "i": "i", "u": "ɯ", "e": "e", "o": "o"}
-LONG = {"ā": "a", "ī": "i", "ū": "u", "ē": "e", "ō": "o", "â": "a", "î": "i", "û": "u", "ê": "e", "ô": "o"}
-# Longest first. Each maps a consonant (cluster) to its IPA before a vowel.
-CONSONANTS = [
-    ("sh", "ɕ"), ("ch", "ʨ"), ("ts", "ʦ"), ("ky", "kj"), ("gy", "ɡj"), ("ny", "ɲ"), ("hy", "ç"), ("by", "bj"),
-    ("py", "pj"), ("my", "mj"), ("ry", "ɾj"), ("j", "ʥ"), ("f", "ɸ"), ("k", "k"), ("g", "ɡ"), ("s", "s"),
-    ("z", "z"), ("t", "t"), ("d", "d"), ("n", "n"), ("h", "h"), ("b", "b"), ("p", "p"), ("m", "m"),
-    ("y", "j"), ("r", "ɾ"), ("w", "w"), ("v", "b"), ("l", "ɾ"),
-]
-SPECIAL = {("s", "i"): "ɕ", ("z", "i"): "ʥ", ("t", "i"): "ʨ", ("t", "u"): "ʦ", ("h", "u"): "ɸ", ("d", "i"): "ʥ"}
+# ---------- engines ----------
 
 
-def romaji_to_ipa(word: str) -> str:
-    """Hepburn romaji (with macrons for long vowels) to IPA. Unknown letters are dropped."""
-    s = word.lower().replace("-", "")
-    out = []
-    i = 0
-    while i < len(s):
-        c = s[i]
-        if c in LONG:
-            out.append(VOWELS[LONG[c]] + "ː")
-            i += 1
-            continue
-        if c in VOWELS:
-            out.append(VOWELS[c])
-            i += 1
-            continue
-        if c == "n" and (i + 1 >= len(s) or (s[i + 1] not in VOWELS and s[i + 1] not in LONG and s[i + 1] != "y")):
-            out.append("ɴ")  # syllabic n
-            i += 1
-            continue
-        if c == "'":
-            i += 1
-            continue
-        # Doubled consonant (small tsu): kk, ss, tt, pp, and tch.
-        if c != "n" and i + 1 < len(s) and (s[i + 1] == c or (c == "t" and s[i + 1 : i + 3] == "ch")):
-            out.append("ʔ")
-            i += 1
-            continue
-        for rom, ipa in CONSONANTS:
-            if s.startswith(rom, i):
-                nxt = s[i + len(rom) : i + len(rom) + 1]
-                vowel = LONG.get(nxt, nxt)
-                out.append(SPECIAL.get((rom, vowel), ipa))
-                i += len(rom)
-                break
+class KokoroVoice:
+    def __init__(self, engine: Kokoro):
+        from kokoro_onnx import Kokoro as K
+
+        self.engine = engine
+        self.kokoro = K(str(KOKORO_DIR / "kokoro-v1.0.int8.onnx"), str(KOKORO_DIR / "voices-v1.0.bin"))
+
+    def phonemize(self, text: str, lang: str) -> str:
+        return self.kokoro.tokenizer.phonemize(text, lang)
+
+    def synthesize(self, ipa: str):
+        ipa = "".join(c for c in ipa if c in self.kokoro.tokenizer.vocab)
+        return self.kokoro.create(ipa, voice=self.engine.voice, speed=self.engine.speed, is_phonemes=True)
+
+
+class PiperVoice:
+    def __init__(self, engine: Piper):
+        from piper import PiperVoice as P, SynthesisConfig
+
+        self.engine = engine
+        self.voice = P.load(str(PIPER_DIR / f"{engine.model}.onnx"))
+        speaker = self.voice.config.speaker_id_map.get(engine.speaker) if engine.speaker else None
+        if engine.speaker and speaker is None:
+            raise SystemExit(f"{engine.model} has no speaker {engine.speaker}")
+        self.config = SynthesisConfig(speaker_id=speaker, length_scale=engine.length_scale)
+
+    def phonemize(self, text: str, lang: str) -> str:
+        from piper import espeakbridge
+        from piper.phonemize_espeak import ESPEAK_DATA_DIR
+
+        espeakbridge.initialize(str(ESPEAK_DATA_DIR))
+        espeakbridge.set_voice(lang)
+        clauses = espeakbridge.get_phonemes(text)
+        return " ".join(re.sub(r"\([^)]+\)", "", ph) + term for ph, term, _ in clauses)
+
+    def synthesize(self, ipa: str):
+        import numpy as np
+
+        rate = self.voice.config.sample_rate
+        pause = np.zeros(int(rate * 0.18), dtype=np.float32)
+        parts = []
+        # One sentence at a time: the model was trained on sentences.
+        for sentence in re.findall(r"[^.!?]+[.!?]*", ipa):
+            if not sentence.strip(" .!?,"):
+                continue
+            ids = self.voice.phonemes_to_ids(list(unicodedata.normalize("NFD", sentence.strip())))
+            audio = self.voice.phoneme_ids_to_audio(ids, self.config)
+            parts += [audio.astype(np.float32), pause]
+        audio = np.concatenate(parts[:-1]) if parts else np.zeros(1, dtype=np.float32)
+        peak = float(np.max(np.abs(audio))) or 1.0
+        return audio / peak * 0.9, rate
+
+
+def load_voice(guide: Guide):
+    return KokoroVoice(guide.engine) if isinstance(guide.engine, Kokoro) else PiperVoice(guide.engine)
+
+
+# ---------- lines -> phonemes ----------
+
+
+def segments(guide: Guide, line: str) -> list[tuple[str, str]]:
+    """Split a line into ("en" | "local" | "ja", text) parts."""
+    out: list[tuple[str, str]] = []
+
+    def add(kind: str, text: str):
+        if out and out[-1][0] == kind:
+            out[-1] = (kind, out[-1][1] + " " + text)
         else:
-            i += 1  # not a romaji letter
-    return "".join(out)
+            out.append((kind, text))
 
+    def add_local(text: str):
+        said = guide.say.get(text, text)
+        if said.startswith("af:"):  # another language than the guide's, e.g. Afrikaans in Cape Town
+            add("local:af", said[3:])
+        elif guide.cyrillic:
+            for run in re.findall(r"[Ѐ-ӿ][Ѐ-ӿ\s\-'!?.,]*|[^Ѐ-ӿ]+", said):
+                if run.strip():
+                    add("local" if CYRILLIC.search(run) else "en", run.strip())
+        else:
+            add("local", said)
 
-def phonemes(kokoro, line: str) -> str:
-    """The line as Kokoro phonemes: English parts through its English G2P, braced Japanese words through romaji_to_ipa."""
-    parts = []
-    for m in re.finditer(r"\{([^}]*)\}|([^{]+)", line):
+    for m in re.finditer(r"\{([^}]*)\}|([^{]+)", unicodedata.normalize("NFC", line)):
         braced, plain = m.group(1), m.group(2)
-        if plain is not None:
-            # Japanese names inside the English: split them out and say them in Japanese.
-            names = "|".join(map(re.escape, sorted(JAPANESE, key=len, reverse=True)))
-            for chunk in re.split(r"(?<![\w-])((?:" + names + r")(?:['’]s)?)(?![\w-])", normalize(plain)):
-                name = re.sub(r"['’]s$", "", chunk)
-                if name in JAPANESE:
-                    parts.append(romaji_to_ipa(JAPANESE[name] or name) + ("z" if name != chunk else ""))
-                elif chunk.strip():
-                    parts.append(kokoro.tokenizer.phonemize(chunk, "en-us"))
+        if braced is not None:
+            word = braced.strip()
+            if word in JAPANESE_EVERYWHERE and guide.local != "romaji":
+                add("ja", word)
+            elif word in ENGLISH_BRACED:
+                add("en", ENGLISH_BRACED[word])
+            elif word in guide.english_words or guide.local == guide.english:
+                add("en", word)
+            elif word in guide.say or guide.cyrillic:
+                add_local(word)
+            else:
+                # Word by word: some braced names are half English ("Tahrir Square").
+                for w in word.split():
+                    bare = w.strip("!?.,")
+                    if bare in guide.english_words or bare in ENGLISH_BRACED:
+                        add("en", ENGLISH_BRACED.get(bare, w))
+                    else:
+                        add_local(w) if w in guide.say else add("local", w)
             continue
-        word = braced.strip()
-        if word in ENGLISH:
-            parts.append(kokoro.tokenizer.phonemize(ENGLISH[word] or word, "en-us"))
-            continue
-        punct = re.search(r"[!?.,]+$", word)
-        core = word[: punct.start()] if punct else word
-        ipa = " ".join(romaji_to_ipa(w) for w in core.split())
-        parts.append(ipa + (punct.group(0) if punct else ""))
-    text = " ".join(p.strip() for p in parts if p.strip())
-    return re.sub(r"\s+([!?.,;:])", r"\1", text)
+        # Plain English, with local names (accented, or listed) said the local way.
+        for chunk in re.split(r"(\s+)", normalize(plain)):
+            if not chunk.strip():
+                continue
+            m2 = re.match(r"^([\"'(‘“]*)(.*?)(['’]s)?([\"'),.!?;:’”]*)$", chunk)
+            lead, core, poss, trail = m2.groups()
+            local = core in guide.names or core in guide.say or any(c.isalpha() and ord(c) > 127 for c in core)
+            if core and local and re.search(r"\w", core) and guide.local != guide.english:
+                if lead:
+                    add("en", lead)
+                add_local(core)
+                tail = ("z" if poss else "") + trail
+                if tail:
+                    out.append(("ipa", tail))
+            else:
+                add("en", chunk)
+    return out
 
 
-def main() -> None:
-    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--guide", default="hana")
-    ap.add_argument("--voice", default="jf_alpha", help="Kokoro voice (jf_alpha, jf_gongitsune, jf_nezumi, jf_tebukuro)")
-    ap.add_argument("--speed", type=float, default=1.0)
-    ap.add_argument("--bitrate", default="32k", help="MP3 bitrate (mono, 24 kHz)")
-    ap.add_argument("--dry-run", action="store_true", help="only print the phonemes")
-    args = ap.parse_args()
+def phonemes(voice, guide: Guide, line: str) -> str:
+    parts = []
+    for kind, text in segments(guide, line):
+        if kind == "ipa":
+            ipa = text
+        elif kind == "en":
+            ipa = voice.phonemize(text, guide.english).replace("ʲ", "")  # espeak's linking glide ("we_y_arrive")
+            if guide.target:
+                ipa = fit(ipa, guide.target, guide.accent)
+        elif kind == "ja" or guide.local == "romaji":
+            ipa = romaji_phrase(text)
+        elif guide.local == "pinyin":
+            ipa = pinyin_to_ipa(text)
+        else:
+            ipa = voice.phonemize(text, kind.split(":")[1] if ":" in kind else guide.local)
+        if kind != "en" and guide.target:
+            ipa = fit(ipa, guide.target)
+        if guide.devoice:
+            ipa = devoice_finals(ipa)
+        if kind == "ipa" and parts:
+            parts[-1] += ipa
+        else:
+            parts.append(ipa.strip())
+    text = " ".join(p for p in parts if p)
+    return re.sub(r"\s+([!?.,;:])", r"\1", text).strip()
 
-    from kokoro_onnx import Kokoro
+
+# ---------- main ----------
+
+
+def voice_guide(name: str, args) -> None:
     import soundfile as sf
 
-    data = json.loads(subprocess.run(["node", "tools/voice/lines.mjs", args.guide], cwd=ROOT, check=True, capture_output=True, text=True).stdout)
-    lines = data["lines"]
-    out_dir = ROOT / "audio" / args.guide
+    guide = GUIDES[name]
+    data = json.loads(subprocess.run(["node", "tools/voice/lines.mjs", name], cwd=ROOT, check=True, capture_output=True, text=True).stdout)
+    lines = data["lines"][: args.limit] if args.limit else data["lines"]
+    out_dir = Path(args.out) / name if args.out else ROOT / "audio" / name
     out_dir.mkdir(parents=True, exist_ok=True)
-    kokoro = Kokoro(str(MODEL_DIR / "kokoro-v1.0.int8.onnx"), str(MODEL_DIR / "voices-v1.0.bin"))
+    voice = load_voice(guide)
 
     keys = []
     for n, line in enumerate(lines, 1):
         key = voice_key(line)
         keys.append(key)
         mp3 = out_dir / f"{key}.mp3"
-        ph = phonemes(kokoro, unicodedata.normalize("NFC", line))
+        ph = phonemes(voice, guide, line)
         if args.dry_run:
             print(f"{key} {ph}")
             continue
         if mp3.exists():
             continue
-        samples, rate = kokoro.create(ph, voice=args.voice, speed=args.speed, is_phonemes=True)
+        samples, rate = voice.synthesize(ph)
         wav = out_dir / f"{key}.wav"
         sf.write(wav, samples, rate)
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", wav, "-ac", "1", "-ar", "24000", "-codec:a", "libmp3lame", "-b:a", args.bitrate, mp3], check=True)
         wav.unlink()
-        print(f"[{n}/{len(lines)}] {key} {len(samples) / rate:.1f}s {mp3.stat().st_size // 1024} KB  {line[:60]}", flush=True)
-    if args.dry_run:
+        print(f"[{name} {n}/{len(lines)}] {key} {len(samples) / rate:.1f}s {mp3.stat().st_size // 1024} KB  {line[:60]}", flush=True)
+    if args.dry_run or args.out or args.limit:
         return
 
     for f in out_dir.glob("*.mp3"):
@@ -218,18 +242,35 @@ def main() -> None:
     voices = {}
     if manifest.exists():
         voices = json.loads(re.search(r"VOICE_DATA = (\{.*\});", manifest.read_text(), re.S).group(1))
-    voices[args.guide] = {"dir": f"audio/{args.guide}", "voice": f"Kokoro {args.voice}", "keys": sorted(set(keys))}
+    voices[name] = {"dir": f"audio/{name}", "voice": guide.engine.label(), "keys": sorted(set(keys))}
+    voices = dict(sorted(voices.items()))
     manifest.write_text(
         "// Guides with a recorded voice: which lines have audio (audio/<guide>/<key>.mp3).\n"
         "// Generated by tools/voice/generate.py; do not edit.\n\n"
-        f"const VOICE_DATA = {json.dumps(voices, indent=1)};\n\n"
+        f"const VOICE_DATA = {json.dumps(voices, indent=1, ensure_ascii=False)};\n\n"
         "/** @type {Record<string, { dir: string, keys: ReadonlySet<string> }>} */\n"
         "export const VOICES = Object.fromEntries(\n"
         "  Object.entries(VOICE_DATA).map(([guide, v]) => [guide, { dir: v.dir, keys: new Set(v.keys) }]),\n"
         ");\n"
     )
     total = sum(f.stat().st_size for f in out_dir.glob("*.mp3"))
-    print(f"{len(keys)} lines, {total / 1024:.0f} KB in {out_dir.relative_to(ROOT)}; wrote {manifest.relative_to(ROOT)}")
+    print(f"{name}: {len(keys)} lines, {total / 1024:.0f} KB in {out_dir.relative_to(ROOT)}; wrote {manifest.relative_to(ROOT)}")
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--guide", action="append", choices=sorted(GUIDES), help="guide id (repeatable)")
+    ap.add_argument("--all", action="store_true", help="every guide")
+    ap.add_argument("--bitrate", default="32k", help="MP3 bitrate (mono, 24 kHz)")
+    ap.add_argument("--dry-run", action="store_true", help="only print the phonemes")
+    ap.add_argument("--limit", type=int, help="only the first N lines (for trying a voice; no manifest)")
+    ap.add_argument("--out", help="write to OUT/<guide> instead of audio/ (for trying a voice; no manifest)")
+    args = ap.parse_args()
+    names = sorted(GUIDES) if args.all else (args.guide or [])
+    if not names:
+        ap.error("name a --guide or use --all")
+    for name in names:
+        voice_guide(name, args)
 
 
 if __name__ == "__main__":
