@@ -4,7 +4,7 @@ import { Dialogue, lineParts } from "../src/domain/dialogue.js";
 import { GameState } from "../src/domain/game-state.js";
 import { bearing } from "../src/domain/geo.js";
 import { Button, FINISH, pressedBetween } from "../src/domain/input.js";
-import { StepType } from "../src/domain/journey.js";
+import { seekTarget, StepType } from "../src/domain/journey.js";
 import { panoramaUrl, routeUrl } from "../src/domain/maps-links.js";
 import { JOURNEYS } from "../src/content/journeys.js";
 
@@ -104,4 +104,14 @@ test("content: taglines count the rides and stops", () => {
     assert.match(j.tagline, new RegExp(`${rides} (train )?rides · ${stops} stops`), j.id);
     assert.equal(new Set(j.steps.map((s) => s.id)).size, j.steps.length, `${j.id}: unique step ids`);
   }
+});
+
+test("seek: skips inside the video's cut, and past its end ends the ride", () => {
+  const cut = { id: "v", start: 100, end: 400 };
+  assert.equal(seekTarget(cut, 150, 30), 180);
+  assert.equal(seekTarget(cut, 110, -30), 100, "not before the cut's start");
+  assert.equal(seekTarget(cut, 380, 30), null, "past the end: the ride is over");
+  assert.equal(seekTarget({ id: "v" }, 10, -30), 0);
+  assert.equal(seekTarget({ id: "v" }, 590, 30, 600), null, "no cut end: the video's length");
+  assert.equal(seekTarget({ id: "v" }, 500, 30, 600), 530);
 });

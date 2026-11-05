@@ -300,6 +300,12 @@ vv-route-map.folded { transform: translateX(calc(100% + 3vw)); }
   position: absolute; left: 50%; bottom: 7vh; transform: translateX(-50%); z-index: 12; cursor: pointer;
   background: #fff; border: 2px solid var(--ink); border-radius: 6px; padding: 0.2em 1em; font-weight: 700; box-shadow: var(--shadow);
 }
+.seek-badge {
+  position: absolute; left: 50%; top: 42%; transform: translate(-50%, -50%); z-index: 12; pointer-events: none;
+  background: rgba(59, 36, 24, 0.82); color: #fff; border-radius: 999px; padding: 0.3em 1.1em; font-weight: 800; font-size: 1.4em;
+}
+.seek-badge.show { animation: seek-fade 1.2s ease-out forwards; }
+@keyframes seek-fade { 0%, 60% { opacity: 1; } 100% { opacity: 0; } }
 .over-video .bubble { max-width: min(40rem, 56vw); }
 
 /* ---------- walk ---------- */

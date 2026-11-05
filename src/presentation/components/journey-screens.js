@@ -2,7 +2,7 @@
 // hand-over, and the wrap-ups after each day and the whole journey.
 
 import { Button, FINISH } from "../../domain/input.js";
-import { StepType } from "../../domain/journey.js";
+import { SEEK_STEP, StepType } from "../../domain/journey.js";
 import { RideVideo } from "../../infrastructure/youtube-player.js";
 import { define, esc, Screen } from "../base.js";
 import { progress } from "../describe.js";
@@ -115,7 +115,8 @@ function burstPoints(cx = 100, cy = 100, r1 = 96, r2 = 70, n = 14) {
 
 /**
  * A train ride: the side-window video full screen, the guide talking over it.
- * A = next bubble, Start = skip the ride, X = sound, Y = map. After the
+ * A = next bubble, Start = skip the ride, ← / → = 30 s back / forward,
+ * X = sound, Y = map. After the
  * (last) video, remaining bubbles can still be read, then on to the stop.
  */
 export class VvRideScreen extends StepScreen {
@@ -131,12 +132,14 @@ export class VvRideScreen extends StepScreen {
       ${this.hudHtml()}
       <div class="ride-caption panel caption"></div>
       <vv-route-map class="panel"></vv-route-map>
+      <div class="seek-badge" aria-live="polite" hidden></div>
       <div class="sound-badge" data-button="x" hidden>🔇 Sound off: press <b>X</b> (or click once, then X)</div>
       <vv-speech guide="${this.guideId}" class="bottom-speech over-video"></vv-speech>
       <vv-pad-hint></vv-pad-hint>`;
     this.hints([
       ["a", "Next"],
       ["start", "Skip ride"],
+      ["dpad", `±${SEEK_STEP} s`],
       ["x", "Sound"],
       ["y", "Map"],
       ["select", "Pause"],
@@ -194,7 +197,24 @@ export class VvRideScreen extends StepScreen {
     this.app.next();
   }
 
+  /** ← / →: jump back or forward in the video, with a short badge. @param {number} delta */
+  seek(delta) {
+    const t = this.video?.seek(delta);
+    if (t == null) return;
+    const badge = /** @type {HTMLElement} */ (this.$(".seek-badge"));
+    const start = this.video?.video.start ?? 0;
+    const at = Math.max(0, Math.round(t - start));
+    badge.textContent = `${delta < 0 ? "⏪" : "⏩"} ${delta < 0 ? "−" : "+"}${Math.abs(delta)} s · ${Math.floor(at / 60)}:${String(at % 60).padStart(2, "0")}`;
+    badge.hidden = false;
+    badge.classList.remove("show");
+    void badge.offsetWidth; // restart the fade
+    badge.classList.add("show");
+    clearTimeout(this.seekTimer);
+    this.seekTimer = setTimeout(() => (badge.hidden = true), 1200);
+  }
+
   cleanup() {
+    clearTimeout(this.seekTimer);
     this.video?.destroy();
   }
 
@@ -202,6 +222,8 @@ export class VvRideScreen extends StepScreen {
     if (this.common(action)) return;
     if (action === Button.A) this.speech.advance();
     else if (action === Button.START) this.finish();
+    else if (action === Button.LEFT) this.seek(-SEEK_STEP);
+    else if (action === Button.RIGHT) this.seek(SEEK_STEP);
     else if (action === Button.X) this.video?.toggleSound();
     else if (action === Button.Y) {
       this.mapShown = !this.mapShown;

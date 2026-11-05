@@ -28,8 +28,8 @@ export const CONTROL_ORDER = Object.freeze([
 export const CONTROL_INFO = Object.freeze({
   [Button.UP]: { name: "D-pad ↑", does: "Choose" },
   [Button.DOWN]: { name: "D-pad ↓", does: "Choose" },
-  [Button.LEFT]: { name: "D-pad ←", does: "Choose" },
-  [Button.RIGHT]: { name: "D-pad →", does: "Choose" },
+  [Button.LEFT]: { name: "D-pad ←", does: "Choose; in a ride: 30 s back" },
+  [Button.RIGHT]: { name: "D-pad →", does: "Choose; in a ride: 30 s forward" },
   [Button.A]: { name: "A", does: "OK, next bubble" },
   [Button.B]: { name: "B", does: "Back" },
   [Button.X]: { name: "X", does: "Sound on / off" },

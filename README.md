@@ -59,7 +59,7 @@ game** lists the saves; a game saved in Street View resumes where you stood.
 
 | Button   | Keyboard          | What it does                                                   |
 | -------- | ----------------- | -------------------------------------------------------------- |
-| D-pad    | arrow keys        | choose                                                         |
+| D-pad    | arrow keys        | choose; during a ride ← / → skip 30 s back / forward           |
 | A        | Enter, Space      | OK, next speech bubble                                         |
 | B        | Esc, Backspace    | back                                                           |
 | Start    | S                 | skip the train ride (or the remaining bubbles); title: start   |

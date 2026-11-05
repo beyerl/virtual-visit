@@ -5,6 +5,8 @@
 // (gamepad presses don't count). So the video starts with sound; if that is
 // refused, it plays muted and `muted` tells the screen to say so.
 
+import { seekTarget } from "../domain/journey.js";
+
 const API = "https://www.youtube.com/iframe_api";
 const AUTOPLAY_CHECK = 1500;
 
@@ -41,6 +43,7 @@ export class RideVideo {
     this.ended = false;
     this.muted = false;
     this.destroyed = false;
+    this.video = video;
     loadApi(window)
       .then((YT) => {
         if (this.destroyed) return;
@@ -116,6 +119,24 @@ export class RideVideo {
       this.player.mute();
       this.setMuted(true);
     }
+  }
+
+  /**
+   * Skip `delta` seconds forward (or back, if negative) within the cut. Past
+   * the end, the ride ends. @param {number} delta
+   * @returns {number | null} the new time, or null if nothing happened or the ride ended
+   */
+  seek(delta) {
+    if (!this.player?.getCurrentTime || this.ended) return null;
+    const t = seekTarget(this.video, this.player.getCurrentTime(), delta, this.player.getDuration?.() || undefined);
+    if (t == null) {
+      this.ended = true;
+      this.player.pauseVideo?.();
+      this.on.onEnded?.();
+      return null;
+    }
+    this.player.seekTo(t, true);
+    return t;
   }
 
   destroy() {

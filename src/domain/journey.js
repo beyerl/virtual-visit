@@ -22,6 +22,24 @@ export const StepType = Object.freeze({
  * @typedef {{ id: string, day: number, type: string, lines: readonly string[], leg?: number, stop?: Stop, rides?: Ride[] }} Step
  */
 
+/** Seconds the D-pad skips forward or back in a ride video. */
+export const SEEK_STEP = 30;
+
+/**
+ * Where to jump in a ride video: `delta` seconds from `now`, kept inside the
+ * cut. Past the end means the ride is over (null).
+ * @param {Video} video @param {number} now current time @param {number} delta
+ * @param {number} [duration] the whole video's length, when the cut has no end
+ * @returns {number | null}
+ */
+export function seekTarget(video, now, delta, duration) {
+  const start = video.start ?? 0;
+  const end = video.end ?? duration ?? Infinity;
+  const t = now + delta;
+  if (t >= end - 1) return null;
+  return Math.max(start, t);
+}
+
 export class Journey {
   /**
    * @param {{ id: string, title: string, jp: string, tagline: string, guide: string, available: boolean,
