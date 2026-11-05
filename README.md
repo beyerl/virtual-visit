@@ -44,7 +44,8 @@ Ulaanbaatar), the stops use user photospheres; every walk starts within 15 m of 
 
 1. Title screen → **Start new game** or **Load game**.
 2. Choose a journey.
-3. Each day starts with the guide's plan for the day. Then, for every stop:
+3. Each day starts with the guide's plan for the day, with a photo of every stop (free images
+   from Wikimedia Commons, see [CREDITS.md](CREDITS.md)). Then, for every stop:
    - a **train ride**: a side-window (車窓 / 側面展望) YouTube video, cut to the stretch we ride,
      with the guide's speech bubbles about the place we're going to (on foot, a short walk scene
      instead);

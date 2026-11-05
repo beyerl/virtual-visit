@@ -115,3 +115,17 @@ test("seek: skips inside the video's cut, and past its end ends the ride", () =>
   assert.equal(seekTarget({ id: "v" }, 590, 30, 600), null, "no cut end: the video's length");
   assert.equal(seekTarget({ id: "v" }, 500, 30, 600), 530);
 });
+
+test("content: every stop has a photo from Wikimedia Commons, with its file and credit", async () => {
+  const { existsSync } = await import("node:fs");
+  for (const j of JOURNEYS.filter((j) => j.steps.length))
+    j.days.forEach((d, di) =>
+      j.stopsOf(di).forEach((s) => {
+        const where = `${j.id} ${d.id} ${s.name}`;
+        assert.ok(s.image, `${where}: photo`);
+        assert.ok(existsSync(new URL(`../${s.image.src}`, import.meta.url)), `${where}: ${s.image.src} exists`);
+        assert.match(s.image.page, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/, where);
+        assert.ok(s.image.author && s.image.license, `${where}: credit`);
+      }),
+    );
+});

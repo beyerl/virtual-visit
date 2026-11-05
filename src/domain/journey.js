@@ -15,7 +15,8 @@ export const StepType = Object.freeze({
  * @typedef {{ id: string, start?: number, end?: number }} Video  a YouTube video, optionally cut to [start, end) seconds
  * @typedef {{ line: string, name: string, from: [string, string], to: [string, string], mins: string, video: Video }} Ride
  * @typedef {{ kind: "sight" | "dinner", name: string, jp: string, text: string, walkLabel: string, mins: number,
- *             o: string, d: string, tip?: string, cuisine?: string }} Stop
+ *             o: string, d: string, tip?: string, cuisine?: string, image?: StopImage }} Stop
+ * @typedef {{ src: string, file: string, author: string, license: string, page: string }} StopImage  a photo of the stop, with its credit
  * @typedef {{ id: string, rides?: Ride[], hana: string[], stop: Stop }} Leg
  * @typedef {{ rides: Ride[], hana: string[] }} HomeRide
  * @typedef {{ id: string, num: string, title: string, intro: string[], legs: Leg[], home?: HomeRide, wrapUp: string[] }} Day

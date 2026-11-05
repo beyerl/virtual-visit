@@ -81,7 +81,8 @@ export class VvDayIntro extends StepScreen {
         <h2 class="comic-heading day-title">${esc(day.title)}</h2>
         <div class="panel day-plan">
           <div class="plan-lines">${lines.map((l) => `<span class="line-pill" style="--line:${j.lines[l]?.color}">${esc(j.lines[l]?.name)}</span>`).join("")}</div>
-          <ol class="plan-stops">${stops.map((s) => `<li class="${s.kind}">${esc(s.name)} <span class="jp">${esc(s.jp)}</span></li>`).join("")}</ol>
+          <ol class="plan-stops" style="--n:${stops.length}">${stops.map((s, i) => planStop(s, i)).join("")}</ol>
+          ${stops.some((s) => s.image) ? `<a class="photo-credits" href="${CREDITS_URL}" target="_blank" rel="noopener">Photos: Wikimedia Commons (credits)</a>` : ""}
         </div>
       </div>
       <vv-speech guide="${this.guideId}" class="bottom-speech"></vv-speech>
@@ -101,6 +102,17 @@ export class VvDayIntro extends StepScreen {
     if (action === Button.START) this.speech.skipAll();
   }
 }
+
+const CREDITS_URL = "https://github.com/beyerl/virtual-visit/blob/main/CREDITS.md";
+
+/** A stop of the day's plan: its photo, number (or a lantern for dinner) and name. @param {import("../../domain/journey.js").Stop} s @param {number} i */
+const planStop = (s, i) => {
+  const img = s.image;
+  return `<li class="plan-stop ${s.kind}">
+    <span class="plan-photo">${img ? `<img src="${esc(img.src)}" alt="${esc(s.name)}" title="Photo: ${esc(img.author)}, ${esc(img.license)}, via Wikimedia Commons" width="320" height="240" decoding="async">` : ""}<b class="plan-num">${s.kind === "dinner" ? "🏮" : i + 1}</b></span>
+    <span class="plan-name">${esc(s.name)} <span class="jp">${esc(s.jp)}</span></span>
+  </li>`;
+};
 
 /** Points of a comic burst star. */
 function burstPoints(cx = 100, cy = 100, r1 = 96, r2 = 70, n = 14) {

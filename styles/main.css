@@ -249,8 +249,8 @@ vv-menu { display: grid; gap: 0.4em; }
 .icon { width: 1.2em; height: 1.2em; }
 
 /* ---------- day intro ---------- */
-.day-intro { position: absolute; inset: 7vh 4vw auto; display: grid; justify-items: center; gap: 2.5vh; }
-.burst { position: relative; width: min(18vh, 30vw); aspect-ratio: 1; display: grid; place-items: center; animation: burst-in 0.6s var(--ease); }
+.day-intro { position: absolute; inset: 7vh 4vw auto; display: grid; justify-items: center; gap: 2vh; }
+.burst { position: relative; width: min(15vh, 30vw); aspect-ratio: 1; display: grid; place-items: center; animation: burst-in 0.6s var(--ease); }
 .burst svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 120s linear infinite; }
 .burst span { position: relative; white-space: nowrap; font-family: var(--display); font-weight: 600; font-size: clamp(1.4rem, 4.2vh, 3rem); letter-spacing: 0.05em; color: var(--red); transform: rotate(-1.5deg); }
 @keyframes burst-in { from { transform: translateY(8px) scale(0.94); opacity: 0; } }
@@ -258,9 +258,35 @@ vv-menu { display: grid; gap: 0.4em; }
 .day-plan { padding: 0.9em 1.3em; max-width: min(56rem, 92vw); }
 .plan-lines { display: flex; flex-wrap: wrap; gap: 0.4em; margin-bottom: 0.6em; }
 .line-pill { font-family: var(--round); font-weight: 900; font-size: 0.8em; padding: 0.1em 0.7em; border-radius: 6px; border: 2px solid var(--ink); background: var(--line); color: #fff; text-shadow: 0 3px 0 var(--ink-soft); }
-.plan-stops { margin: 0; padding-left: 1.4em; columns: 2; column-gap: 2.5em; font-weight: 700; }
-.plan-stops li.dinner::marker { content: "🏮 "; }
-.plan-stops .jp { font-size: 0.8em; }
+.plan-stops {
+  margin: 0; padding: 0; list-style: none; display: grid; gap: 0.9em;
+  grid-template-columns: repeat(var(--n, 6), minmax(0, 9rem)); justify-content: center;
+}
+.plan-stop { display: grid; align-content: start; gap: 0.35em; animation: card-in 0.5s var(--ease) both; }
+.plan-stop:nth-child(2) { animation-delay: 60ms; } .plan-stop:nth-child(3) { animation-delay: 120ms; }
+.plan-stop:nth-child(4) { animation-delay: 180ms; } .plan-stop:nth-child(5) { animation-delay: 240ms; }
+.plan-stop:nth-child(6) { animation-delay: 300ms; }
+@keyframes card-in { from { opacity: 0; transform: translateY(6px); } }
+.plan-photo {
+  position: relative; display: block; aspect-ratio: 4 / 3; border: 2px solid var(--ink); border-radius: 6px; overflow: hidden;
+  background: repeating-linear-gradient(45deg, #ead7b0 0 8px, #f3e5c6 8px 16px); box-shadow: 0 3px 0 var(--ink-soft);
+}
+.plan-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.plan-num {
+  position: absolute; left: 0.25em; top: 0.25em; min-width: 1.6em; height: 1.6em; display: grid; place-items: center; padding: 0 0.3em;
+  border: 2px solid var(--ink); border-radius: 999px; background: #fff7e3; font-size: 0.8em; line-height: 1;
+}
+.plan-stop.dinner .plan-num { background: var(--red); }
+.plan-name { font-weight: 700; font-size: 0.85em; line-height: 1.25; overflow-wrap: anywhere; }
+.plan-name .jp { display: block; font-size: 0.85em; }
+@media (max-height: 820px) and (min-width: 761px) {
+  /* Short screens: the day badge goes beside the title, to leave room for the photos. */
+  .day-intro { grid-template-columns: auto auto; justify-content: center; align-items: center; column-gap: 1.5vw; inset-block-start: 6.5vh; }
+  .burst { width: 13vh; }
+  .burst span { font-size: 3.4vh; }
+  .day-plan { grid-column: 1 / -1; }
+}
+.photo-credits { display: block; margin-top: 0.6em; text-align: right; font-size: 0.7em; color: var(--muted); }
 
 /* ---------- ride ---------- */
 vv-ride-screen { background: var(--ink); }
@@ -380,7 +406,7 @@ vv-visit-screen.leaving { animation: leave 0.6s ease-in forwards; }
   vv-guide { transform: scale(0.7); transform-origin: 0 100%; margin-right: -44px; margin-top: -63px; }
   vv-speech .bubble { margin-bottom: 70px; max-width: 72vw; font-size: 1em; }
   .visit { grid-template-columns: 1fr; overflow-y: auto; bottom: 2vh; }
-  .plan-stops { columns: 1; }
+  .plan-stops { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6em; }
   vv-route-map { display: none; }
   .ride-caption { max-width: 92vw; }
 }
