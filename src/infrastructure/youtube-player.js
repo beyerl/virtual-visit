@@ -9,6 +9,7 @@ import { seekTarget } from "../domain/journey.js";
 
 const API = "https://www.youtube.com/iframe_api";
 const AUTOPLAY_CHECK = 1500;
+const DUCKED_VOLUME = 30;
 
 /** @type {Promise<any> | null} */
 let loading = null;
@@ -74,6 +75,7 @@ export class RideVideo {
   }
 
   ready() {
+    if (this.ducked) this.player.setVolume(DUCKED_VOLUME);
     this.player.playVideo();
     setTimeout(() => {
       if (this.destroyed || this.ended) return;
@@ -119,6 +121,12 @@ export class RideVideo {
       this.player.mute();
       this.setMuted(true);
     }
+  }
+
+  /** Turn the video down (while the guide speaks) or back up. @param {boolean} down */
+  duck(down) {
+    this.ducked = down;
+    this.player?.setVolume?.(down ? DUCKED_VOLUME : 100);
   }
 
   /**

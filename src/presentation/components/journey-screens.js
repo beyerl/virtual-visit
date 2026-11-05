@@ -3,6 +3,7 @@
 
 import { Button, FINISH } from "../../domain/input.js";
 import { SEEK_STEP, StepType } from "../../domain/journey.js";
+import { VISIT_LINES } from "../../content/visit-lines.js";
 import { RideVideo } from "../../infrastructure/youtube-player.js";
 import { define, esc, Screen } from "../base.js";
 import { progress } from "../describe.js";
@@ -160,6 +161,9 @@ export class VvRideScreen extends StepScreen {
       this.dialogueDone = true;
       if (this.videoDone) this.finish();
     });
+    // The guide's voice over the video: turn the video down while she speaks.
+    this.speech.addEventListener("voice-start", () => this.video?.duck(true));
+    this.speech.addEventListener("voice-end", () => this.video?.duck(false));
     this.speech.play(this.step.lines);
     this.playRide();
   }
@@ -341,11 +345,7 @@ export class VvVisitScreen extends StepScreen {
       ["lr", "Finish stop"],
       ["select", "Pause"],
     ]);
-    this.speech.play([
-      returned
-        ? "{Okaeri!} Welcome back. Do you want to look around some more, or shall we move on?"
-        : `Here we are! Walk around with me, and press {L + R} together when you've seen enough.`,
-    ]);
+    this.speech.play([returned ? VISIT_LINES.returned : VISIT_LINES.arrived]);
   }
 
   go() {

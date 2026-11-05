@@ -1,8 +1,16 @@
 // The guide with a speech bubble (attribute `guide`: a guide id, see guide.js). Lines appear letter by letter; A shows the
 // whole line at once, or goes on to the next one. Fires "dialogue-end" after
 // the last line.
+//
+// A guide with a recorded voice (content/voices.js) says each line while its
+// bubble is shown; going on to the next bubble, or skipping, stops it. While
+// the voice speaks, "voice-start" and "voice-end" fire (rides turn the video
+// down).
 
 import { Dialogue } from "../../domain/dialogue.js";
+import { voiceFile } from "../../domain/voice.js";
+import { VOICES } from "../../content/voices.js";
+import { VoicePlayer } from "../../infrastructure/voice-player.js";
 import { define, lineHtml } from "../base.js";
 import "./guide.js";
 
@@ -14,6 +22,10 @@ export class VvSpeech extends HTMLElement {
     this.dialogue = new Dialogue([]);
     this.timer = 0;
     this.typing = false;
+    this.voice = new VoicePlayer({
+      onStart: () => this.dispatchEvent(new CustomEvent("voice-start", { bubbles: true })),
+      onEnd: () => this.dispatchEvent(new CustomEvent("voice-end", { bubbles: true })),
+    });
   }
 
   connectedCallback() {
@@ -25,6 +37,7 @@ export class VvSpeech extends HTMLElement {
 
   disconnectedCallback() {
     clearInterval(this.timer);
+    this.voice.stop();
   }
 
   get guide() {
@@ -49,6 +62,7 @@ export class VvSpeech extends HTMLElement {
   show() {
     clearInterval(this.timer);
     const line = this.dialogue.current;
+    this.speak(line);
     if (line == null) {
       this.bubble.hidden = true;
       this.guide.talking = false;
@@ -89,6 +103,13 @@ export class VvSpeech extends HTMLElement {
         ci = 0;
       }
     }, TYPE_MS);
+  }
+
+  /** Say the line in the guide's voice, if it was recorded; stop the line before. @param {string | null} line */
+  speak(line) {
+    const file = line == null ? null : voiceFile(VOICES[this.getAttribute("guide") || "hana"], line);
+    if (file) this.voice.play(file);
+    else this.voice.stop();
   }
 
   /** @type {() => void} */

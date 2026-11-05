@@ -53,6 +53,11 @@ Ulaanbaatar), the stops use user photospheres; every walk starts within 15 m of 
      Press **L + R together** when you've seen enough, and the next ride starts.
 4. After each day, and after the whole journey, a wrap-up with stamps for every stop.
 
+In Tokyo, Hana also **speaks** every speech bubble (in English, with a Japanese accent). Her voice
+stops when you go on to the next bubble or skip, and the ride video turns down while she talks.
+Browsers only play sound after a click or a key press, so with only a gamepad she stays silent
+until then.
+
 The game saves itself after every step and every move in Street View (localStorage). **Load
 game** lists the saves; a game saved in Street View resumes where you stood.
 
@@ -107,6 +112,20 @@ npm test           # domain and application tests (Node 22+)
 The extension's content script also runs on `localhost` and `127.0.0.1`, so the hand-over works
 locally too.
 
+## Guide voices
+
+Hana's lines are pre-recorded with local text-to-speech: [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M)
+(via kokoro-onnx, on the CPU) with its Japanese female voice `jf_alpha` reading English. The
+Japanese words in {braces} and the Japanese place names are turned into Japanese phonemes, so they
+sound Japanese. Each line is a 24 kHz mono 32 kbit/s MP3 in `audio/hana/`, named by a hash of its
+text, so a changed line gets new audio. After changing Tokyo's lines, run:
+
+```sh
+.venv-voice/bin/python tools/voice/generate.py --guide hana   # setup: see the script's docstring
+```
+
+It voices only new or changed lines, removes stale files and rewrites `src/content/voices.js`.
+
 ## Architecture
 
 Domain-driven, with dependencies pointing inwards:
@@ -115,19 +134,23 @@ Domain-driven, with dependencies pointing inwards:
 src/
   domain/          journey (aggregate root) and its itinerary of steps, game state (entity),
                    dialogue, input (SNES buttons, the L + R chord), controls (pad bindings),
-                   geo, Google Maps links
+                   geo, Google Maps links, voice (which audio file says a line)
   application/     GameService (new game, load, advance, visit a stop, come back),
                    InputService (buttons → actions, with repeat), ControlsService (custom
                    controls, capturing the next pad input), ports (interfaces)
   infrastructure/  localStorage saves, gamepad / keyboard / pointer sources, the extension
-                   link (postMessage), the YouTube IFrame player, the browser's location
+                   link (postMessage), the YouTube IFrame player, the voice player, the browser's location
   presentation/    web components: <vv-app> (screen flow), splash, menus, load, journey
                    select, controls, day intro, ride, walk, visit, wrap-up, pause, and the parts:
                    <vv-guide> (all eleven guides in pure CSS), <vv-speech>, <vv-menu>, <vv-pad-hint>, <vv-route-map>
   content/         journeys: Tokyo, Beijing, Moscow, Bogotá, Rio, New York, Ulaanbaatar, Cape Town,
-                   Cairo, Nairobi, Kingston (days, legs, guide lines, ride videos), Tokyo's rail map
+                   Cairo, Nairobi, Kingston (days, legs, guide lines, ride videos), Tokyo's rail map,
+                   stop photos and their credits, which lines have a voice
   main.js          composition root, the only module touching browser globals
 styles/            theme (main.css) and the guides (guides.css)
+images/stops/      stop photos (WebP)
+audio/<guide>/     the guides' recorded lines (MP3)
+tools/voice/       makes the recorded lines (local TTS)
 ```
 
 All graphics are CSS or inline SVG: a golden-hour sky over stepped pixel hills, parchment panels in dark wood frames, earthy terracotta / ochre / leaf green / teal, hard pixel shadows. Fonts (Pixelify Sans, Zen Maru Gothic, Zen Kaku Gothic New) come from Google Fonts.

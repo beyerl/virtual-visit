@@ -129,3 +129,20 @@ test("content: every stop has a photo from Wikimedia Commons, with its file and 
       }),
     );
 });
+
+test("voice: Hana says every one of her lines, files named by the same hash as the generator's", async () => {
+  const { existsSync } = await import("node:fs");
+  const { voiceFile, voiceKey } = await import("../src/domain/voice.js");
+  const { VOICES } = await import("../src/content/voices.js");
+  const { VISIT_LINES } = await import("../src/content/visit-lines.js");
+  assert.equal(voiceKey("{Mata ne!} Tōkyō"), "61f8ed6a", "same FNV-1a as tools/voice/generate.py (UTF-8)");
+  const lines = new Set([...tokyo.steps.flatMap((s) => s.lines), ...Object.values(VISIT_LINES)]);
+  for (const line of lines) {
+    const file = voiceFile(VOICES.hana, line);
+    assert.ok(file, `recorded: ${line}`);
+    assert.ok(existsSync(new URL(`../${file}`, import.meta.url)), `${file} exists`);
+  }
+  assert.equal(VOICES.hana.keys.size, lines.size, "no stale recordings");
+  assert.equal(voiceFile(VOICES.hana, "A line nobody wrote."), null);
+  assert.equal(voiceFile(VOICES.wei, "Nǐ hǎo!"), null, "guides without a voice stay silent");
+});
