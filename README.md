@@ -47,8 +47,8 @@ Ulaanbaatar), the stops use user photospheres; every walk starts within 15 m of 
 3. Each day starts with the guide's plan for the day, with a photo of every stop (free images
    from Wikimedia Commons, see [CREDITS.md](CREDITS.md)). Then, for every stop:
    - a **train ride**: a side-window (車窓 / 側面展望) YouTube video, cut to the stretch we ride,
-     with the guide's speech bubbles about the place we're going to (on foot, a short walk scene
-     instead);
+     with the guide's speech bubbles about the place we're going to and a small map of the ride
+     (on foot, a short walk scene instead);
    - the **stop in Street View**, at the start of the walking route, facing the way to go.
      Press **L + R together** when you've seen enough, and the next ride starts.
 4. After each day, and after the whole journey, a wrap-up with stamps for every stop.
@@ -161,6 +161,14 @@ tools/voice/       makes the recorded lines (local TTS)
 ```
 
 All graphics are CSS or inline SVG: a golden-hour sky over stepped pixel hills, parchment panels in dark wood frames, earthy terracotta / ochre / leaf green / teal, hard pixel shadows. Fonts (Pixelify Sans, Zen Maru Gothic, Zen Kaku Gothic New) come from Google Fonts.
+
+## Ride maps
+
+Tokyo's ride maps are drawn from its rail network (`src/content/tokyo-network.js`). The other
+journeys' maps come from each ride's route in `src/content/ride-routes.js`: the stations of
+metro, rail, tram and bus rides from OpenStreetMap route relations, the roads of car, matatu and
+scooter rides from OSRM, and cable cars, boats and long-distance trains as lines through their
+main stops. Map data © OpenStreetMap contributors (ODbL).
 
 ## Ride videos
 

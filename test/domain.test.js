@@ -146,3 +146,21 @@ test("voice: Hana says every one of her lines, files named by the same hash as t
   assert.equal(voiceFile(VOICES.hana, "A line nobody wrote."), null);
   assert.equal(voiceFile(VOICES.wei, "Nǐ hǎo!"), null, "guides without a voice stay silent");
 });
+
+test("content: every ride outside Tokyo has a route for its map, near where its stop is", () => {
+  for (const j of JOURNEYS.filter((j) => j.steps.length && j.id !== "tokyo"))
+    j.days.forEach((d, di) =>
+      j.ridesOf(di).forEach((r) => {
+        const where = `${j.id} ${d.id} ${r.name}`;
+        assert.ok(r.route && r.route.length >= 2, `${where}: route`);
+        for (const p of r.route) assert.ok(Math.abs(p[0]) <= 90 && Math.abs(p[1]) <= 180 && (p[2] === undefined || typeof p[2] === "string"), where);
+      }),
+    );
+  for (const j of JOURNEYS.filter((j) => j.steps.length && j.id !== "tokyo"))
+    for (const s of j.steps.filter((s) => s.rides && s.stop)) {
+      const end = s.rides.at(-1).route.at(-1);
+      const [lat, lng] = s.stop.o.split(",").map(Number);
+      const km = Math.hypot((lat - end[0]) * 111, (lng - end[1]) * 111 * Math.cos((lat * Math.PI) / 180));
+      assert.ok(km < 7, `${j.id} ${s.id}: ride ends ${km.toFixed(1)} km from the walk`); // some end at a station a few km off (Beijing South)
+    }
+});

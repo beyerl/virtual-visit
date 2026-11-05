@@ -7,6 +7,12 @@ Autotracker, from [OpenGameArt](https://opengameart.org/content/happy-adventure-
 under [CC0](https://creativecommons.org/publicdomain/zero/1.0/) (public domain). File:
 `audio/music/happy-adventure.mp3`.
 
+## Map data
+
+The ride maps' stations and roads (`src/content/ride-routes.js`) are from
+[OpenStreetMap](https://www.openstreetmap.org/copyright) (© OpenStreetMap contributors, ODbL),
+the roads routed with [OSRM](https://project-osrm.org/).
+
 ## Images
 
 The stop photos on the day pages are thumbnails (cropped and scaled to 320 × 240) of

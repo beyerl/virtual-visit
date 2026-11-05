@@ -1,6 +1,7 @@
 // A small SVG map of a ride: the network faintly, the ridden stretch in its
-// line colour, stations labelled where there is room. Ported from the
-// original page (reference/tokyo-with-hana.html).
+// line colour, stations labelled where there is room. Tokyo's is drawn from
+// its rail network (ported from reference/tokyo-with-hana.html); the other
+// journeys' from each ride's own route (content/ride-routes.js).
 
 import { define, esc } from "../base.js";
 
@@ -153,11 +154,108 @@ export function rideMapSvg(ride, network, color) {
   return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Map: ${esc(ride.name)} from ${esc(S[a][2])} to ${esc(S[b][2])}">${g}${labels}</svg>`;
 }
 
+/**
+ * A map of a ride from its own route (journeys without a drawn network): the
+ * journey's other rides faintly, this ride in its line colour, its stations,
+ * and the two ends labelled.
+ * @param {import("../../domain/journey.js").Ride} ride
+ * @param {import("../../domain/journey.js").Ride[]} others the journey's other rides with a route
+ * @param {(line: string) => string} color
+ * @returns {string} SVG markup, or "" without a route
+ */
+export function routeMapSvg(ride, others, color) {
+  const route = ride.route;
+  if (!route || route.length < 2) return "";
+  const lat0 = route.reduce((a, p) => a + p[0], 0) / route.length;
+  const kx = KY * Math.cos((lat0 * Math.PI) / 180);
+  const km = (/** @type {number[]} */ p) => [p[1] * kx, -p[0] * KY];
+  const K = route.map(km);
+  let x0 = Math.min(...K.map((p) => p[0]));
+  let x1 = Math.max(...K.map((p) => p[0]));
+  let y0 = Math.min(...K.map((p) => p[1]));
+  let y1 = Math.max(...K.map((p) => p[1]));
+  const pad = Math.max(0.25, Math.max(x1 - x0, y1 - y0) * 0.14);
+  x0 -= pad;
+  x1 += pad * 1.6; // room for the end labels
+  y0 -= pad;
+  y1 += pad;
+  let w = Math.max(x1 - x0, 1.2);
+  let h = Math.max(y1 - y0, 0.68);
+  if (w / h > W / H) h = w / (W / H);
+  else w = h * (W / H);
+  const cx = (x0 + x1) / 2;
+  const cy = (y0 + y1) / 2;
+  x0 = cx - w / 2;
+  y0 = cy - h / 2;
+  const s = W / w;
+  const pt = (/** @type {number[]} */ p) => {
+    const k = km(p);
+    return [(k[0] - x0) * s, (k[1] - y0) * s];
+  };
+  let g = "";
+  for (const o of others) {
+    if (o === ride || !o.route) continue;
+    g += `<polyline points="${pl(o.route.map(pt))}" fill="none" stroke="${color(o.line)}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" opacity="0.28"/>`;
+  }
+  const rp = route.map(pt);
+  g += `<polyline points="${pl(rp)}" fill="none" stroke="#3b2418" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"/>`;
+  g += `<polyline points="${pl(rp)}" fill="none" stroke="${color(ride.line)}" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>`;
+  /** @type {number[][]} */
+  const boxes = [];
+  const outside = (/** @type {number[]} */ bx) => bx[0] < 2 || bx[1] < 2 || bx[0] + bx[2] > W - 2 || bx[1] + bx[3] > H - 2;
+  const hit = (/** @type {number[]} */ bx) =>
+    outside(bx) || boxes.some((o) => bx[0] < o[0] + o[2] && bx[0] + bx[2] > o[0] && bx[1] < o[1] + o[3] && bx[1] + bx[3] > o[1]);
+  let labels = "";
+  const place = (/** @type {number[]} */ p, /** @type {string} */ t, /** @type {number} */ size, /** @type {number} */ weight, /** @type {boolean} */ force) => {
+    const tw = t.length * size * 0.56 + 4;
+    const gap = size > 13 ? 12 : 9;
+    /** @type {[number, number, string, number[]][]} */
+    const cand = [
+      [p[0] + gap, p[1] + size * 0.35, "start", [p[0] + gap, p[1] - size / 2, tw, size]],
+      [p[0] - gap, p[1] + size * 0.35, "end", [p[0] - gap - tw, p[1] - size / 2, tw, size]],
+      [p[0], p[1] - gap - 2, "middle", [p[0] - tw / 2, p[1] - gap - size, tw, size]],
+      [p[0], p[1] + gap + size - 2, "middle", [p[0] - tw / 2, p[1] + gap - 2, tw, size]],
+    ];
+    let c = cand.find((c) => !hit(c[3]));
+    if (!c) {
+      if (!force) return;
+      c = cand.find((c) => !outside(c[3])) ?? cand[0]; // an end's name: at least inside the map
+    }
+    boxes.push(c[3]);
+    labels += `<text x="${c[0].toFixed(1)}" y="${c[1].toFixed(1)}" font-size="${size}" font-weight="${weight}" text-anchor="${c[2]}">${esc(t)}</text>`;
+  };
+  const stations = route.map((p, i) => ({ p: rp[i], name: i === 0 ? ride.from[1] : i === route.length - 1 ? ride.to[1] : p[2] })).filter((st) => st.name);
+  for (const st of stations) boxes.push([st.p[0] - 7, st.p[1] - 7, 14, 14]);
+  stations.forEach((st, k) => {
+    const end = k === 0 || k === stations.length - 1;
+    g += end
+      ? `<circle cx="${st.p[0].toFixed(1)}" cy="${st.p[1].toFixed(1)}" r="9" fill="#fff" stroke="#3b2418" stroke-width="4"/>`
+      : `<circle cx="${st.p[0].toFixed(1)}" cy="${st.p[1].toFixed(1)}" r="4.5" fill="#fff" stroke="#3b2418" stroke-width="2"/>`;
+  });
+  place(stations[0].p, stations[0].name ?? "", 16, 800, true);
+  place(stations[stations.length - 1].p, stations[stations.length - 1].name ?? "", 16, 800, true);
+  stations.slice(1, -1).forEach((st) => place(st.p, st.name ?? "", 12, 600, false));
+  const scaleKm = niceKm(w / 4);
+  const sw = scaleKm * s;
+  labels += `<text x="${W - 14}" y="24" font-size="13" font-weight="800" text-anchor="end">N ↑</text>`;
+  labels += `<path d="M14 ${H - 14} h${sw.toFixed(1)}" stroke="#3b2418" stroke-width="3"/><text class="ctx" x="14" y="${H - 20}" font-size="11">${scaleKm < 1 ? `${scaleKm * 1000} m` : `${scaleKm} km`}</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Map: ${esc(ride.name)} from ${esc(ride.from[1])} to ${esc(ride.to[1])}">${g}${labels}</svg>`;
+}
+
+/** A round scale-bar length near `km`. @param {number} km */
+function niceKm(km) {
+  const e = 10 ** Math.floor(Math.log10(km));
+  return [1, 2, 5, 10].map((m) => m * e).reduce((a, b) => (Math.abs(b - km) < Math.abs(a - km) ? b : a));
+}
+
 export class VvRouteMap extends HTMLElement {
   /** @param {{ ride: import("../../domain/journey.js").Ride, journey: import("../../domain/journey.js").Journey }} p */
   show({ ride, journey }) {
     const net = /** @type {any} */ (journey).network;
-    const svg = net ? rideMapSvg(ride, net, (line) => journey.lines[line]?.color ?? "#888") : "";
+    const color = (/** @type {string} */ line) => journey.lines[line]?.color ?? "#888";
+    const svg = net
+      ? rideMapSvg(ride, net, color)
+      : routeMapSvg(ride, journey.days.flatMap((_, d) => journey.ridesOf(d)), color);
     this.innerHTML = svg;
     this.hidden = !svg;
   }
