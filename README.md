@@ -17,6 +17,29 @@ Currently available, each with its own guide:
 - **Moscow with Katya**: 3 days, 11 train rides, 15 stops, from the Sapsan arrival to Red
   Square, the Arbat, Gorky Park, VDNKh, the Sparrow Hills and around the Central Circle.
 
+And eight two-day journeys, each with its own guide too:
+
+- **Bogotá with Valentina**: 4 rides, 8 stops: TransMilenio to the Gold Museum, La Candelaria,
+  Plaza de Bolívar, the funicular up Monserrate, the TransMiCable over Ciudad Bolívar and the Zona T.
+- **Rio with Thiago**: 6 rides, 8 stops: the VLT, the Selarón steps, the Santa Teresa tram, the
+  Sugarloaf cable car, the Corcovado train to Christ the Redeemer, Ipanema and Copacabana.
+- **New York with Maya**: 6 rides, 10 stops: the Staten Island Ferry, Wall Street, the Brooklyn
+  Bridge and DUMBO, Times Square, the Roosevelt Island Tram, Central Park and the High Line.
+- **Ulaanbaatar with Bat**: 5 rides, 8 stops: the Trans-Mongolian train, Sükhbaatar Square, the
+  Choijin Lama Temple, Zaisan, the Chinggis Khaan statue and Turtle Rock in Terelj.
+- **Cape Town with Thandi**: 5 rides, 7 stops: the V&A Waterfront, the Table Mountain cableway,
+  the Bo-Kaap, and the Southern Line along False Bay to Muizenberg, Boulders Beach and Kalk Bay.
+- **Cairo with Omar**: 4 rides, 8 stops: the metro to Tahrir, the Qasr al-Nil bridge, a felucca to
+  the Cairo Tower, Pyramids Street to Giza and the Sphinx, and Khan el-Khalili.
+- **Nairobi with Amani**: 4 rides, 6 stops: the Expressway, the KICC, the Railway Museum, a matatu
+  to the Giraffe Centre and a game drive in Nairobi National Park.
+- **Kingston with Kemar**: 4 rides, 7 stops: Hope Road to the Bob Marley Museum, Emancipation Park,
+  Devon House, the Blue Mountains, the waterfront and Port Royal.
+
+Not every ride is a train: some cities are seen from a bus, a cable car, a boat or a car window.
+Where Google has no official Street View (much of Cairo, parts of Bogotá, Nairobi, Kingston and
+Ulaanbaatar), the stops use user photospheres; every walk starts within 15 m of one.
+
 ## How a journey goes
 
 1. Title screen → **Start new game** or **Load game**.
@@ -99,8 +122,9 @@ src/
                    link (postMessage), the YouTube IFrame player, the browser's location
   presentation/    web components: <vv-app> (screen flow), splash, menus, load, journey
                    select, controls, day intro, ride, walk, visit, wrap-up, pause, and the parts:
-                   <vv-guide> (Hana, Wei, Katya in pure CSS), <vv-speech>, <vv-menu>, <vv-pad-hint>, <vv-route-map>
-  content/         journeys: Tokyo, Beijing, Moscow (days, legs, guide lines, ride videos), Tokyo's rail map
+                   <vv-guide> (all eleven guides in pure CSS), <vv-speech>, <vv-menu>, <vv-pad-hint>, <vv-route-map>
+  content/         journeys: Tokyo, Beijing, Moscow, Bogotá, Rio, New York, Ulaanbaatar, Cape Town,
+                   Cairo, Nairobi, Kingston (days, legs, guide lines, ride videos), Tokyo's rail map
   main.js          composition root, the only module touching browser globals
 styles/            theme (main.css) and the guides (guides.css)
 ```
@@ -113,5 +137,9 @@ Side-window recordings by these YouTube channels, embedded with the YouTube play
 めんどくさがらないで【サブチャン】 (Yamanote Line), PSTLSTS (Tōkaidō Shinkansen), きままトラベル
 (Marunouchi Line), yoman7206 (Ginza, Asakusa, Hanzōmon lines), 乗り物車窓ch (Chūō Line), 大人のひとり歩き
 and 日本最大!車窓YouTuber! (Yurikamome), 乗り物でどうでしょうチャンネル (Keihin-Tōhoku Line).
+
+The rides of the other journeys are side-window, front-window, in-car or dashcam recordings by
+many channels, each checked for embedding; the video id in each journey's file leads to its
+channel.
 
 Where a video has station chapters, the ride is cut to them; other cut points are estimates.

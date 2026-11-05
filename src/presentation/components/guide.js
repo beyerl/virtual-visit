@@ -1,6 +1,8 @@
 // The travel guides, in pure CSS (styles/guides.css): Hana (Tokyo), Wei
-// (Beijing) and Katya (Moscow) share one figure; `who` picks hair, clothes,
-// accessories and what they hold. They blink and bob all the time, move their
+// (Beijing), Katya (Moscow), Vale (Bogotá), Thiago (Rio), Maya (New York),
+// Bat (Ulaanbaatar), Thandi (Cape Town), Omar (Cairo), Amani (Nairobi) and
+// Kemar (Kingston) share one figure; `who` picks hair, clothes, accessories
+// and what they hold. They blink and bob all the time, move their
 // mouth while [talking], and wave.
 
 import { define } from "../base.js";

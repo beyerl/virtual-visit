@@ -361,7 +361,7 @@ export class VvWrapUp extends StepScreen {
           ${days.map((d) => `${journey ? `<h3>${esc(j.days[d].num)} · ${esc(j.days[d].title)}</h3>` : ""}<div class="stamps">${stamps(j, d)}</div>`).join("")}
           <div class="tally">
             <span><b>${stops.length}</b> stops</span>
-            <span><b>${rides.length}</b> train rides</span>
+            <span><b>${rides.length}</b> rides</span>
             <span class="pills">${[...new Set(rides.map((r) => r.line))].map((l) => `<i class="dot" style="background:${j.lines[l]?.color}" title="${esc(j.lines[l]?.name)}"></i>`).join("")}</span>
           </div>
         </div>

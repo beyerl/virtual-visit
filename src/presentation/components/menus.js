@@ -192,12 +192,22 @@ export class VvJourneySelect extends Screen {
 
   select() {
     this.querySelectorAll(".journey-card").forEach((el, i) => el.classList.toggle("selected", i === this.index));
+    this.querySelector(".journey-card.selected")?.scrollIntoView({ block: "nearest" });
+  }
+
+  /** Cards per row of the grid. */
+  get columns() {
+    const grid = this.querySelector(".journey-cards");
+    return grid ? Math.max(1, getComputedStyle(grid).gridTemplateColumns.split(" ").length) : 1;
   }
 
   onAction(/** @type {string} */ action) {
     const journeys = this.app.game.journeys;
-    if (action === Button.LEFT || action === Button.UP) this.index = (this.index - 1 + journeys.length) % journeys.length;
-    else if (action === Button.RIGHT || action === Button.DOWN) this.index = (this.index + 1) % journeys.length;
+    const n = journeys.length;
+    if (action === Button.LEFT) this.index = (this.index - 1 + n) % n;
+    else if (action === Button.RIGHT) this.index = (this.index + 1) % n;
+    else if (action === Button.UP) this.index = Math.max(0, this.index - this.columns);
+    else if (action === Button.DOWN) this.index = Math.min(n - 1, this.index + this.columns);
     else if (action === Button.B) return this.app.mainMenu();
     else if (action === Button.A || action === Button.START) {
       const j = journeys[this.index];

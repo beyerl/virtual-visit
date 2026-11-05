@@ -1,0 +1,317 @@
+// New York with Maya: two days, from the Staten Island Ferry past the Statue
+// of Liberty, over the Brooklyn Bridge, up to Times Square, Central Park and
+// the High Line. Coordinates are WGS84 (OpenStreetMap); every walk starts
+// within 25 m of a Street View panorama.
+//
+// In Maya's lines, {braces} mark New York words, shown in red.
+
+export const NEW_YORK = {
+  id: "newyork",
+  title: "New York",
+  jp: "The Big Apple",
+  tagline: "2 days · 6 rides · 10 stops",
+  guide: { id: "maya", name: "Maya Brooks", short: "Maya" },
+  available: true,
+  lines: {
+    ferry: { name: "Staten Island Ferry", color: "#F58025" },
+    q: { name: "Subway Q", color: "#FCCC0A" },
+    w: { name: "Subway W", color: "#FCCC0A" },
+    f: { name: "Subway F", color: "#FF6319" },
+    c: { name: "Subway C", color: "#0039A6" },
+    tram: { name: "Roosevelt Island Tram", color: "#C8102E" },
+  },
+  days: [
+    {
+      id: "day1",
+      num: "Day 1",
+      title: "Lady Liberty and the Brooklyn Bridge",
+      intro: [
+        "{Hey there!} I'm Maya, and I grew up right here in New York City. Welcome to {the Big Apple}!",
+        "Today we start on the water: a free ferry ride past the Statue of Liberty, into the very south tip of Manhattan.",
+        "Then Wall Street, a walk over the Brooklyn Bridge, and dumplings in Chinatown. Let's go!",
+      ],
+      legs: [
+        {
+          id: "ferry",
+          rides: [
+            {
+              line: "ferry",
+              name: "Staten Island Ferry",
+              from: ["SI", "St. George"],
+              to: ["M", "Whitehall"],
+              mins: "25 min",
+              video: { id: "bxgMWN-KXXo", start: 26, end: 224 },
+            },
+          ],
+          hana: [
+            "These big orange boats carry New Yorkers between Staten Island and Manhattan, every day and every night. And the ride is free!",
+            "Look to the side: that's the {Statue of Liberty}! France gave her to America in 1886.",
+            "She's made of copper, as thin as two coins. It was brown at first, then the air turned it green.",
+            "Ahead you see the skyscrapers of Lower Manhattan. When you've seen enough on land, press {L + R} together.",
+          ],
+          stop: {
+            kind: "sight",
+            name: "The Battery",
+            jp: "Battery Park",
+            text: "The green park at the southern tip of Manhattan, with the round Castle Clinton fort from 1811 and a view across the harbour to the Statue of Liberty.",
+            walkLabel: "Whitehall Terminal → the waterfront",
+            mins: 5,
+            o: "40.70137,-74.01337",
+            d: "40.70290,-74.01710",
+            tip: "Look for the SeaGlass Carousel: you ride inside glowing fish, like in an aquarium!",
+          },
+        },
+        {
+          id: "wallst",
+          hana: [
+            "A few steps north stands the {Charging Bull}, a bronze bull of more than three tonnes.",
+            "An artist put him there in 1989 without asking anyone! People loved him so much that he could stay.",
+            "Then we walk up {Wall Street}. Its name comes from a wooden wall the Dutch built here, when the town was still called New Amsterdam.",
+          ],
+          stop: {
+            kind: "sight",
+            name: "Charging Bull & Wall Street",
+            jp: "Wall St",
+            text: "The famous bronze bull at Bowling Green, then the narrow canyon of Wall Street with the Stock Exchange and Federal Hall.",
+            walkLabel: "Bowling Green → Broadway → Federal Hall",
+            mins: 8,
+            o: "40.70492,-74.01376",
+            d: "40.70732,-74.01025",
+            tip: "On the steps of Federal Hall stands George Washington. He became the first president of the United States right on this spot, in 1789.",
+          },
+        },
+        {
+          id: "bridge",
+          hana: [
+            "Now my favourite walk in the whole city: over the {Brooklyn Bridge}!",
+            "It opened in 1883, the first big bridge hanging on steel wires. When the engineer got sick, his wife Emily Roebling helped finish it.",
+            "To show everyone it was strong, a circus man led 21 elephants across it!",
+            "Walk on the wooden path, high above the cars. The view of the skyscrapers is amazing.",
+          ],
+          stop: {
+            kind: "sight",
+            name: "Brooklyn Bridge",
+            jp: "Brooklyn Bridge",
+            text: "The great stone-towered suspension bridge over the East River, with a wooden walkway above the traffic and views of Manhattan and the harbour.",
+            walkLabel: "City Hall → onto the bridge → the first tower",
+            mins: 15,
+            o: "40.71238,-74.00445",
+            d: "40.70600,-73.99680",
+          },
+        },
+        {
+          id: "dumbo",
+          hana: [
+            "On the Brooklyn side we go down into {DUMBO}. It's short for 'Down Under the Manhattan Bridge Overpass'!",
+            "Old factories became shops and flats, and the streets are still made of cobblestones.",
+            "Stand on Washington Street and look back: the Empire State Building fits exactly under the arch of the Manhattan Bridge.",
+          ],
+          stop: {
+            kind: "sight",
+            name: "DUMBO",
+            jp: "Down Under the Manhattan Bridge Overpass",
+            text: "A Brooklyn neighbourhood of brick warehouses and cobbled streets between two bridges, with a park and an old carousel on the river.",
+            walkLabel: "Front Street → Washington Street",
+            mins: 3,
+            o: "40.70324,-73.99054",
+            d: "40.70350,-73.98947",
+            tip: "Down by the water is Jane's Carousel, from 1922, in a glass box. It goes round all year!",
+          },
+        },
+        {
+          id: "nomwah",
+          rides: [
+            {
+              line: "q",
+              name: "Subway Q over the Manhattan Bridge",
+              from: ["Q", "DeKalb Av"],
+              to: ["Q", "Canal St"],
+              mins: "7 min",
+              video: { id: "nQOjOdIlsrE", start: 700, end: 1103 },
+            },
+          ],
+          hana: [
+            "Back to Manhattan by {subway}! The Q train rides across the Manhattan Bridge, out in the open. Look right!",
+            "The New York subway has 472 stations, more than any other metro in the world, and it runs all night.",
+            "We get off at Canal Street, in {Chinatown}. Dinner is at {Nom Wah Tea Parlor}, open since 1920.",
+            "They make {dim sum}: little steamed dumplings in bamboo baskets. Try the pork buns!",
+          ],
+          stop: {
+            kind: "dinner",
+            name: "Nom Wah Tea Parlor",
+            jp: "南華茶室",
+            cuisine: "Dim sum · Chinatown",
+            text: "The oldest dim sum restaurant in Chinatown, on the bend of little Doyers Street, with red booths and old tiles.",
+            walkLabel: "Mott Street → Pell Street → Doyers Street",
+            mins: 4,
+            o: "40.71583,-73.99957",
+            d: "40.71446,-73.99820",
+            tip: "Doyers Street has a sharp bend in the middle. Peek around the corner!",
+          },
+        },
+      ],
+      wrapUp: [
+        "What a first day! Lady Liberty from the ferry, the Charging Bull and the Brooklyn Bridge.",
+        "And dumplings in Chinatown. You're already walking like a real New Yorker!",
+        "Tomorrow: the brightest square in the world, a cable car and a park on old train tracks. {Good night!}",
+      ],
+    },
+    {
+      id: "day2",
+      num: "Day 2",
+      title: "Lights, a tram in the sky, and Central Park",
+      intro: [
+        "{Good morning!} Grab a bagel, it's going to be a big day.",
+        "We ride the subway into Times Square, cross the river in a cable car, and walk in Central Park.",
+        "We finish on the High Line, a park up in the air, and have dinner in an old cookie factory.",
+      ],
+      legs: [
+        {
+          id: "times",
+          rides: [
+            {
+              line: "w",
+              name: "Subway W",
+              from: ["W", "Astoria–Ditmars Blvd"],
+              to: ["W", "Times Sq–42 St"],
+              mins: "20 min",
+              video: { id: "byyQerz6Vdw", start: 66, end: 1290 },
+            },
+          ],
+          hana: [
+            "We start in {Queens}, where people from almost every country in the world live.",
+            "Here the train runs up on a bridge of steel. Look out at the rooftops and the water towers on top of the houses.",
+            "Then it dives into a tunnel under the river and comes up in {Times Square}.",
+            "The square got its name from the New York Times newspaper. On New Year's Eve a glowing ball drops from the roof!",
+          ],
+          stop: {
+            kind: "sight",
+            name: "Times Square",
+            jp: "The Crossroads of the World",
+            text: "Giant glowing billboards, theatres and crowds where Broadway crosses Seventh Avenue, with the red glass steps in the middle.",
+            walkLabel: "42nd Street → Broadway → the red steps",
+            mins: 6,
+            o: "40.75504,-73.98701",
+            d: "40.75890,-73.98510",
+            tip: "Sit on the red steps and look up: the lights are so bright that it never really gets dark here.",
+          },
+        },
+        {
+          id: "roosevelt",
+          rides: [
+            {
+              line: "f",
+              name: "Subway F",
+              from: ["F", "47–50 Sts–Rockefeller Ctr"],
+              to: ["F", "Roosevelt Island"],
+              mins: "8 min",
+              video: { id: "JuAkueIIXEs", start: 178, end: 868 },
+            },
+          ],
+          hana: [
+            "The orange F train takes us under the East River to a long, narrow island: {Roosevelt Island}.",
+            "Its station is one of the deepest in the city. The escalators go on forever!",
+            "We walk down to the southern tip, to a quiet park for President Franklin D. Roosevelt.",
+          ],
+          stop: {
+            kind: "sight",
+            name: "Roosevelt Island",
+            jp: "Four Freedoms Park",
+            text: "A narrow island in the East River, with a riverside path down to Four Freedoms Park and a view of the United Nations building.",
+            walkLabel: "Tram station → riverside path → Four Freedoms Park",
+            mins: 15,
+            o: "40.75694,-73.95413",
+            d: "40.75063,-73.96038",
+          },
+        },
+        {
+          id: "centralpark",
+          rides: [
+            {
+              line: "tram",
+              name: "Roosevelt Island Tram",
+              from: ["T", "Roosevelt Island"],
+              to: ["T", "59 St & 2 Av"],
+              mins: "4 min",
+              video: { id: "VLeDUiqu8VI" },
+            },
+          ],
+          hana: [
+            "Back to Manhattan in a red cable car! The {tram} flies over the river, right next to the Queensboro Bridge.",
+            "It's been running since 1976. Spider-Man fought a villain on it in a movie!",
+            "From the tram station we walk a few blocks to {Central Park}. It's bigger than the whole country of Monaco.",
+            "Everything here was made by people: the hills, the lakes, even the rocks were moved around!",
+          ],
+          stop: {
+            kind: "sight",
+            name: "Central Park",
+            jp: "Central Park",
+            text: "Manhattan's great park from 1858, with lakes, meadows and stone bridges. At its south-east corner, the Pond and the little Gapstow Bridge.",
+            walkLabel: "Grand Army Plaza → the Pond → Gapstow Bridge",
+            mins: 8,
+            o: "40.76443,-73.97340",
+            d: "40.76690,-73.97430",
+            tip: "Watch for the squirrels. They're not shy at all and will ask you for nuts!",
+          },
+        },
+        {
+          id: "highline",
+          rides: [
+            {
+              line: "c",
+              name: "Subway C",
+              from: ["C", "59 St–Columbus Circle"],
+              to: ["C", "14 St"],
+              mins: "8 min",
+              video: { id: "N5xljIMekaM" },
+            },
+          ],
+          hana: [
+            "This time we look out of the front window! The blue C train runs down Eighth Avenue.",
+            "We're going to the {High Line}. It was a railway on stilts for freight trains, full of meat and milk.",
+            "When the trains stopped, wild flowers grew on the tracks. Now it's a park, nine metres above the street!",
+          ],
+          stop: {
+            kind: "sight",
+            name: "The High Line",
+            jp: "High Line",
+            text: "A park on an old elevated railway, with gardens, benches and the old rails, winding between buildings above the streets of Chelsea.",
+            walkLabel: "Gansevoort Street → up the stairs → over 14th Street",
+            mins: 10,
+            o: "40.73971,-74.00862",
+            d: "40.74280,-74.00760",
+          },
+        },
+        {
+          id: "chelsea",
+          hana: [
+            "Dinner is right below the High Line, in {Chelsea Market}.",
+            "It used to be a biscuit factory. The Oreo cookie was invented here in 1912!",
+            "Today it's a long hall full of food stalls: tacos, lobster rolls, noodles, and of course cookies.",
+          ],
+          stop: {
+            kind: "dinner",
+            name: "Chelsea Market",
+            jp: "Chelsea Market",
+            cuisine: "Food hall · Chelsea",
+            text: "A food hall in the old Nabisco biscuit factory, with brick walls, iron pipes and dozens of food stalls under one roof.",
+            walkLabel: "Tenth Avenue → Ninth Avenue entrance",
+            mins: 4,
+            o: "40.73997,-74.00695",
+            d: "40.74205,-74.00490",
+            tip: "Look for the old pipe fountain inside, made from the factory's drainpipes.",
+          },
+        },
+      ],
+      wrapUp: [
+        "Times Square, a cable car over the river, Central Park, and a park on train tracks.",
+        "And dinner where the Oreo was born!",
+      ],
+    },
+  ],
+  wrapUp: [
+    "Two days, six rides, ten stops. You saw New York from the water, from a bridge, from the sky and from under the ground!",
+    "Street View pictures are taken on different days, so the weather can change between two steps. New York in snow is beautiful too!",
+    "Thanks for exploring my city with me. {See you later!}",
+  ],
+};

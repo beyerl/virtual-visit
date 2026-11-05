@@ -87,7 +87,7 @@ test("new game is saved at once and advances with autosave", () => {
   assert.equal(saves.get("g1").stepIndex, 0);
   game.advance();
   assert.equal(saves.get("g1").stepIndex, 1);
-  assert.throws(() => game.newGame("paris"), /not available/);
+  assert.throws(() => game.newGame("atlantis"), /not available/);
 });
 
 test("opening a visit hands it to the extension and goes to the route", async () => {

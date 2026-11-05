@@ -25,8 +25,13 @@ test("itinerary: each day opens, every leg is a transit then a visit, wrap-ups c
 
 test("content: every journey has a guide; every ride a video and a known line; every stop walk points", () => {
   const available = JOURNEYS.filter((j) => j.steps.length);
-  assert.deepEqual(available.map((j) => j.id), ["tokyo", "beijing", "moscow"]);
-  assert.deepEqual(available.map((j) => j.guide.id), ["hana", "wei", "katya"]);
+  assert.deepEqual(available.map((j) => j.id), [
+    "tokyo", "beijing", "moscow", "bogota", "rio", "newyork", "ulaanbaatar", "capetown", "cairo", "nairobi", "kingston",
+  ]);
+  assert.deepEqual(available.map((j) => j.guide.id), [
+    "hana", "wei", "katya", "vale", "thiago", "maya", "bat", "thandi", "omar", "amani", "kemar",
+  ]);
+  assert.ok(!JOURNEYS.some((j) => j.id === "paris"), "Paris is gone");
   for (const j of available) for (const d of j.days) {
     for (const r of d.legs.flatMap((l) => l.rides ?? []).concat(d.home?.rides ?? [])) {
       assert.match(r.video.id, /^[\w-]{11}$/, r.name);
@@ -96,7 +101,7 @@ test("content: taglines count the rides and stops", () => {
   for (const j of JOURNEYS.filter((x) => x.steps.length)) {
     const rides = j.days.reduce((n, _, i) => n + j.ridesOf(i).length, 0);
     const stops = j.steps.filter((s) => s.type === StepType.VISIT).length;
-    assert.match(j.tagline, new RegExp(`${rides} train rides · ${stops} stops`), j.id);
+    assert.match(j.tagline, new RegExp(`${rides} (train )?rides · ${stops} stops`), j.id);
     assert.equal(new Set(j.steps.map((s) => s.id)).size, j.steps.length, `${j.id}: unique step ids`);
   }
 });

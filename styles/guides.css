@@ -174,3 +174,199 @@ vv-guide[who="katya"] .item::after {
   content: ""; position: absolute; left: -12px; top: -32px; width: 24px; height: 30px;
   background: repeating-linear-gradient(45deg, transparent 0 5px, rgba(59, 36, 24, 0.35) 5px 6px); clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
+
+/* ---------- Valentina (Bogotá): long wavy hair, a blue clip, a cup of tinto ---------- */
+vv-guide[who="vale"] { --hair: #2a1712; --jacket: #e0a540; --scarf: #c0392b; --skin: #e9bf98; }
+vv-guide[who="vale"] .hair-back { left: 19px; width: 112px; height: 134px; border-radius: 56px 56px 34px 34px; }
+vv-guide[who="vale"] .hair-back::after {
+  content: ""; position: absolute; left: -4px; bottom: -6px; width: 112px; height: 16px;
+  background: radial-gradient(circle at 50% 0, var(--hair) 7px, transparent 8px) 0 0 / 16px 14px repeat-x;
+}
+vv-guide[who="vale"] .clip { background: #2f6db5; }
+vv-guide[who="vale"] .badge { background: #2f6db5; }
+vv-guide[who="vale"] .item {
+  position: absolute; left: -6px; top: -34px; width: 26px; height: 22px; background: #fbf0d9;
+  border: 2.5px solid var(--ink); border-radius: 2px 2px 9px 9px; box-shadow: inset 0 5px 0 #6b3f26;
+}
+vv-guide[who="vale"] .item::after {
+  content: ""; position: absolute; right: -11px; top: 3px; width: 8px; height: 10px;
+  border: 2.5px solid var(--ink); border-left: none; border-radius: 0 8px 8px 0;
+}
+vv-guide[who="vale"] .item::before {
+  content: ""; position: absolute; left: 7px; top: -18px; width: 8px; height: 14px; border-left: 2.5px solid rgba(59, 36, 24, 0.45);
+  border-radius: 50%; animation: guide-steam 1.8s ease-in-out infinite;
+}
+@keyframes guide-steam { 0% { opacity: 0; transform: translateY(4px); } 50% { opacity: 1; } 100% { opacity: 0; transform: translateY(-6px); } }
+
+/* ---------- Thiago (Rio): short curls, green and yellow, a football ---------- */
+vv-guide[who="thiago"] { --hair: #1f120c; --jacket: #3b8a4f; --scarf: #f2c45a; --skin: #a86b45; --blush: #c97a5a; }
+vv-guide[who="thiago"] .hair-back { top: 10px; height: 58px; border-radius: 50px 50px 30px 30px; }
+vv-guide[who="thiago"] .bangs { top: 10px; height: 26px; border-radius: 44px 44px 14px 14px; }
+vv-guide[who="thiago"] .bangs::after {
+  right: 0; left: 0; top: 20px; width: auto; height: 12px; border-radius: 0;
+  background: radial-gradient(circle at 50% 0, var(--hair) 6px, transparent 7px) 0 0 / 13px 12px repeat-x;
+}
+vv-guide[who="thiago"] .clip { display: none; }
+vv-guide[who="thiago"] .scarf { border-radius: 4px; height: 12px; }
+vv-guide[who="thiago"] .scarf::after { display: none; }
+vv-guide[who="thiago"] .item {
+  position: absolute; left: -9px; top: -44px; width: 32px; height: 32px; border-radius: 50%; border: 2.5px solid var(--ink);
+  background:
+    radial-gradient(circle at 50% 50%, var(--ink) 5px, transparent 6px),
+    radial-gradient(circle at 12% 30%, var(--ink) 3.5px, transparent 4.5px),
+    radial-gradient(circle at 88% 30%, var(--ink) 3.5px, transparent 4.5px),
+    radial-gradient(circle at 26% 90%, var(--ink) 3.5px, transparent 4.5px),
+    radial-gradient(circle at 74% 90%, var(--ink) 3.5px, transparent 4.5px),
+    #fff;
+  animation: guide-ball 1.2s ease-in-out infinite alternate;
+}
+@keyframes guide-ball { from { transform: translateY(0) rotate(0); } to { transform: translateY(-6px) rotate(50deg); } }
+
+/* ---------- Maya (New York): a foam Liberty crown and torch ---------- */
+vv-guide[who="maya"] { --hair: #3b2418; --jacket: #2f4f86; --scarf: #f2c45a; --skin: #d6a27a; --blush: #e08a6a; }
+vv-guide[who="maya"] .clip { display: none; }
+vv-guide[who="maya"] .hat {
+  display: block; position: absolute; left: 31px; top: -12px; width: 88px; height: 42px; z-index: 2; background: var(--ink);
+  clip-path: polygon(0 100%, 3% 52%, 13% 74%, 18% 16%, 31% 62%, 50% 0, 69% 62%, 82% 16%, 87% 74%, 97% 52%, 100% 100%);
+}
+vv-guide[who="maya"] .hat::before {
+  content: ""; position: absolute; inset: 5px 5px 3px; background: #7cc4a8;
+  clip-path: polygon(0 100%, 3% 52%, 13% 74%, 18% 16%, 31% 62%, 50% 0, 69% 62%, 82% 16%, 87% 74%, 97% 52%, 100% 100%);
+}
+vv-guide[who="maya"] .item {
+  position: absolute; left: 0; top: -40px; width: 14px; height: 28px; background: #7cc4a8;
+  border: 2.5px solid var(--ink); border-radius: 3px 3px 7px 7px;
+}
+vv-guide[who="maya"] .item::before {
+  content: ""; position: absolute; left: -7px; top: -26px; width: 22px; height: 24px; background: #f2a93b;
+  border: 2.5px solid var(--ink); border-radius: 50% 50% 46% 46% / 64% 64% 36% 36%; box-shadow: inset 0 -7px 0 #f2c45a;
+  transform-origin: 50% 100%; animation: guide-flame 0.5s ease-in-out infinite alternate;
+}
+@keyframes guide-flame { from { transform: scaleY(1); } to { transform: scaleY(1.12) rotate(4deg); } }
+
+/* ---------- Bat (Ulaanbaatar): a pointed Mongolian hat, a deel, a blue khadag ---------- */
+vv-guide[who="bat"] { --hair: #1f120c; --jacket: #2f6db5; --scarf: #f2c45a; --skin: #e8b88e; }
+vv-guide[who="bat"] .hair-back { top: 16px; height: 60px; border-radius: 48px 48px 24px 24px; }
+vv-guide[who="bat"] .bangs { top: 22px; height: 24px; border-radius: 30px 30px 14px 14px; }
+vv-guide[who="bat"] .bangs::after { display: none; }
+vv-guide[who="bat"] .clip { display: none; }
+vv-guide[who="bat"] .hat {
+  display: block; position: absolute; left: 31px; top: -16px; width: 82px; height: 44px; z-index: 2;
+  background: #c0392b; border: 3px solid var(--ink); border-radius: 50% 50% 12px 12px / 92% 92% 12px 12px;
+  box-shadow: inset 0 -11px 0 #2f6db5;
+}
+vv-guide[who="bat"] .pompom {
+  display: block; position: absolute; left: 33px; top: -14px; width: 12px; height: 14px;
+  background: #f2c45a; border: 2.5px solid var(--ink); border-radius: 50% 50% 30% 30%;
+}
+vv-guide[who="bat"] .scarf { left: 52px; width: 46px; height: 10px; top: 106px; border-radius: 3px; }
+vv-guide[who="bat"] .scarf::after { display: none; }
+vv-guide[who="bat"] .body::after {
+  content: ""; position: absolute; left: -3px; right: -3px; top: 52px; height: 12px; background: #f2c45a; border-block: 2.5px solid var(--ink);
+}
+vv-guide[who="bat"] .item {
+  position: absolute; left: 3px; top: -56px; width: 12px; height: 46px; background: #8ec1ea;
+  border: 2px solid var(--ink); border-radius: 4px; transform-origin: 50% 100%;
+  animation: guide-ribbon 1.4s ease-in-out infinite alternate;
+}
+vv-guide[who="bat"] .item::after {
+  content: ""; position: absolute; left: 6px; top: -2px; width: 28px; height: 10px; background: #8ec1ea;
+  border: 2px solid var(--ink); border-radius: 2px 9px 9px 2px;
+}
+@keyframes guide-ribbon { from { transform: rotate(-6deg); } to { transform: rotate(8deg); } }
+
+/* ---------- Thandi (Cape Town): a bright headwrap, a pink protea ---------- */
+vv-guide[who="thandi"] { --hair: #1f120c; --jacket: #7b4b94; --scarf: #3d8a8c; --skin: #7a4a2e; --blush: #a8604a; }
+vv-guide[who="thandi"] .hair-back { height: 72px; border-radius: 50px 50px 30px 30px; }
+vv-guide[who="thandi"] .bangs, vv-guide[who="thandi"] .clip { display: none; }
+vv-guide[who="thandi"] .hat {
+  display: block; position: absolute; left: 27px; top: -8px; width: 96px; height: 52px; z-index: 2;
+  background: repeating-linear-gradient(45deg, #e48a52 0 8px, #f2c45a 8px 16px, #3d8a8c 16px 20px);
+  border: 3px solid var(--ink); border-radius: 50% 50% 18px 18px / 74% 74% 18px 18px;
+}
+vv-guide[who="thandi"] .pompom {
+  display: block; position: absolute; left: 56px; top: -14px; width: 28px; height: 22px; border-radius: 50%;
+  background: #e48a52; border: 3px solid var(--ink);
+}
+vv-guide[who="thandi"] .item {
+  position: absolute; left: -11px; top: -46px; width: 34px; height: 34px; border-radius: 50%;
+  background: repeating-conic-gradient(#e86a8a 0 15deg, #f6b3c3 15deg 30deg); border: 2.5px solid var(--ink);
+}
+vv-guide[who="thandi"] .item::after {
+  content: ""; position: absolute; inset: 8px; border-radius: 50%; background: #f2c45a; border: 2px solid var(--ink);
+}
+
+/* ---------- Omar (Cairo): a turquoise scarf, a lantern (fanous) ---------- */
+vv-guide[who="omar"] { --hair: #1f120c; --jacket: #2f4f86; --scarf: #3db0a6; --skin: #c98e60; --blush: #d9826a; }
+vv-guide[who="omar"] .hair-back { top: 12px; height: 58px; border-radius: 50px 50px 26px 26px; }
+vv-guide[who="omar"] .bangs { top: 10px; height: 30px; border-radius: 46px 46px 10px 34px; }
+vv-guide[who="omar"] .bangs::after { right: 54px; top: 18px; width: 26px; height: 14px; border-radius: 0 0 4px 16px; }
+vv-guide[who="omar"] .clip { display: none; }
+vv-guide[who="omar"] .item {
+  position: absolute; left: -6px; top: -42px; width: 24px; height: 30px; border: 2.5px solid var(--ink); border-radius: 5px;
+  background: linear-gradient(90deg, #d2603f 0 33%, #f2c45a 33% 66%, #3d8a8c 66%);
+  box-shadow: 0 0 12px 2px rgba(242, 196, 90, 0.7);
+  transform-origin: 50% -12px; animation: guide-lamp 1.6s ease-in-out infinite alternate;
+}
+vv-guide[who="omar"] .item::before {
+  content: ""; position: absolute; left: 1px; top: -13px; width: 17px; height: 10px; background: #e0a540;
+  border: 2.5px solid var(--ink); border-radius: 50% 50% 2px 2px;
+}
+vv-guide[who="omar"] .item::after {
+  content: ""; position: absolute; left: 6px; bottom: -9px; width: 7px; height: 6px; background: #e0a540; border: 2px solid var(--ink); border-radius: 0 0 4px 4px;
+}
+@keyframes guide-lamp { from { transform: rotate(-6deg); } to { transform: rotate(6deg); } }
+
+/* ---------- Amani (Nairobi): a safari hat, braids, a red shuka, binoculars ---------- */
+vv-guide[who="amani"] { --hair: #1f120c; --jacket: #3b8a4f; --scarf: #c0392b; --skin: #6b3f26; --blush: #9a5a40; }
+vv-guide[who="amani"] .hair-back {
+  left: 22px; width: 106px; height: 136px; border-radius: 50px 50px 14px 14px;
+  background: repeating-linear-gradient(90deg, var(--hair) 0 7px, #4a2a1a 7px 9px);
+}
+vv-guide[who="amani"] .bangs { top: 22px; height: 26px; border-radius: 30px 30px 12px 12px; }
+vv-guide[who="amani"] .bangs::after, vv-guide[who="amani"] .clip { display: none; }
+vv-guide[who="amani"] .scarf { background: repeating-linear-gradient(90deg, #c0392b 0 6px, #2f4f86 6px 8px); }
+vv-guide[who="amani"] .scarf::after { background: repeating-linear-gradient(0deg, #c0392b 0 6px, #2f4f86 6px 8px); }
+vv-guide[who="amani"] .hat {
+  display: block; position: absolute; left: 37px; top: -4px; width: 76px; height: 30px; z-index: 2;
+  background: #c9a66b; border: 3px solid var(--ink); border-radius: 26px 26px 4px 4px; box-shadow: inset 0 -7px 0 #7a5a30;
+}
+vv-guide[who="amani"] .hat::after {
+  content: ""; position: absolute; left: -22px; bottom: -9px; width: 114px; height: 10px; background: #c9a66b;
+  border: 3px solid var(--ink); border-radius: 50%;
+}
+vv-guide[who="amani"] .item {
+  position: absolute; left: -14px; top: -30px; width: 16px; height: 22px; background: #3b2418;
+  border: 2.5px solid var(--ink); border-radius: 6px; box-shadow: inset 0 5px 0 #8ec1ea;
+}
+vv-guide[who="amani"] .item::after {
+  content: ""; position: absolute; left: 15px; top: -2.5px; width: 16px; height: 22px; background: #3b2418;
+  border: 2.5px solid var(--ink); border-radius: 6px; box-shadow: inset 0 5px 0 #8ec1ea;
+}
+
+/* ---------- Kemar (Kingston): a straw hat with a green band, a coconut ---------- */
+vv-guide[who="kemar"] { --hair: #1f120c; --jacket: #1f8a4c; --scarf: #f2c45a; --skin: #5a3420; --blush: #8a4a34; }
+vv-guide[who="kemar"] .hair-back { top: 16px; height: 56px; border-radius: 48px 48px 24px 24px; }
+vv-guide[who="kemar"] .bangs { top: 24px; height: 22px; border-radius: 30px 30px 12px 12px; }
+vv-guide[who="kemar"] .bangs::after, vv-guide[who="kemar"] .clip { display: none; }
+vv-guide[who="kemar"] .hat {
+  display: block; position: absolute; left: 39px; top: -6px; width: 72px; height: 32px; z-index: 2;
+  background: repeating-linear-gradient(0deg, #e8c675 0 4px, #d4ad5a 4px 6px); border: 3px solid var(--ink);
+  border-radius: 20px 20px 4px 4px; box-shadow: inset 0 -8px 0 #1f8a4c;
+}
+vv-guide[who="kemar"] .hat::after {
+  content: ""; position: absolute; left: -20px; bottom: -9px; width: 106px; height: 10px; background: #e8c675;
+  border: 3px solid var(--ink); border-radius: 50%;
+}
+vv-guide[who="kemar"] .item {
+  position: absolute; left: -9px; top: -36px; width: 30px; height: 28px; border-radius: 50%; border: 2.5px solid var(--ink);
+  background: radial-gradient(circle at 50% 24%, #fbf0d9 0 7px, transparent 8px), #7a5230;
+}
+vv-guide[who="kemar"] .item::after {
+  content: ""; position: absolute; left: 14px; top: -20px; width: 4px; height: 24px; transform: rotate(14deg);
+  background: repeating-linear-gradient(0deg, #d2603f 0 4px, #fff 4px 8px); border: 1.5px solid var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  vv-guide .item::before, vv-guide .item::after { animation: none !important; }
+}

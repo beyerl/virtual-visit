@@ -1,4 +1,4 @@
-// The guide with a speech bubble (attribute `guide`: hana, wei, katya). Lines appear letter by letter; A shows the
+// The guide with a speech bubble (attribute `guide`: a guide id, see guide.js). Lines appear letter by letter; A shows the
 // whole line at once, or goes on to the next one. Fires "dialogue-end" after
 // the last line.
 
