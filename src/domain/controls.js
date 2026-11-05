@@ -32,7 +32,7 @@ export const CONTROL_INFO = Object.freeze({
   [Button.RIGHT]: { name: "D-pad →", does: "Choose; in a ride: 30 s forward" },
   [Button.A]: { name: "A", does: "OK, next bubble" },
   [Button.B]: { name: "B", does: "Back" },
-  [Button.X]: { name: "X", does: "Sound on / off" },
+  [Button.X]: { name: "X", does: "Sound on / off (ride), music (menus)" },
   [Button.Y]: { name: "Y", does: "Map, delete a save" },
   [Button.L]: { name: "L", does: "With R: finish the stop" },
   [Button.R]: { name: "R", does: "With L: finish the stop" },

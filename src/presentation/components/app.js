@@ -1,6 +1,7 @@
 // The root component: shows one screen at a time (plus the pause overlay),
 // passes the player's actions to it, and moves through the game's flow.
 
+import { Button } from "../../domain/input.js";
 import { StepType } from "../../domain/journey.js";
 import { define } from "../base.js";
 import "./controls.js";
@@ -17,6 +18,10 @@ const STEP_SCREENS = {
   [StepType.JOURNEY_WRAP_UP]: "vv-wrap-up",
 };
 
+/** Screens with menu music; on the first four, X turns it on or off. */
+const MUSIC_SCREENS = new Set(["vv-splash", "vv-main-menu", "vv-journey-select", "vv-load-screen", "vv-controls"]);
+const MUSIC_TOGGLE_SCREENS = new Set(["vv-splash", "vv-main-menu", "vv-journey-select", "vv-load-screen"]);
+
 export class VvApp extends HTMLElement {
   constructor() {
     super();
@@ -27,6 +32,8 @@ export class VvApp extends HTMLElement {
     /** @type {import("../../application/controls-service.js").ControlsService} */
     this.controls = /** @type {any} */ (null);
     this.version = "0";
+    /** @type {import("../../infrastructure/menu-music.js").MenuMusic | null} */
+    this.music = null;
     /** @type {import("../base.js").Screen | null} */
     this.screen = null;
     /** @type {import("../base.js").Screen | null} */
@@ -36,14 +43,22 @@ export class VvApp extends HTMLElement {
   /**
    * @param {{ game: import("../../application/game-service.js").GameService, link: import("../../application/ports.js").VisitLink,
    *           input: import("../../application/input-service.js").InputService,
-   *           controls: import("../../application/controls-service.js").ControlsService, version: string }} deps
+   *           controls: import("../../application/controls-service.js").ControlsService, version: string,
+   *           music?: import("../../infrastructure/menu-music.js").MenuMusic }} deps
    */
-  async start({ game, link, input, controls, version }) {
+  async start({ game, link, input, controls, version, music }) {
     this.game = game;
     this.link = link;
     this.controls = controls;
     this.version = version;
-    input.listen((a) => (this.pause ?? this.screen)?.onAction(a));
+    this.music = music ?? null;
+    input.listen((a) => {
+      if (a === Button.X && !this.pause && this.music && MUSIC_TOGGLE_SCREENS.has(this.screen?.localName ?? "")) {
+        this.music.toggle();
+        return;
+      }
+      (this.pause ?? this.screen)?.onAction(a);
+    });
     const back = await game.returnFromVisit();
     if (back === "finished") this.playStep();
     else if (back === "returned") this.playStep({ returned: true, position: game.state?.position });
@@ -59,6 +74,7 @@ export class VvApp extends HTMLElement {
     this.screen?.remove();
     this.screen = el;
     this.append(el);
+    this.music?.setInMenu(MUSIC_SCREENS.has(tag));
   }
 
   mainMenu() {

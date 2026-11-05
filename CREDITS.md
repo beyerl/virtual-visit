@@ -1,4 +1,13 @@
-# Image credits
+# Credits
+
+## Menu music
+
+"Happy Adventure (Loop)" by [TinyWorlds](https://opengameart.org/users/tinyworlds), made with
+Autotracker, from [OpenGameArt](https://opengameart.org/content/happy-adventure-loop), released
+under [CC0](https://creativecommons.org/publicdomain/zero/1.0/) (public domain). File:
+`audio/music/happy-adventure.mp3`.
+
+## Images
 
 The stop photos on the day pages are thumbnails (cropped and scaled to 320 × 240) of
 images from [Wikimedia Commons](https://commons.wikimedia.org/), used under their free licences.

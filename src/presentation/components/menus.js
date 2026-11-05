@@ -23,7 +23,7 @@ export class VvSplash extends Screen {
           <span class="w3">the world!</span>
         </h1>
         <button class="press-start" data-button="start">Press start</button>
-        <p class="splash-note">Best with an SNES-style gamepad · keyboard works too</p>
+        <p class="splash-note">Best with an SNES-style gamepad · keyboard works too · <b>X</b>: music on / off</p>
       </div>`;
   }
 
@@ -67,6 +67,7 @@ export class VvMainMenu extends Screen {
     /** @type {VvPadHint} */ (this.$("vv-pad-hint")).hints = [
       ["dpad", "Choose"],
       ["a", "OK"],
+      ["x", "Music"],
     ];
   }
 
@@ -95,6 +96,7 @@ export class VvLoadScreen extends Screen {
       ["a", "Load"],
       ["y", "Delete"],
       ["b", "Back"],
+      ["x", "Music"],
     ];
   }
 
@@ -186,6 +188,7 @@ export class VvJourneySelect extends Screen {
       ["dpad", "Choose"],
       ["a", "Let's go!"],
       ["b", "Back"],
+      ["x", "Music"],
     ];
     this.select();
   }

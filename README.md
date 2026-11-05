@@ -70,7 +70,7 @@ game** lists the saves; a game saved in Street View resumes where you stood.
 | B        | Esc, Backspace    | back                                                           |
 | Start    | S                 | skip the train ride (or the remaining bubbles); title: start   |
 | Select   | P, Tab            | pause menu                                                     |
-| X        | X, M              | sound on / off during a ride                                   |
+| X        | X, M              | sound on / off during a ride; music on / off in the menus      |
 | Y        | Y, Delete         | show / hide the ride map; delete a save (load screen)          |
 | L + R    | Q + E             | finish the stop (in the game and in Street View)               |
 
@@ -111,6 +111,13 @@ npm test           # domain and application tests (Node 22+)
 
 The extension's content script also runs on `localhost` and `127.0.0.1`, so the hand-over works
 locally too.
+
+## Menu music
+
+The title screen and the menus play "Happy Adventure (Loop)" by TinyWorlds (CC0, from
+OpenGameArt; see [CREDITS.md](CREDITS.md)), looped with Web Audio. **X** turns it on or off
+there (remembered in localStorage); it fades out when a journey starts. Like all sound, it starts
+after the first click or key press.
 
 ## Guide voices
 
