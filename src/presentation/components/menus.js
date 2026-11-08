@@ -238,6 +238,7 @@ export class VvPause extends Screen {
     const menu = /** @type {VvMenu} */ (this.$("vv-menu"));
     menu.setOptions([
       { label: "Resume", value: "resume" },
+      ...(this.app.game.state?.stepIndex ? [{ label: "Back to previous step", value: "back" }] : []),
       { label: "Skip to next step", value: "skip" },
       { label: "Main menu", value: "menu" },
     ]);
@@ -245,6 +246,7 @@ export class VvPause extends Screen {
       const v = /** @type {CustomEvent} */ (e).detail;
       this.app.closePause();
       if (v === "skip") this.app.next();
+      if (v === "back") this.app.previous();
       if (v === "menu") this.app.mainMenu();
     });
   }

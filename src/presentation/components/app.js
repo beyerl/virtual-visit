@@ -131,6 +131,12 @@ export class VvApp extends HTMLElement {
     else this.playStep();
   }
 
+  /** Back to the previous step (saved). */
+  previous() {
+    this.game.back();
+    this.playStep();
+  }
+
   openVisit() {
     this.game.openVisit().catch((e) => {
       console.error(e);

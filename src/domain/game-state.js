@@ -42,6 +42,11 @@ export class GameState {
     );
   }
 
+  /** Back to the previous step, if there is one. @param {number} now */
+  back(now) {
+    return this.with({ stepIndex: Math.max(0, this.stepIndex - 1), visiting: false, position: null, finished: false }, now);
+  }
+
   /** Street View was opened for the current stop. @param {number} now */
   openVisit(now) {
     return this.with({ visiting: true }, now);

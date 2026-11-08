@@ -13,7 +13,7 @@ import { LocalStorageValue } from "./infrastructure/local-storage-value.js";
 import { MenuMusic } from "./infrastructure/menu-music.js";
 import "./presentation/components/app.js";
 
-export const VERSION = "0.12.0";
+export const VERSION = "0.12.1";
 
 const link = new ExtensionVisitLink(window);
 const game = new GameService({

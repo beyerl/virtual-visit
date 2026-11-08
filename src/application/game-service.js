@@ -76,6 +76,11 @@ export class GameService {
     return this.commit(this.state.advance(j.steps.length, this.now()));
   }
 
+  back() {
+    if (!this.state) throw new Error("no game");
+    return this.commit(this.state.back(this.now()));
+  }
+
   /** Back to the start of the journey's steps (for "play again"). */
   restart() {
     if (!this.state) throw new Error("no game");

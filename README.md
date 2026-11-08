@@ -61,6 +61,8 @@ with only a gamepad the guides stay silent until then.
 The game saves itself after every step and every move in Street View (localStorage). **Load
 game** lists the saves; a game saved in Street View resumes where you stood.
 
+The pause menu can also go back to the previous step or skip to the next one.
+
 ## Controls
 
 | Button   | Keyboard          | What it does                                                   |

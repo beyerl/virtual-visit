@@ -90,6 +90,20 @@ test("new game is saved at once and advances with autosave", () => {
   assert.throws(() => game.newGame("atlantis"), /not available/);
 });
 
+test("going back returns to the previous step, saved, and stops at the first", () => {
+  const { game, saves } = setup();
+  const s = game.newGame("tokyo");
+  game.back();
+  assert.equal(game.state.stepIndex, 0);
+  game.advance();
+  game.advance();
+  game.commit(game.state.moveTo({ lat: 1, lng: 2 }, 5));
+  game.back();
+  assert.equal(game.state.stepIndex, 1);
+  assert.equal(game.state.position, null);
+  assert.equal(saves.get(s.id).stepIndex, 1);
+});
+
 test("opening a visit hands it to the extension and goes to the route", async () => {
   const { game, link, navigator } = setup();
   game.newGame("tokyo");
