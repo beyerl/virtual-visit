@@ -4,6 +4,7 @@
 //   game -> extension  { source: "virtual-visit", type: "vv-hello" | "vv-start" | "vv-clear", ticket? }
 //   extension -> game  { source: "sv-gamepad-visit", type: "vv-state", ticket, version }
 //                      { source: "sv-gamepad-visit", type: "vv-started" }
+//   both ways          { source, type: "vv-settings", settings, updatedAt }
 //
 // "vv-state" answers "vv-hello" and is sent again whenever the stored visit
 // changes (each Street View move is stored by the extension right away).
@@ -26,6 +27,8 @@ export class ExtensionVisitLink extends VisitLink {
     this.version = null;
     /** @type {((t: import("../application/ports.js").VisitTicket) => void)[]} */
     this.listeners = [];
+    /** @type {((remote: { settings: unknown, updatedAt: number }) => void) | null} */
+    this.settingsListener = null;
     /** @type {Map<string, (() => void)[]>} */
     this.waiting = new Map();
     /** @type {Promise<boolean> | null} */
@@ -37,6 +40,9 @@ export class ExtensionVisitLink extends VisitLink {
         this.version = e.data.version ?? "?";
         this.ticket = e.data.ticket ?? null;
         if (this.ticket) for (const fn of this.listeners) fn(this.ticket);
+      }
+      if (type === "vv-settings" && typeof e.data.updatedAt === "number") {
+        this.settingsListener?.({ settings: e.data.settings, updatedAt: e.data.updatedAt });
       }
       for (const fn of this.waiting.get(type) ?? []) fn();
       this.waiting.delete(type);
@@ -92,5 +98,13 @@ export class ExtensionVisitLink extends VisitLink {
 
   onUpdate(/** @type {(t: import("../application/ports.js").VisitTicket) => void} */ fn) {
     this.listeners.push(fn);
+  }
+
+  onSettings(/** @type {(remote: { settings: unknown, updatedAt: number }) => void} */ fn) {
+    this.settingsListener = fn;
+  }
+
+  pushSettings(/** @type {unknown} */ settings, /** @type {number} */ updatedAt) {
+    this.post("vv-settings", { settings, updatedAt });
   }
 }

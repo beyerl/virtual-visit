@@ -5,9 +5,9 @@ import { Button } from "../../domain/input.js";
 import { StepType } from "../../domain/journey.js";
 import { JOURNEY_MUSIC, MENU_TRACK } from "../../content/journey-music.js";
 import { define } from "../base.js";
-import "./controls.js";
 import "./journey-screens.js";
 import "./menus.js";
+import "./settings.js";
 
 /** Screen per step type. */
 const STEP_SCREENS = {
@@ -20,11 +20,11 @@ const STEP_SCREENS = {
 };
 
 /** Screens outside a journey, with the menu music. */
-const MENU_SCREENS = new Set(["vv-splash", "vv-main-menu", "vv-journey-select", "vv-load-screen", "vv-controls"]);
+const MENU_SCREENS = new Set(["vv-splash", "vv-main-menu", "vv-journey-select", "vv-load-screen", "vv-settings"]);
 /** Screens of a journey with its music (rides have their video's sound). */
 const JOURNEY_MUSIC_SCREENS = new Set(["vv-day-intro", "vv-walk-screen", "vv-visit-screen", "vv-wrap-up"]);
 /** Screens where X doesn't turn the music on or off: it is set up as a control here. */
-const NO_MUSIC_TOGGLE = new Set(["vv-controls"]);
+const NO_MUSIC_TOGGLE = new Set(["vv-settings"]);
 
 /**
  * What a screen plays.
@@ -46,6 +46,8 @@ export class VvApp extends HTMLElement {
     this.link = /** @type {any} */ (null);
     /** @type {import("../../application/controls-service.js").ControlsService} */
     this.controls = /** @type {any} */ (null);
+    /** @type {import("../../application/settings-service.js").SettingsService} */
+    this.settings = /** @type {any} */ (null);
     this.version = "0";
     /** @type {import("../../infrastructure/menu-music.js").MenuMusic | null} */
     this.music = null;
@@ -58,13 +60,15 @@ export class VvApp extends HTMLElement {
   /**
    * @param {{ game: import("../../application/game-service.js").GameService, link: import("../../application/ports.js").VisitLink,
    *           input: import("../../application/input-service.js").InputService,
-   *           controls: import("../../application/controls-service.js").ControlsService, version: string,
+   *           controls: import("../../application/controls-service.js").ControlsService,
+   *           settings: import("../../application/settings-service.js").SettingsService, version: string,
    *           music?: import("../../infrastructure/menu-music.js").MenuMusic }} deps
    */
-  async start({ game, link, input, controls, version, music }) {
+  async start({ game, link, input, controls, settings, version, music }) {
     this.game = game;
     this.link = link;
     this.controls = controls;
+    this.settings = settings;
     this.version = version;
     this.music = music ?? null;
     input.listen((a) => {
@@ -105,8 +109,8 @@ export class VvApp extends HTMLElement {
     this.show("vv-load-screen");
   }
 
-  controlsScreen() {
-    this.show("vv-controls");
+  settingsScreen() {
+    this.show("vv-settings");
   }
 
   journeySelect() {

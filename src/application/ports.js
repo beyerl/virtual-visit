@@ -57,6 +57,14 @@ export class VisitLink {
   onUpdate(fn) {
     throw new Error("abstract");
   }
+  /** @param {(remote: { settings: unknown, updatedAt: number }) => void} fn called with the extension's settings */
+  onSettings(fn) {
+    throw new Error("abstract");
+  }
+  /** Tell the extension the settings. @param {unknown} settings @param {number} updatedAt */
+  pushSettings(settings, updatedAt) {
+    throw new Error("abstract");
+  }
 }
 
 export class Navigator {

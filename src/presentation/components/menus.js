@@ -56,12 +56,12 @@ export class VvMainMenu extends Screen {
         sub: saves.length ? `${saves.length} saved game${saves.length > 1 ? "s" : ""}` : "No saved games yet",
         disabled: !saves.length,
       },
-      { label: "Controls", value: "controls", sub: "Set up your gamepad" },
+      { label: "Settings", value: "settings", sub: "Gamepad, Street View, sound" },
     ]);
     menu.addEventListener("choose", (e) => {
       const v = /** @type {CustomEvent} */ (e).detail;
       if (v === "new") this.app.journeySelect();
-      else if (v === "controls") this.app.controlsScreen();
+      else if (v === "settings") this.app.settingsScreen();
       else this.app.loadScreen();
     });
     /** @type {VvPadHint} */ (this.$("vv-pad-hint")).hints = [

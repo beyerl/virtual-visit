@@ -4,7 +4,7 @@
 import { Button } from "../../domain/input.js";
 import { define, esc } from "../base.js";
 
-/** @typedef {{ label: string, value: string, sub?: string, disabled?: boolean, html?: string }} MenuOption */
+/** @typedef {{ label: string, value: string, sub?: string, disabled?: boolean, heading?: boolean, html?: string }} MenuOption */
 
 export class VvMenu extends HTMLElement {
   constructor() {
@@ -31,7 +31,7 @@ export class VvMenu extends HTMLElement {
     this.innerHTML = this.options
       .map(
         (o, i) => `
-        <div class="menu-item${i === this.index ? " selected" : ""}${o.disabled ? " disabled" : ""}" role="option"
+        <div class="menu-item${i === this.index ? " selected" : ""}${o.disabled ? " disabled" : ""}${o.heading ? " heading" : ""}" role="option"
              aria-selected="${i === this.index}" data-index="${i}">
           <span class="menu-pointer" aria-hidden="true">▶</span>
           <span class="menu-body">${o.html ?? `<span class="menu-label">${esc(o.label)}</span>${o.sub ? `<span class="menu-sub">${esc(o.sub)}</span>` : ""}`}</span>

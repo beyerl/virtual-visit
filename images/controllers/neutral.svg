@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="110 45 690 400" width="690" height="400" font-family="system-ui, -apple-system, Segoe UI, sans-serif">
+  <title>Gamepad with custom controls</title>
+  <rect x="110" y="45" width="690" height="400" rx="16" fill="#ffffff"/>
+  <rect x="300" y="126" width="84" height="28" rx="10" fill="#8c959f"/>
+  <rect x="516" y="126" width="84" height="28" rx="10" fill="#8c959f"/>
+  <g fill="#424a53" stroke="#424a53" stroke-width="6">
+    <rect x="280" y="148" width="340" height="140" rx="70"/>
+    <ellipse cx="318" cy="288" rx="50" ry="84" transform="rotate(24 318 288)"/>
+    <ellipse cx="582" cy="288" rx="50" ry="84" transform="rotate(-24 582 288)"/>
+  </g>
+  <g fill="#d0d7de">
+    <rect x="280" y="148" width="340" height="140" rx="70"/>
+    <ellipse cx="318" cy="288" rx="50" ry="84" transform="rotate(24 318 288)"/>
+    <ellipse cx="582" cy="288" rx="50" ry="84" transform="rotate(-24 582 288)"/>
+  </g>
+  <rect x="345" y="182" width="18" height="60" rx="3" fill="#32383f"/>
+  <rect x="324" y="203" width="60" height="18" rx="3" fill="#32383f"/>
+  <rect x="424" y="206" width="24" height="10" rx="5" fill="#8c959f"/>
+  <rect x="458" y="206" width="24" height="10" rx="5" fill="#8c959f"/>
+  <g fill="#57606a">
+    <circle cx="553" cy="178" r="13"/>
+    <circle cx="581" cy="206" r="13"/>
+    <circle cx="553" cy="234" r="13"/>
+    <circle cx="525" cy="206" r="13"/>
+  </g>
+  <text x="450" y="428" font-size="20" font-weight="600" fill="#1f2328" text-anchor="middle">Custom controls</text>
+</svg>

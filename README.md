@@ -80,11 +80,24 @@ Gamepads with Chrome's standard mapping are read by button position (as on an Xb
 B bottom, X top, Y left, like the SNES). Common USB SNES replicas without a standard mapping are
 supported too. Everything can also be clicked.
 
-**Main menu → Controls** sets the pad's controls: pick a control and press the pad button (or
-push the stick / D-pad direction) for it, or choose _Set up all buttons_ to go through all twelve
-in a row (Enter skips one, Esc stops, waiting 8 s skips). Each input belongs to one control only;
-assigning it elsewhere takes it away from the old one. _Automatic layout_ forgets the custom
-controls. They are saved in localStorage; the keyboard keys always stay the same.
+**Main menu → Settings** holds everything that can be set:
+
+- **Street View controls:** the Xbox Classic or SNES preset (← / →, with a picture of it) or your
+  own assignments, control by control or all in a row. A changed layout shows as _Custom_.
+- **Street View:** look speeds, ambient sound, the three volumes and the log level, as in the
+  extension's popup.
+- **Game controls:** pick a control and press the pad button (or push the stick / D-pad direction)
+  for it, or choose _Set up all game buttons_ to go through all twelve in a row (Enter skips one,
+  Esc stops, waiting 8 s skips). _Automatic game layout_ forgets the custom controls; the keyboard
+  keys always stay the same.
+
+Each input belongs to one control only; assigning it elsewhere takes it away from the old one.
+
+The Street View settings are kept in this site's localStorage, which is the single source of truth
+once the game has them. The extension's own pages can't read that, so it mirrors them. Each side
+stamps its changes and the newer one wins: a change in the popup while the game is closed arrives
+the next time the game opens. On the first start, the game takes over what the extension has.
+Needs Street View Gamepad 1.13 or newer.
 
 Browsers only play video with sound after a click or key press on the page (a gamepad press
 doesn't count). Without one, rides play muted and a badge says so: click once anywhere, then
