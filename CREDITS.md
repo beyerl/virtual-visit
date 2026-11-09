@@ -24,8 +24,7 @@ Each track was shortened to at most three minutes, faded at both ends and normal
 | Cape Town | [Limpopo, from Traditional Songs from South Africa](https://archive.org/details/traditionalsongsfromsouthafrica) | Nkunzemnyama | CC BY 3.0 |
 | Cairo | [Zar music, 2017 (audio of the video)](https://commons.wikimedia.org/wiki/File:Egyptian_singer_of_the_Band_Asyad_El_Zar_%D9%81%D8%B1%D9%82%D9%87_%D8%A7%D8%B3%D9%8A%D8%A7%D8%AF_%D8%A7%D9%84%D8%B2%D8%A7%D8%B1.webm) | Asyad El Zar (Zar Masters), filmed by Ahmed Emad H | CC BY-SA 4.0 |
 | Kingston | [Endless Dub](https://commons.wikimedia.org/wiki/File:Endless_Dub.ogg) | Lion of Joppa soundsystem, a version of "Endless Fighting" by Kocha | CC BY-SA 3.0 |
-
-Nairobi uses the menu music: no openly licensed recording was found.
+| Nairobi | [Maasai women's welcome dance and singing, Amboseli, 2025 (audio of the video)](https://commons.wikimedia.org/wiki/File:Danza_de_bienvenida_de_mujeres_mas%C3%A1i.webm) | Maasai women of a village at Amboseli, filmed by ProtoplasmaKid | CC BY-SA 4.0 |
 
 ## Guide voices
 
