@@ -7,25 +7,6 @@ Autotracker, from [OpenGameArt](https://opengameart.org/content/happy-adventure-
 under [CC0](https://creativecommons.org/publicdomain/zero/1.0/) (public domain). File:
 `audio/music/happy-adventure.mp3`.
 
-## Journey music
-
-Each track was shortened to at most three minutes, faded at both ends and normalised in loudness
-(`tools/music/build.py`). The licences are those stated on the source pages.
-
-| Journey | Music | Performer / author | Licence |
-| --- | --- | --- | --- |
-| Tokyo | [Kōjō no Tsuki, koto](https://commons.wikimedia.org/wiki/File:Kojonotsuki.ogg) | ContributorQ | CC BY-SA 4.0 |
-| Beijing | [雨打芭蕉 (Rain on the Banana Leaves), gaohu](https://commons.wikimedia.org/wiki/File:%E9%9B%A8%E6%89%93%E8%8A%AD%E8%95%89.ogg) | Folk music, arranged by 丘鹤俦, performed by Zhang Peijian, recorded by David290 | CC BY-SA 4.0 |
-| Moscow | [Kalinka, synthesised accordion](https://commons.wikimedia.org/wiki/File:Kalinka.ogg) | Ivan Larionov, realised by Pracchia-78 | Public domain |
-| Bogotá | [Cuando la vida se va, bambuco (excerpt)](https://commons.wikimedia.org/wiki/File:Cuando_la_vida_se_va-fragmento.ogg) | Alexander Cuesta-Moreno | CC BY-SA 3.0 |
-| Rio | [Choro e Poesia, polka, 1913](https://commons.wikimedia.org/wiki/File:Polca_Choro_e_Poesia_Pedro_de_Alc%C3%A2ntara_e_Ernesto_Nazareth.opus) | Pedro de Alcântara | Public domain |
-| New York | [Smoky Mountain Fiddle](https://archive.org/details/TinaEAndrusSmokyMountainFiddle) | Tina E. Andrus | CC BY 2.5 |
-| Ulaanbaatar | [Zuun Langiin Joroo Luus, transcription](https://commons.wikimedia.org/wiki/File:Zuun_Langiin_Joroo_Luus.ogg) | Kapoios2026 | CC0 |
-| Cape Town | [Limpopo, from Traditional Songs from South Africa](https://archive.org/details/traditionalsongsfromsouthafrica) | Nkunzemnyama | CC BY 3.0 |
-| Cairo | [Bashraf Kuzum, Maqam Hijaz, part 1, 1931](https://commons.wikimedia.org/wiki/File:Baschrav_Kuzum_Maqam_Hijaz_part_1_(1931).ogg) | Unknown, from _Musik des Orients_ | Public domain |
-
-Nairobi and Kingston use the menu music: no openly licensed traditional recording was found.
-
 ## Guide voices
 
 Recorded with local text-to-speech (`tools/voice/`):
