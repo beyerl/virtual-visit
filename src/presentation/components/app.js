@@ -3,6 +3,7 @@
 
 import { Button } from "../../domain/input.js";
 import { StepType } from "../../domain/journey.js";
+import { JOURNEY_MUSIC, MENU_TRACK } from "../../content/journey-music.js";
 import { define } from "../base.js";
 import "./controls.js";
 import "./journey-screens.js";
@@ -18,9 +19,23 @@ const STEP_SCREENS = {
   [StepType.JOURNEY_WRAP_UP]: "vv-wrap-up",
 };
 
-/** Screens with menu music; on the first four, X turns it on or off. */
-const MUSIC_SCREENS = new Set(["vv-splash", "vv-main-menu", "vv-journey-select", "vv-load-screen", "vv-controls"]);
-const MUSIC_TOGGLE_SCREENS = new Set(["vv-splash", "vv-main-menu", "vv-journey-select", "vv-load-screen"]);
+/** Screens outside a journey, with the menu music. */
+const MENU_SCREENS = new Set(["vv-splash", "vv-main-menu", "vv-journey-select", "vv-load-screen", "vv-controls"]);
+/** Screens of a journey with its music (rides have their video's sound). */
+const JOURNEY_MUSIC_SCREENS = new Set(["vv-day-intro", "vv-walk-screen", "vv-visit-screen", "vv-wrap-up"]);
+/** Screens where X doesn't turn the music on or off: it is set up as a control here. */
+const NO_MUSIC_TOGGLE = new Set(["vv-controls"]);
+
+/**
+ * What a screen plays.
+ * @param {string} tag @param {import("../../domain/journey.js").Journey} [journey]
+ * @returns {import("../../infrastructure/menu-music.js").Track | null}
+ */
+const musicOf = (tag, journey) => {
+  if (MENU_SCREENS.has(tag)) return MENU_TRACK;
+  if (JOURNEY_MUSIC_SCREENS.has(tag)) return (journey && JOURNEY_MUSIC[journey.id]) ?? MENU_TRACK;
+  return null;
+};
 
 export class VvApp extends HTMLElement {
   constructor() {
@@ -53,7 +68,7 @@ export class VvApp extends HTMLElement {
     this.version = version;
     this.music = music ?? null;
     input.listen((a) => {
-      if (a === Button.X && !this.pause && this.music && MUSIC_TOGGLE_SCREENS.has(this.screen?.localName ?? "")) {
+      if (a === Button.X && !this.pause && this.music && this.hasMusicToggle) {
         this.music.toggle();
         return;
       }
@@ -74,7 +89,12 @@ export class VvApp extends HTMLElement {
     this.screen?.remove();
     this.screen = el;
     this.append(el);
-    this.music?.setInMenu(MUSIC_SCREENS.has(tag));
+    this.music?.play(musicOf(tag, props.journey));
+  }
+
+  get hasMusicToggle() {
+    const tag = this.screen?.localName ?? "";
+    return !NO_MUSIC_TOGGLE.has(tag) && !!musicOf(tag);
   }
 
   mainMenu() {
@@ -137,7 +157,9 @@ export class VvApp extends HTMLElement {
     this.playStep();
   }
 
-  openVisit() {
+  /** Into Street View, once the music has faded out. */
+  async openVisit() {
+    await this.music?.fadeOut();
     this.game.openVisit().catch((e) => {
       console.error(e);
       this.playStep();

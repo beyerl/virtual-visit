@@ -13,7 +13,7 @@ import { LocalStorageValue } from "./infrastructure/local-storage-value.js";
 import { MenuMusic } from "./infrastructure/menu-music.js";
 import "./presentation/components/app.js";
 
-export const VERSION = "0.12.1";
+export const VERSION = "0.13.0";
 
 const link = new ExtensionVisitLink(window);
 const game = new GameService({
@@ -40,10 +40,5 @@ const input = new InputService({
 setInterval(() => input.tick(), 16);
 
 const app = /** @type {import("./presentation/components/app.js").VvApp} */ (document.querySelector("vv-app"));
-// "Happy Adventure (Loop)" by TinyWorlds, CC0, from OpenGameArt (see CREDITS.md).
-const music = new MenuMusic(
-  window,
-  { src: "audio/music/happy-adventure.mp3", volume: 0.35, loopStart: 0.042 },
-  new LocalStorageValue(() => window.localStorage, "virtual-visit.music.v1"),
-);
+const music = new MenuMusic(window, new LocalStorageValue(() => window.localStorage, "virtual-visit.music.v1"));
 app.start({ game, link, input, controls, version: VERSION, music });

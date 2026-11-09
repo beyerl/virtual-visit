@@ -72,7 +72,7 @@ The pause menu can also go back to the previous step or skip to the next one.
 | B        | Esc, Backspace    | back                                                           |
 | Start    | S                 | skip the train ride (or the remaining bubbles); title: start   |
 | Select   | P, Tab            | pause menu                                                     |
-| X        | X, M              | sound on / off during a ride; music on / off in the menus      |
+| X        | X, M              | sound on / off during a ride; music on / off elsewhere         |
 | Y        | Y, Delete         | show / hide the ride map; delete a save (load screen)          |
 | L + R    | Q + E             | finish the stop (in the game and in Street View)               |
 
@@ -114,12 +114,14 @@ npm test           # domain and application tests (Node 22+)
 The extension's content script also runs on `localhost` and `127.0.0.1`, so the hand-over works
 locally too.
 
-## Menu music
+## Music
 
 The title screen and the menus play "Happy Adventure (Loop)" by TinyWorlds (CC0, from
-OpenGameArt; see [CREDITS.md](CREDITS.md)), looped with Web Audio. **X** turns it on or off
-there (remembered in localStorage); it fades out when a journey starts. Like all sound, it starts
-after the first click or key press.
+OpenGameArt). A journey's day pages, walks, stop pages and wrap-ups play traditional music of the
+country visited, openly licensed (see [CREDITS.md](CREDITS.md) and `tools/music/build.py`); Nairobi
+and Kingston keep the menu music, as no openly licensed recording was found. It stops for the ride
+videos and fades out before Street View opens. **X** turns the music on or off on these screens
+(remembered in localStorage). Like all sound, it starts after the first click or key press.
 
 ## Guide voices
 
