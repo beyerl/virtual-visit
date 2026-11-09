@@ -130,9 +130,9 @@ locally too.
 ## Music
 
 The title screen and the menus play "Happy Adventure (Loop)" by TinyWorlds (CC0, from
-OpenGameArt). A journey's day pages, walks, stop pages and wrap-ups play music of the country
-visited, openly licensed (see [CREDITS.md](CREDITS.md) and `tools/music/build.py`); Nairobi keeps
-the menu music, as no openly licensed recording was found. It stops for the ride
+OpenGameArt). A journey's day pages, walks, stop pages and wrap-ups play traditional music of the
+country visited, openly licensed (see [CREDITS.md](CREDITS.md) and `tools/music/build.py`); Nairobi
+and Kingston keep the menu music, as no openly licensed recording was found. It stops for the ride
 videos and fades out before Street View opens. **X** turns the music on or off on these screens
 (remembered in localStorage). Like all sound, it starts after the first click or key press.
 
