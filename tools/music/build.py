@@ -31,7 +31,6 @@ TRACKS = {
     "capetown": ARCHIVE + "traditionalsongsfromsouthafrica/limpopo.mp3",
     "cairo": COMMONS + "Egyptian singer of the Band Asyad El Zar فرقه اسياد الزار.webm",
     "kingston": COMMONS + "Endless Dub.ogg",
-    "nairobi": COMMONS + "Danza de bienvenida de mujeres masái.webm",
 }
 
 # Seconds of silence to skip at the start of a source.
