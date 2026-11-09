@@ -18,13 +18,14 @@ Each track was shortened to at most three minutes, faded at both ends and normal
 | Beijing | [雨打芭蕉 (Rain on the Banana Leaves), gaohu](https://commons.wikimedia.org/wiki/File:%E9%9B%A8%E6%89%93%E8%8A%AD%E8%95%89.ogg) | Folk music, arranged by 丘鹤俦, performed by Zhang Peijian, recorded by David290 | CC BY-SA 4.0 |
 | Moscow | [Kalinka, synthesised accordion](https://commons.wikimedia.org/wiki/File:Kalinka.ogg) | Ivan Larionov, realised by Pracchia-78 | Public domain |
 | Bogotá | [Cuando la vida se va, bambuco (excerpt)](https://commons.wikimedia.org/wiki/File:Cuando_la_vida_se_va-fragmento.ogg) | Alexander Cuesta-Moreno | CC BY-SA 3.0 |
-| Rio | [Choro e Poesia, polka, 1913](https://commons.wikimedia.org/wiki/File:Polca_Choro_e_Poesia_Pedro_de_Alc%C3%A2ntara_e_Ernesto_Nazareth.opus) | Pedro de Alcântara | Public domain |
+| Rio | [Agradeço e dou respeito, samba, 2006](https://commons.wikimedia.org/wiki/File:Agradeco_e_dou_respeito.ogg) | Ruy Humberto da Silva Camargo (RuydoJB) | CC BY-SA 4.0 |
 | New York | [Smoky Mountain Fiddle](https://archive.org/details/TinaEAndrusSmokyMountainFiddle) | Tina E. Andrus | CC BY 2.5 |
-| Ulaanbaatar | [Zuun Langiin Joroo Luus, transcription](https://commons.wikimedia.org/wiki/File:Zuun_Langiin_Joroo_Luus.ogg) | Kapoios2026 | CC0 |
+| Ulaanbaatar | [Musicians from Mongolia in front of the Centre Pompidou, 2010](https://archive.org/details/aporee_8216_9989) | Unnamed street musicians, recorded by Thijs Geritz | CC BY-SA 3.0 |
 | Cape Town | [Limpopo, from Traditional Songs from South Africa](https://archive.org/details/traditionalsongsfromsouthafrica) | Nkunzemnyama | CC BY 3.0 |
-| Cairo | [Bashraf Kuzum, Maqam Hijaz, part 1, 1931](https://commons.wikimedia.org/wiki/File:Baschrav_Kuzum_Maqam_Hijaz_part_1_(1931).ogg) | Unknown, from _Musik des Orients_ | Public domain |
+| Cairo | [Zar music, 2017 (audio of the video)](https://commons.wikimedia.org/wiki/File:Egyptian_singer_of_the_Band_Asyad_El_Zar_%D9%81%D8%B1%D9%82%D9%87_%D8%A7%D8%B3%D9%8A%D8%A7%D8%AF_%D8%A7%D9%84%D8%B2%D8%A7%D8%B1.webm) | Asyad El Zar (Zar Masters), filmed by Ahmed Emad H | CC BY-SA 4.0 |
+| Kingston | [Endless Dub](https://commons.wikimedia.org/wiki/File:Endless_Dub.ogg) | Lion of Joppa soundsystem, a version of "Endless Fighting" by Kocha | CC BY-SA 3.0 |
 
-Nairobi and Kingston use the menu music: no openly licensed traditional recording was found.
+Nairobi uses the menu music: no openly licensed recording was found.
 
 ## Guide voices
 

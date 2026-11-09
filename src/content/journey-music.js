@@ -1,7 +1,6 @@
-// The music of each journey's screens: traditional music of the country
-// visited (sources and licences: CREDITS.md; built by tools/music/build.py).
-// Kenya and Jamaica have no openly licensed traditional recording yet, so those
-// journeys keep the menu music.
+// The music of each journey's screens: music of the country visited (sources
+// and licences: CREDITS.md; built by tools/music/build.py). Kenya has no openly
+// licensed recording yet, so that journey keeps the menu music.
 
 const VOLUME = 0.4; // quiet enough for the guide to speak over it
 
@@ -14,6 +13,6 @@ export const MENU_TRACK = Object.freeze({ src: "audio/music/happy-adventure.mp3"
 /** @type {Readonly<Record<string, import("../infrastructure/menu-music.js").Track>>} */
 export const JOURNEY_MUSIC = Object.freeze(
   Object.fromEntries(
-    ["tokyo", "beijing", "moscow", "bogota", "rio", "newyork", "ulaanbaatar", "capetown", "cairo"].map((id) => [id, track(id)]),
+    ["tokyo", "beijing", "moscow", "bogota", "rio", "newyork", "ulaanbaatar", "capetown", "cairo", "kingston"].map((id) => [id, track(id)]),
   ),
 );
