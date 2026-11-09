@@ -129,11 +129,12 @@ locally too.
 
 ## Music
 
-The title screen, the menus and every journey's day pages, walks, stop pages and wrap-ups play
-"Happy Adventure (Loop)" by TinyWorlds (CC0, from OpenGameArt; see [CREDITS.md](CREDITS.md)),
-looped with Web Audio. It stops for the ride videos and fades out before Street View opens. **X**
-turns it on or off on these screens (remembered in localStorage). Like all sound, it starts after
-the first click or key press.
+The title screen and the menus play "Happy Adventure (Loop)" by TinyWorlds (CC0, from
+OpenGameArt). Each journey's day pages, walks, stop pages and wrap-ups have their own cozy track
+with a feel of the country visited, by Kevin MacLeod (CC BY; see [CREDITS.md](CREDITS.md) and
+`tools/music/build.py`). The music stops for the ride videos and fades out before Street View
+opens. **X** turns it on or off on these screens (remembered in localStorage). Like all sound, it
+starts after the first click or key press.
 
 ## Guide voices
 

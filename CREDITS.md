@@ -7,6 +7,27 @@ Autotracker, from [OpenGameArt](https://opengameart.org/content/happy-adventure-
 under [CC0](https://creativecommons.org/publicdomain/zero/1.0/) (public domain). File:
 `audio/music/happy-adventure.mp3`.
 
+## Journey music
+
+All tracks are by Kevin MacLeod ([incompetech.com](https://incompetech.com)), licensed under
+[Creative Commons: By Attribution 4.0](https://creativecommons.org/licenses/by/4.0/). They were
+shortened to at most three minutes, faded at both ends and normalised in loudness
+(`tools/music/build.py`). Files: `audio/music/<journey>.mp3`.
+
+| Journey | Track |
+| --- | --- |
+| Tokyo | Ishikari Lore |
+| Beijing | Shenyang |
+| Moscow | Padanaya Blokov |
+| Bogotá | Del Rio Bravo |
+| Rio | Casa Bossa Nova |
+| New York | Mister Exposition |
+| Ulaanbaatar | Cattails |
+| Cape Town | Allada |
+| Cairo | Desert City |
+| Nairobi | Savannah (Sketch) |
+| Kingston | Beach Party |
+
 ## Guide voices
 
 Recorded with local text-to-speech (`tools/voice/`):
