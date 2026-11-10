@@ -4,7 +4,7 @@ import { Dialogue, lineParts } from "../src/domain/dialogue.js";
 import { GameState } from "../src/domain/game-state.js";
 import { bearing } from "../src/domain/geo.js";
 import { Button, FINISH, pressedBetween } from "../src/domain/input.js";
-import { seekTarget, StepType } from "../src/domain/journey.js";
+import { nextPlaybackRate, seekTarget, StepType } from "../src/domain/journey.js";
 import { panoramaUrl, routeUrl } from "../src/domain/maps-links.js";
 import { JOURNEYS } from "../src/content/journeys.js";
 import { CITY_SVG } from "../src/presentation/components/globe.js";
@@ -173,4 +173,13 @@ test("content: every ride outside Tokyo has a route for its map, near where its 
 
 test("opening cutscene: every journey has a city drawing for the train window", () => {
   for (const j of JOURNEYS) assert.ok(CITY_SVG[j.id], j.id);
+});
+
+test("playback speed: D-pad up / down step through the offered speeds and stop at the ends", () => {
+  assert.equal(nextPlaybackRate(1, 1), 1.25);
+  assert.equal(nextPlaybackRate(1, -1), 0.75);
+  assert.equal(nextPlaybackRate(2, 1), 2, "not past the fastest");
+  assert.equal(nextPlaybackRate(0.25, -1), 0.25, "not below the slowest");
+  assert.equal(nextPlaybackRate(1, 1, [2, 1, 1.5]), 1.5, "the player's own speeds, in any order");
+  assert.equal(nextPlaybackRate(1.1, -1, [0.5, 1, 2]), 1, "from an odd speed to the next offered one");
 });

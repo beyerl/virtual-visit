@@ -5,7 +5,7 @@
 // (gamepad presses don't count). So the video starts with sound; if that is
 // refused, it plays muted and `muted` tells the screen to say so.
 
-import { seekTarget } from "../domain/journey.js";
+import { nextPlaybackRate, seekTarget } from "../domain/journey.js";
 
 const API = "https://www.youtube.com/iframe_api";
 const AUTOPLAY_CHECK = 1500;
@@ -45,6 +45,8 @@ export class RideVideo {
     this.muted = false;
     this.destroyed = false;
     this.video = video;
+    /** Playback speed, kept for when the player is ready. */
+    this.rate = 1;
     loadApi(window)
       .then((YT) => {
         if (this.destroyed) return;
@@ -76,6 +78,7 @@ export class RideVideo {
 
   ready() {
     if (this.ducked) this.player.setVolume(DUCKED_VOLUME);
+    if (this.rate !== 1) this.player.setPlaybackRate?.(this.rate);
     this.player.playVideo();
     setTimeout(() => {
       if (this.destroyed || this.ended) return;
@@ -145,6 +148,22 @@ export class RideVideo {
     }
     this.player.seekTo(t, true);
     return t;
+  }
+
+  /** Set the playback speed (applied once the player is ready). @param {number} rate */
+  setRate(rate) {
+    this.rate = rate;
+    this.player?.setPlaybackRate?.(rate);
+  }
+
+  /**
+   * One step faster (1) or slower (-1), among the speeds the player offers.
+   * @param {1 | -1} dir @returns {number} the new speed
+   */
+  changeRate(dir) {
+    const offered = this.player?.getAvailablePlaybackRates?.();
+    this.setRate(nextPlaybackRate(this.rate, dir, offered?.length ? offered : undefined));
+    return this.rate;
   }
 
   destroy() {

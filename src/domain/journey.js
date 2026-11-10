@@ -42,6 +42,22 @@ export function seekTarget(video, now, delta, duration) {
   return Math.max(start, t);
 }
 
+/** Playback speeds D-pad ↑ / ↓ step through in a ride video (YouTube's usual set). */
+export const PLAYBACK_RATES = Object.freeze([0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]);
+
+/**
+ * The next playback speed up (`dir` 1) or down (-1) from `current`, staying at
+ * the fastest or slowest one. @param {number} current @param {1 | -1} dir
+ * @param {readonly number[]} [rates] the speeds the player offers
+ * @returns {number}
+ */
+export function nextPlaybackRate(current, dir, rates = PLAYBACK_RATES) {
+  const sorted = [...rates].sort((a, b) => a - b);
+  if (!sorted.length) return current;
+  if (dir > 0) return sorted.find((r) => r > current + 1e-9) ?? sorted[sorted.length - 1];
+  return [...sorted].reverse().find((r) => r < current - 1e-9) ?? sorted[0];
+}
+
 export class Journey {
   /**
    * @param {{ id: string, title: string, jp: string, tagline: string, guide: string, available: boolean,

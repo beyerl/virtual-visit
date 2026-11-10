@@ -1,6 +1,6 @@
 {
   "name": "virtual-visit",
-  "version": "0.16.2",
+  "version": "0.16.3",
   "private": true,
   "description": "Virtually traveling the world: a gamepad-driven journey with train rides and Street View walks",
   "type": "module",

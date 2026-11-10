@@ -26,8 +26,8 @@ export const CONTROL_ORDER = Object.freeze([
 
 /** What each button is called and does in the game. */
 export const CONTROL_INFO = Object.freeze({
-  [Button.UP]: { name: "D-pad ↑", does: "Choose" },
-  [Button.DOWN]: { name: "D-pad ↓", does: "Choose" },
+  [Button.UP]: { name: "D-pad ↑", does: "Choose; in a ride: play faster" },
+  [Button.DOWN]: { name: "D-pad ↓", does: "Choose; in a ride: play slower" },
   [Button.LEFT]: { name: "D-pad ←", does: "Choose; in a ride: 30 s back" },
   [Button.RIGHT]: { name: "D-pad →", does: "Choose; in a ride: 30 s forward" },
   [Button.A]: { name: "A", does: "OK, next bubble" },

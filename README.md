@@ -78,7 +78,7 @@ The game opens with a short cutscene: the view from a train window as the cities
 
 | Button   | Keyboard          | What it does                                                   |
 | -------- | ----------------- | -------------------------------------------------------------- |
-| D-pad    | arrow keys        | choose; during a ride ← / → skip 30 s back / forward           |
+| D-pad    | arrow keys        | choose; in a ride ← / → skip 30 s, ↑ / ↓ faster / slower       |
 | A        | Enter, Space      | OK, next speech bubble                                         |
 | B        | Esc, Backspace    | back                                                           |
 | Start    | S                 | skip the train ride (or the remaining bubbles); title: start   |

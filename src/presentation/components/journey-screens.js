@@ -104,6 +104,9 @@ export class VvDayIntro extends StepScreen {
   }
 }
 
+/** Ride video speed chosen with D-pad ↑ / ↓, kept for the rest of the session. */
+let rideRate = 1;
+
 const CREDITS_URL = "https://github.com/beyerl/virtual-visit/blob/main/CREDITS.md";
 
 /** A stop of the day's plan: its photo, number (or a lantern for dinner) and name. @param {import("../../domain/journey.js").Stop} s @param {number} i */
@@ -129,7 +132,7 @@ function burstPoints(cx = 100, cy = 100, r1 = 96, r2 = 70, n = 14) {
 /**
  * A train ride: the side-window video full screen, the guide talking over it.
  * A = next bubble, Start = skip the ride, ← / → = 30 s back / forward,
- * X = sound, Y = map. After the
+ * ↑ / ↓ = faster / slower (kept for the rest of the session), X = sound, Y = map. After the
  * (last) video, remaining bubbles can still be read, then on to the stop.
  */
 export class VvRideScreen extends StepScreen {
@@ -152,7 +155,7 @@ export class VvRideScreen extends StepScreen {
     this.hints([
       ["a", "Next"],
       ["start", "Skip ride"],
-      ["dpad", `±${SEEK_STEP} s`],
+      ["dpad", `±${SEEK_STEP} s · speed`],
       ["x", "Sound"],
       ["y", "Map"],
       ["select", "Pause"],
@@ -194,6 +197,7 @@ export class VvRideScreen extends StepScreen {
         /** @type {HTMLElement} */ (this.$(".sound-badge")).hidden = !m;
       },
     });
+    this.video.setRate(rideRate);
   }
 
   rideEnded() {
@@ -217,10 +221,22 @@ export class VvRideScreen extends StepScreen {
   seek(delta) {
     const t = this.video?.seek(delta);
     if (t == null) return;
-    const badge = /** @type {HTMLElement} */ (this.$(".seek-badge"));
     const start = this.video?.video.start ?? 0;
     const at = Math.max(0, Math.round(t - start));
-    badge.textContent = `${delta < 0 ? "⏪" : "⏩"} ${delta < 0 ? "−" : "+"}${Math.abs(delta)} s · ${Math.floor(at / 60)}:${String(at % 60).padStart(2, "0")}`;
+    this.badge(`${delta < 0 ? "⏪" : "⏩"} ${delta < 0 ? "−" : "+"}${Math.abs(delta)} s · ${Math.floor(at / 60)}:${String(at % 60).padStart(2, "0")}`);
+  }
+
+  /** ↑ / ↓: play faster or slower, with a short badge. @param {1 | -1} dir */
+  changeSpeed(dir) {
+    if (!this.video) return;
+    rideRate = this.video.changeRate(dir);
+    this.badge(`${dir > 0 ? "🐇" : "🐢"} ${rideRate}×`);
+  }
+
+  /** Flash a short message over the video. @param {string} text */
+  badge(text) {
+    const badge = /** @type {HTMLElement} */ (this.$(".seek-badge"));
+    badge.textContent = text;
     badge.hidden = false;
     badge.classList.remove("show");
     void badge.offsetWidth; // restart the fade
@@ -240,6 +256,8 @@ export class VvRideScreen extends StepScreen {
     else if (action === Button.START) this.finish();
     else if (action === Button.LEFT) this.seek(-SEEK_STEP);
     else if (action === Button.RIGHT) this.seek(SEEK_STEP);
+    else if (action === Button.UP) this.changeSpeed(1);
+    else if (action === Button.DOWN) this.changeSpeed(-1);
     else if (action === Button.X) this.video?.toggleSound();
     else if (action === Button.Y) {
       this.mapShown = !this.mapShown;
