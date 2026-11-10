@@ -27,10 +27,10 @@ test("itinerary: each day opens, every leg is a transit then a visit, wrap-ups c
 test("content: every journey has a guide; every ride a video and a known line; every stop walk points", () => {
   const available = JOURNEYS.filter((j) => j.steps.length);
   assert.deepEqual(available.map((j) => j.id), [
-    "tokyo", "beijing", "moscow", "bogota", "rio", "newyork", "ulaanbaatar", "capetown", "cairo", "nairobi", "kingston",
+    "tokyo", "beijing", "moscow", "bogota", "rio", "newyork", "ulaanbaatar", "capetown", "cairo", "nairobi", "kingston", "hobbiton",
   ]);
   assert.deepEqual(available.map((j) => j.guide.id), [
-    "hana", "wei", "katya", "vale", "thiago", "maya", "bat", "thandi", "omar", "amani", "kemar",
+    "hana", "wei", "katya", "vale", "thiago", "maya", "bat", "thandi", "omar", "amani", "kemar", "tama",
   ]);
   assert.ok(!JOURNEYS.some((j) => j.id === "paris"), "Paris is gone");
   for (const j of available) for (const d of j.days) {

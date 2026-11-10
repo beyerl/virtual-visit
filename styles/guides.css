@@ -367,6 +367,40 @@ vv-guide[who="kemar"] .item::after {
   background: repeating-linear-gradient(0deg, #d2603f 0 4px, #fff 4px 8px); border: 1.5px solid var(--ink);
 }
 
+/* ---------- Tama (Hobbiton): curly hair, pointed ears, a green cloak with a leaf clasp, a pottery mug ---------- */
+vv-guide[who="tama"] { --hair: #8a5a2b; --jacket: #c9a23f; --scarf: #3b8a4f; --skin: #f3cfa6; --blush: #e8946f; }
+vv-guide[who="tama"] .hair-back {
+  left: 21px; top: 8px; width: 108px; height: 76px; border: none; border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, var(--hair) 11px, var(--ink) 11.5px 14px, transparent 14.5px) -4px -4px / 27px 25px, var(--hair);
+  box-shadow: 0 0 0 3px var(--ink);
+}
+vv-guide[who="tama"] .bangs {
+  left: 33px; top: 12px; width: 84px; height: 34px; border-radius: 40px 40px 14px 14px;
+  background: radial-gradient(circle at 50% 100%, var(--hair) 9px, transparent 9.5px) 0 14px / 21px 20px repeat-x, linear-gradient(var(--hair) 0 24px, transparent 24px);
+}
+vv-guide[who="tama"] .bangs::after, vv-guide[who="tama"] .clip { display: none; }
+vv-guide[who="tama"] .braid { display: block; position: absolute; left: 0; top: 0; width: 150px; height: 0; }
+vv-guide[who="tama"] .braid::before, vv-guide[who="tama"] .braid::after {
+  content: ""; position: absolute; top: 50px; width: 20px; height: 30px; background: var(--skin); border: var(--ol);
+}
+vv-guide[who="tama"] .braid::before { left: 20px; border-radius: 4px 60% 50% 60%; transform: rotate(-24deg); }
+vv-guide[who="tama"] .braid::after { right: 20px; border-radius: 60% 4px 60% 50%; transform: rotate(24deg); }
+vv-guide[who="tama"] .body { box-shadow: inset 20px 0 0 var(--scarf), inset -20px 0 0 var(--scarf); }
+vv-guide[who="tama"] .arm { background: var(--scarf); }
+vv-guide[who="tama"] .scarf { left: 49px; width: 52px; height: 15px; border-radius: 8px 8px 12px 12px; }
+vv-guide[who="tama"] .scarf::after {
+  left: 18px; top: 3px; width: 14px; height: 20px; background: #7fb356; border-radius: 80% 0 80% 0; transform: rotate(45deg);
+}
+vv-guide[who="tama"] .badge { left: 69px; top: 150px; width: 10px; height: 10px; border-radius: 50%; background: #f2c45a; box-shadow: 0 20px 0 -2px #f2c45a, 0 20px 0 0 var(--ink); }
+vv-guide[who="tama"] .item {
+  position: absolute; left: -7px; top: -40px; width: 26px; height: 28px; background: #b5673c;
+  border: 2.5px solid var(--ink); border-radius: 3px 3px 7px 7px; box-shadow: inset 0 6px 0 #fbf0d9, inset 0 -5px 0 #8a4f32;
+}
+vv-guide[who="tama"] .item::after {
+  content: ""; position: absolute; right: -12px; top: 5px; width: 9px; height: 12px;
+  border: 2.5px solid var(--ink); border-left: none; border-radius: 0 8px 8px 0; background: #b5673c;
+}
+
 @media (prefers-reduced-motion: reduce) {
   vv-guide .item::before, vv-guide .item::after { animation: none !important; }
 }

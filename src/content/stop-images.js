@@ -136,4 +136,13 @@ export const STOP_IMAGES = {
     portroyal: { file: "File:Port Royal Fort defenses.JPG", author: "Raychristofer", license: "CC BY-SA 4.0", page: "https://commons.wikimedia.org/wiki/File:Port_Royal_Fort_defenses.JPG" },
     glorias: { file: "File:Escovitch fish, fried plaintains, and vegetables on top of rice.jpg", author: "K6ka", license: "CC BY-SA 4.0", page: "https://commons.wikimedia.org/wiki/File:Escovitch_fish,_fried_plaintains,_and_vegetables_on_top_of_rice.jpg" },
   },
+  hobbiton: {
+    isite: { file: "File:Matamata i-SITE.jpg", author: "Fuwuyuan", license: "CC BY-SA 4.0", page: "https://commons.wikimedia.org/wiki/File:Matamata_i-SITE.jpg" },
+    shiresrest: { file: "File:The Shire's Rest, Hobbiton Movie Set, Matamata, New Zealand 2016 (50796445103).jpg", author: "Joe Ross from Lansing, Michigan", license: "CC BY-SA 2.0", page: "https://commons.wikimedia.org/wiki/File:The_Shire%27s_Rest,_Hobbiton_Movie_Set,_Matamata,_New_Zealand_2016_(50796445103).jpg" },
+    cutting: { file: "File:Garden and Hobbit Holes --Hobbiton Movie Set, Matamata, New Zealand 2016 (50797357806).jpg", author: "Joe Ross from Lansing, Michigan", license: "CC BY-SA 2.0", page: "https://commons.wikimedia.org/wiki/File:Garden_and_Hobbit_Holes_--Hobbiton_Movie_Set,_Matamata,_New_Zealand_2016_(50797357806).jpg" },
+    bagend: { file: "File:Bag End at Hobbiton, New Zealand.jpg", author: "May0313", license: "CC BY 4.0", page: "https://commons.wikimedia.org/wiki/File:Bag_End_at_Hobbiton,_New_Zealand.jpg" },
+    partytree: { file: "File:The Party Tree, Hobbiton Movie Set, Matamata, New Zealand 2016 (50797253616).jpg", author: "Joe Ross from Lansing, Michigan", license: "CC BY-SA 2.0", page: "https://commons.wikimedia.org/wiki/File:The_Party_Tree,_Hobbiton_Movie_Set,_Matamata,_New_Zealand_2016_(50797253616).jpg" },
+    mill: { file: "File:Hobbiton mill and double-arched bridge (cropped).jpg", author: "Tom Hall", license: "CC BY 2.0", page: "https://commons.wikimedia.org/wiki/File:Hobbiton_mill_and_double-arched_bridge_(cropped).jpg" },
+    dragon: { file: "File:Leaving the Green Dragon Inn, Hobbiton Movie Set, Matamata, New Zealand 2016 (50796598713).jpg", author: "Joe Ross from Lansing, Michigan", license: "CC BY-SA 2.0", page: "https://commons.wikimedia.org/wiki/File:Leaving_the_Green_Dragon_Inn,_Hobbiton_Movie_Set,_Matamata,_New_Zealand_2016_(50796598713).jpg" },
+  },
 };

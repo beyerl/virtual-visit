@@ -12,7 +12,7 @@ export const MENU_TRACK = Object.freeze({ src: "audio/music/happy-adventure.mp3"
 /** @type {Readonly<Record<string, import("../infrastructure/menu-music.js").Track>>} */
 export const JOURNEY_MUSIC = Object.freeze(
   Object.fromEntries(
-    ["tokyo", "beijing", "moscow", "bogota", "rio", "newyork", "ulaanbaatar", "capetown", "cairo", "nairobi", "kingston"].map((id) => [
+    ["tokyo", "beijing", "moscow", "bogota", "rio", "newyork", "ulaanbaatar", "capetown", "cairo", "nairobi", "kingston", "hobbiton"].map((id) => [
       id,
       track(id),
     ]),

@@ -165,4 +165,19 @@ export const CITY_SVG = {
   <circle cx="80" cy="58" r="4" fill="#7a5230" stroke="#3b2418" stroke-width="2"/><circle cx="88" cy="58" r="4" fill="#7a5230" stroke="#3b2418" stroke-width="2"/>
   <path d="M0 128 H200" stroke="#3b2418" stroke-width="3.5"/>
 </svg>`,
+  hobbiton: `
+<svg viewBox="0 0 200 140" aria-hidden="true">
+  <circle cx="164" cy="34" r="15" fill="#f2c45a" stroke="#3b2418" stroke-width="3.5"/>
+  <path d="M58 46 V30" stroke="#3b2418" stroke-width="7" stroke-linecap="round"/>
+  <path d="M58 46 V30" stroke="#8a4f32" stroke-width="3" stroke-linecap="round"/>
+  <path d="M38 26 Q34 10 50 10 Q58 0 68 9 Q84 8 80 24 Q84 34 70 34 H46 Q34 36 38 26 Z" fill="#3b8a4f" stroke="#3b2418" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M0 128 Q10 60 70 44 Q110 34 150 60 Q190 84 200 128 Z" fill="#7fb356" stroke="#3b2418" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M132 58 V40 H144 V62" fill="#e48a52" stroke="#3b2418" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M62 128 V104 Q62 70 96 70 Q130 70 130 104 V128 Z" fill="#f6e6c4" stroke="#3b2418" stroke-width="3.5" stroke-linejoin="round"/>
+  <circle cx="96" cy="104" r="21" fill="#3b8a4f" stroke="#3b2418" stroke-width="3.5"/>
+  <circle cx="96" cy="104" r="3.5" fill="#f2c45a" stroke="#3b2418" stroke-width="2"/>
+  <circle cx="150" cy="106" r="9" fill="#f2c45a" stroke="#3b2418" stroke-width="3"/>
+  <path d="M150 97 V115 M141 106 H159" stroke="#3b2418" stroke-width="2"/>
+  <path d="M0 128 H200" stroke="#3b2418" stroke-width="3.5"/>
+</svg>`,
 };

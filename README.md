@@ -36,9 +36,15 @@ And eight two-day journeys, each with its own guide too:
 - **Kingston with Kemar**: 4 rides, 7 stops: Hope Road to the Bob Marley Museum, Emancipation Park,
   Devon House, the Blue Mountains, the waterfront and Port Royal.
 
+And a one-day trip:
+
+- **Hobbiton with Tama**: 3 rides, 7 stops: the Hobbiton Movie Set near Matamata in New Zealand,
+  from the hobbit-style visitor centre in town by tour bus onto the farm, up to Bag End, down to
+  the Party Tree, past the mill and into the Green Dragon.
+
 Not every ride is a train: some cities are seen from a bus, a cable car, a boat or a car window.
 Where Google has no official Street View (much of Cairo, parts of Bogotá, Nairobi, Kingston and
-Ulaanbaatar), the stops use user photospheres; every walk starts within 15 m of one.
+Ulaanbaatar, and all of the Hobbiton set), the stops use user photospheres; every walk starts within 15 m of one.
 
 ## How a journey goes
 
@@ -158,6 +164,7 @@ their city, in a voice of their gender, young where there is a choice:
 | Katya | Moscow | Piper `ru_RU-irina` | Russian voice; English fitted into Russian sounds |
 | Batbayar | Ulaanbaatar | Piper `ru_RU-denis` | Russian voice (there is no Mongolian one); Mongolian words read as Mongolian |
 | Amani | Nairobi | Kokoro `bf_emma` | English fitted into Swahili sounds (five vowels, non-rhotic) |
+| Tama | Hobbiton | Kokoro `bm_fable` | British man with New Zealand's vowels ("fish" towards "fush", "bed" towards "bid"); Māori words read as Māori |
 
 "Fitted" means the English is rewritten with only the sounds of the guide's language, as a
 learner would say it (no "th" or "w" in Russian: "the weather" becomes "ze vezer"). Words in the
@@ -188,9 +195,9 @@ src/
                    link (postMessage), the YouTube IFrame player, the voice player, the browser's location
   presentation/    web components: <vv-app> (screen flow), splash, menus, load, journey
                    select, controls, day intro, ride, walk, visit, wrap-up, pause, and the parts:
-                   <vv-guide> (all eleven guides in pure CSS), <vv-speech>, <vv-menu>, <vv-pad-hint>, <vv-route-map>
+                   <vv-guide> (all twelve guides in pure CSS), <vv-speech>, <vv-menu>, <vv-pad-hint>, <vv-route-map>
   content/         journeys: Tokyo, Beijing, Moscow, Bogotá, Rio, New York, Ulaanbaatar, Cape Town,
-                   Cairo, Nairobi, Kingston (days, legs, guide lines, ride videos), Tokyo's rail map,
+                   Cairo, Nairobi, Kingston, Hobbiton (days, legs, guide lines, ride videos), Tokyo's rail map,
                    stop photos and their credits, which lines have a voice
   main.js          composition root, the only module touching browser globals
 styles/            theme (main.css) and the guides (guides.css)

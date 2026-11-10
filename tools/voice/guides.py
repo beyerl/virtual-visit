@@ -11,6 +11,9 @@ gender, young where there is a choice:
 - Piper's Russian voices for Moscow and Ulaanbaatar: English is fitted into
   the sounds of Russian (phonetics.fit), as a learner would say it. Amani
   (Nairobi) gets the same with Swahili sounds, in a Kokoro voice.
+- Tama (Hobbiton) is a Kokoro British voice with New Zealand's vowels: the
+  short front vowels move one step on ("fish" towards "fush", "bed" towards
+  "bid", "cat" towards "ket"), and "air" sounds like "ear".
 
 Words in {braces} are in the guide's language unless listed in `english`; the
 `say` table respells them (in Cyrillic for Russian and Mongolian, so espeak
@@ -164,6 +167,18 @@ GUIDES: dict[str, Guide] = {
         target="sw",
         accent={"ə": "a", "ɐ": "a", "ʌ": "a", "æ": "a", "ɜ": "a", "ɪ": "i", "ʊ": "u", "ɒ": "o", "ɔ": "o", "əʊ": "o", "eɪ": "e", "eə": "ea", "ŋ": "nɡ", "ɹ": "r"},
         english_words=words("Carnivore|Expressway|Giraffe|Centre|Ivory|Burning|Site|National|Park|Railway|Museum|Thorn|Tree|Café|Karen"),
+    ),
+    # Hobbiton: Kokoro's young British man Fable (there is no New Zealand voice), non-rhotic as in New
+    # Zealand, with the New Zealand vowel shift: KIT is central, DRESS and TRAP are raised, SQUARE merges
+    # into NEAR. Māori words are read by espeak's Māori.
+    "tama": Guide(
+        engine=Kokoro("bm_fable"),
+        english="en-gb",
+        local="mi",
+        target="en",
+        accent={"ɪ": "ə", "ᵻ": "ə", "ɛ": "e", "a": "ɛ", "æ": "ɛ", "eə": "iə"},
+        english_words=words("Hobbiton|Alexander|The Shire's Rest|Gandalf's Cutting|Bagshot Row|Bag End|Party Field|Party Tree|Mill|Green Dragon"),
+        names=words("Tama|Matamata|Waikato|Kaimai|Aotearoa"),
     ),
     # New York: Kokoro's American woman Heart.
     "maya": Guide(engine=Kokoro("af_heart")),

@@ -30,6 +30,7 @@ TRACKS = {
     "cairo": "Desert City.mp3",
     "nairobi": "Savannah Sketch.mp3",
     "kingston": "Beach Party.mp3",
+    "hobbiton": "Thatched Villagers.mp3",
 }
 
 

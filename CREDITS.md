@@ -27,13 +27,14 @@ shortened to at most three minutes, faded at both ends and normalised in loudnes
 | Cairo | Desert City |
 | Nairobi | Savannah (Sketch) |
 | Kingston | Beach Party |
+| Hobbiton | Thatched Villagers |
 
 ## Guide voices
 
 Recorded with local text-to-speech (`tools/voice/`):
 
 - [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) by hexgrad, Apache 2.0: Hana, Wei,
-  Valentina, Thiago, Maya, Kemar and Amani.
+  Valentina, Thiago, Maya, Kemar, Amani and Tama.
 - [Piper](https://github.com/OHF-Voice/piper1-gpl) voices from
   [rhasspy/piper-voices](https://huggingface.co/rhasspy/piper-voices):
   - `en_US-l2arctic-medium` (Omar), trained on the
@@ -168,3 +169,10 @@ images from [Wikimedia Commons](https://commons.wikimedia.org/), used under thei
 | Kingston Waterfront (kingston) | [PortofKingston.jpg](https://commons.wikimedia.org/wiki/File:PortofKingston.jpg) | W. Harris | CC BY-SA 3.0 |
 | Fort Charles (kingston) | [Port Royal Fort defenses.JPG](https://commons.wikimedia.org/wiki/File:Port_Royal_Fort_defenses.JPG) | Raychristofer | CC BY-SA 4.0 |
 | Gloria's (kingston) | [Escovitch fish, fried plaintains, and vegetables on top of rice.jpg](https://commons.wikimedia.org/wiki/File:Escovitch_fish,_fried_plaintains,_and_vegetables_on_top_of_rice.jpg) | K6ka | CC BY-SA 4.0 |
+| Matamata i-SITE (hobbiton) | [Matamata i-SITE.jpg](https://commons.wikimedia.org/wiki/File:Matamata_i-SITE.jpg) | Fuwuyuan | CC BY-SA 4.0 |
+| The Shire's Rest (hobbiton) | [The Shire's Rest, Hobbiton Movie Set, Matamata, New Zealand 2016 (50796445103).jpg](https://commons.wikimedia.org/wiki/File:The_Shire%27s_Rest,_Hobbiton_Movie_Set,_Matamata,_New_Zealand_2016_%2850796445103%29.jpg) | Joe Ross from Lansing, Michigan | CC BY-SA 2.0 |
+| Gandalf's Cutting & the gardens (hobbiton) | [Garden and Hobbit Holes --Hobbiton Movie Set, Matamata, New Zealand 2016 (50797357806).jpg](https://commons.wikimedia.org/wiki/File:Garden_and_Hobbit_Holes_--Hobbiton_Movie_Set,_Matamata,_New_Zealand_2016_%2850797357806%29.jpg) | Joe Ross from Lansing, Michigan | CC BY-SA 2.0 |
+| Bag End (hobbiton) | [Bag End at Hobbiton, New Zealand.jpg](https://commons.wikimedia.org/wiki/File:Bag_End_at_Hobbiton,_New_Zealand.jpg) | May0313 | CC BY 4.0 |
+| The Party Tree (hobbiton) | [The Party Tree, Hobbiton Movie Set, Matamata, New Zealand 2016 (50797253616).jpg](https://commons.wikimedia.org/wiki/File:The_Party_Tree,_Hobbiton_Movie_Set,_Matamata,_New_Zealand_2016_%2850797253616%29.jpg) | Joe Ross from Lansing, Michigan | CC BY-SA 2.0 |
+| The Mill & the bridge (hobbiton) | [Hobbiton mill and double-arched bridge (cropped).jpg](https://commons.wikimedia.org/wiki/File:Hobbiton_mill_and_double-arched_bridge_%28cropped%29.jpg) | Tom Hall | CC BY 2.0 |
+| The Green Dragon Inn (hobbiton) | [Leaving the Green Dragon Inn, Hobbiton Movie Set, Matamata, New Zealand 2016 (50796598713).jpg](https://commons.wikimedia.org/wiki/File:Leaving_the_Green_Dragon_Inn,_Hobbiton_Movie_Set,_Matamata,_New_Zealand_2016_%2850796598713%29.jpg) | Joe Ross from Lansing, Michigan | CC BY-SA 2.0 |

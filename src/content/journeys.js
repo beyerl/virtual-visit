@@ -6,6 +6,7 @@ import { BEIJING } from "./beijing.js";
 import { BOGOTA } from "./bogota.js";
 import { CAIRO } from "./cairo.js";
 import { CAPE_TOWN } from "./cape-town.js";
+import { HOBBITON } from "./hobbiton.js";
 import { KINGSTON } from "./kingston.js";
 import { MOSCOW } from "./moscow.js";
 import { NAIROBI } from "./nairobi.js";
@@ -56,4 +57,5 @@ export const JOURNEYS = [
   CAIRO,
   NAIROBI,
   KINGSTON,
+  HOBBITON,
 ].map((data) => new Journey(withExtras(data)));
