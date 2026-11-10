@@ -500,3 +500,65 @@ vv-route-map polyline { filter: saturate(0.8); }
 .journey-card.selected { transform: scale(1.05) rotate(-0.8deg); }
 .journey-name { font-size: 1.6em; overflow-wrap: anywhere; }
 .journey-name .jp { display: block; font-size: 0.5em; letter-spacing: 0; margin-top: 0.2em; }
+
+/* ---------- opening cutscene: the view from a train ---------- */
+.intro-end > :not(.splash-art) { visibility: hidden; } /* they keep the globe where the title screen has it */
+.intro-skip { position: absolute; right: 3vw; top: 1.5vh; bottom: auto; z-index: 5; }
+.screen.after-intro { animation: none; } /* the title takes over from the cutscene without a fade */
+.train-cabin {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  animation: train-through 1.2s ease-in var(--scroll) forwards;
+}
+@keyframes train-through { to { transform: scale(9); } }
+.train-window {
+  position: relative; width: var(--w); height: var(--h); overflow: hidden; border-radius: 22px;
+  outline: 10px solid var(--wood-light); outline-offset: -2px;
+  box-shadow: 0 0 0 16px var(--ink), 0 0 0 200vmax var(--wood);
+}
+.train-world {
+  position: absolute; inset: -3px;
+  animation: train-rock 0.42s steps(2, end) infinite, train-world-out 0.8s linear calc(var(--scroll) + 0.25s) forwards;
+}
+@keyframes train-rock { 50% { transform: translateY(2px); } }
+@keyframes train-world-out { to { opacity: 0; } }
+.train-sky { position: absolute; inset: 0; background: linear-gradient(#7fc6c0 0 22%, #a6d7c4 22% 42%, #d8e6b8 42% 60%, #f6e2a6 60% 78%, #f6cb8c 78% 100%); }
+.train-lift { position: absolute; inset: 0; animation: train-lift 1.1s ease-in calc(var(--scroll) - 0.85s) forwards; }
+@keyframes train-lift { to { transform: translateY(calc(var(--h) * 1.1)); } }
+.train-strip {
+  position: absolute; left: 0; bottom: 0; height: 100%; display: flex; padding-left: var(--lead); z-index: 1; width: max-content;
+  animation: train-scroll var(--scroll) linear both;
+}
+@keyframes train-scroll { to { transform: translateX(calc(var(--distance) * -1)); } }
+.train-ground {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 22%;
+  background: linear-gradient(var(--green) 0 27%, #d9c39a 27% 33%, #f4c55a 33% 38%, #d9c39a 38% 100%);
+  border-top: var(--ol);
+}
+.train-city { position: relative; flex: none; width: var(--city); height: 100%; }
+.train-landmark { position: absolute; right: 2%; bottom: 15.7%; width: 74%; } /* its drawn ground line meets the grass */
+.train-landmark svg { display: block; width: 100%; height: auto; overflow: visible; }
+.train-sign {
+  position: absolute; left: 44%; bottom: 3%; z-index: 2; padding: 0.1em 0.55em; white-space: nowrap;
+  font-family: var(--round); font-weight: 700; font-size: calc(var(--h) * 0.065); color: #fff;
+  background: var(--blue); border: var(--ol); border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.train-city vv-guide { position: absolute; left: 22%; margin: 0 0 0 -75px; bottom: 7%; z-index: 3; transform: scale(var(--guide)); transform-origin: 50% 100%; }
+.train-poles {
+  position: absolute; inset: 0; z-index: 2; opacity: 0.85;
+  background: linear-gradient(90deg, var(--ink) 0 100%) 0 0 / calc(var(--w) * 0.018) 100% no-repeat;
+  animation: train-pole 0.95s linear infinite;
+}
+@keyframes train-pole { from { background-position-x: calc(var(--w) * 1.1); } to { background-position-x: calc(var(--w) * -0.1); } }
+.train-curtain {
+  position: absolute; top: 0; bottom: 18%; width: 9%; z-index: 3; border-bottom: var(--ol);
+  background: repeating-linear-gradient(90deg, var(--red) 0 12px, #b84e31 12px 22px);
+}
+.train-curtain.l { left: 0; border-right: var(--ol); border-bottom-right-radius: 70% 22%; }
+.train-curtain.r { right: 0; border-left: var(--ol); border-bottom-left-radius: 70% 22%; }
+.train-sill {
+  position: absolute; left: 50%; top: calc(50% + var(--h) / 2 + 16px); width: calc(var(--w) + 72px); height: 20px; margin-left: calc((var(--w) + 72px) / -2);
+  background: var(--wood-light); border: var(--ol); border-radius: 4px; box-shadow: var(--shadow);
+}
+.train-seat { position: absolute; bottom: -6vh; width: 16vw; height: 26vh; background: var(--blue); border: var(--ol); border-radius: 26px 26px 0 0; box-shadow: inset 0 14px 0 rgba(255, 255, 255, 0.16); }
+.train-seat.l { left: -3vw; }
+.train-seat.r { right: -3vw; }

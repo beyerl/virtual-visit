@@ -13,6 +13,7 @@ import "./guide.js";
 
 export class VvSplash extends Screen {
   render() {
+    this.classList.toggle("after-intro", !!this.props.afterIntro);
     this.innerHTML = `
       <div class="sunburst"></div><div class="halftone"></div>
       <div class="splash">

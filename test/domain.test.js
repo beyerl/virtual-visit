@@ -7,6 +7,7 @@ import { Button, FINISH, pressedBetween } from "../src/domain/input.js";
 import { seekTarget, StepType } from "../src/domain/journey.js";
 import { panoramaUrl, routeUrl } from "../src/domain/maps-links.js";
 import { JOURNEYS } from "../src/content/journeys.js";
+import { CITY_SVG } from "../src/presentation/components/globe.js";
 
 const tokyo = JOURNEYS[0];
 
@@ -168,4 +169,8 @@ test("content: every ride outside Tokyo has a route for its map, near where its 
       const km = Math.hypot((lat - end[0]) * 111, (lng - end[1]) * 111 * Math.cos((lat * Math.PI) / 180));
       assert.ok(km < 7, `${j.id} ${s.id}: ride ends ${km.toFixed(1)} km from the walk`); // some end at a station a few km off (Beijing South)
     }
+});
+
+test("opening cutscene: every journey has a city drawing for the train window", () => {
+  for (const j of JOURNEYS) assert.ok(CITY_SVG[j.id], j.id);
 });

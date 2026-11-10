@@ -63,6 +63,8 @@ game** lists the saves; a game saved in Street View resumes where you stood.
 
 The pause menu can also go back to the previous step or skip to the next one.
 
+The game opens with a short cutscene: the view from a train window as the cities go by, each guide waving from the platform. Any button or a click skips it.
+
 ## Controls
 
 | Button   | Keyboard          | What it does                                                   |
