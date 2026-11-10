@@ -5,7 +5,6 @@ import { Button } from "../../domain/input.js";
 import { StepType } from "../../domain/journey.js";
 import { JOURNEY_MUSIC, MENU_TRACK } from "../../content/journey-music.js";
 import { define } from "../base.js";
-import "./intro.js";
 import "./journey-screens.js";
 import "./menus.js";
 import "./settings.js";
@@ -21,7 +20,7 @@ const STEP_SCREENS = {
 };
 
 /** Screens outside a journey, with the menu music. */
-const MENU_SCREENS = new Set(["vv-intro", "vv-splash", "vv-main-menu", "vv-journey-select", "vv-load-screen", "vv-settings"]);
+const MENU_SCREENS = new Set(["vv-splash", "vv-main-menu", "vv-journey-select", "vv-load-screen", "vv-settings"]);
 /** Screens of a journey with its music (rides have their video's sound). */
 const JOURNEY_MUSIC_SCREENS = new Set(["vv-day-intro", "vv-walk-screen", "vv-visit-screen", "vv-wrap-up"]);
 /** Screens where X doesn't turn the music on or off: it is set up as a control here. */
@@ -82,7 +81,7 @@ export class VvApp extends HTMLElement {
     const back = await game.returnFromVisit();
     if (back === "finished") this.playStep();
     else if (back === "returned") this.playStep({ returned: true, position: game.state?.position });
-    else this.show(matchMedia("(prefers-reduced-motion: reduce)").matches ? "vv-splash" : "vv-intro");
+    else this.show("vv-splash");
   }
 
   /** @param {string} tag @param {Record<string, any>} [props] */

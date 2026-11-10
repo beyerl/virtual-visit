@@ -63,8 +63,6 @@ game** lists the saves; a game saved in Street View resumes where you stood.
 
 The pause menu can also go back to the previous step or skip to the next one.
 
-The game opens with a short cutscene of the guides saying hello; any button or a click skips it.
-
 ## Controls
 
 | Button   | Keyboard          | What it does                                                   |
