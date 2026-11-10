@@ -184,6 +184,16 @@ vv-menu { display: grid; gap: 0.4em; }
 .menu-screen { position: absolute; inset: 0; display: grid; align-content: start; justify-items: start; gap: 4vh; padding: 7vh 8vw; }
 .menu-panel { padding: 1.2em; min-width: min(32rem, 84vw); }
 .load-panel { max-height: 62vh; overflow-y: auto; min-width: min(48rem, 84vw); }
+.credits-panel { padding: 0.6em 1.4em 1.2em; width: min(60rem, 84vw); max-height: 66vh; overflow-y: auto; scroll-behavior: smooth; }
+.credits-panel h3 { margin: 0.9em 0 0.1em; font-family: var(--round); font-weight: 900; font-size: 1.2em; color: var(--red); }
+.credits-panel ul { margin: 0.3em 0 0; padding: 0; list-style: none; }
+.credits-panel li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.7em; padding: 0.15em 0; border-bottom: 2px dotted rgba(59, 36, 24, 0.18); }
+.credits-panel li a, .credits-panel li > span:first-child { font-weight: 700; color: var(--ink); }
+.credits-panel li a { text-decoration: underline; text-decoration-color: var(--blue); text-underline-offset: 0.15em; }
+.credits-note { margin: 0; color: var(--muted); font-size: 0.85em; }
+.credit-by { color: var(--muted); font-size: 0.9em; }
+.credit-license { margin-left: auto; font-family: var(--round); font-weight: 700; font-size: 0.75em; color: var(--blue); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { .credits-panel { scroll-behavior: auto; } }
 .version { position: absolute; left: 1.2vw; bottom: 1.2vh; font-family: var(--round); font-weight: 700; opacity: 0.6; }
 .menu-screen vv-pad-hint { left: auto; right: 1.2vw; }
 .menu-screen .corner-speech ~ vv-pad-hint { left: auto; right: auto; left: 50%; transform: translateX(-50%); bottom: 1vh; }

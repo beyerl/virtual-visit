@@ -5,6 +5,7 @@ import { Button } from "../../domain/input.js";
 import { StepType } from "../../domain/journey.js";
 import { JOURNEY_MUSIC, MENU_TRACK } from "../../content/journey-music.js";
 import { define } from "../base.js";
+import "./credits.js";
 import "./intro.js";
 import "./journey-screens.js";
 import "./menus.js";
@@ -21,7 +22,7 @@ const STEP_SCREENS = {
 };
 
 /** Screens outside a journey, with the menu music. */
-const MENU_SCREENS = new Set(["vv-intro", "vv-splash", "vv-main-menu", "vv-journey-select", "vv-load-screen", "vv-settings"]);
+const MENU_SCREENS = new Set(["vv-intro", "vv-splash", "vv-main-menu", "vv-journey-select", "vv-load-screen", "vv-settings", "vv-credits"]);
 /** Screens of a journey with its music (rides have their video's sound). */
 const JOURNEY_MUSIC_SCREENS = new Set(["vv-day-intro", "vv-walk-screen", "vv-visit-screen", "vv-wrap-up"]);
 /** Screens where X doesn't turn the music on or off: it is set up as a control here. */
@@ -112,6 +113,10 @@ export class VvApp extends HTMLElement {
 
   settingsScreen() {
     this.show("vv-settings");
+  }
+
+  creditsScreen() {
+    this.show("vv-credits");
   }
 
   journeySelect() {

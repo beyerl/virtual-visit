@@ -69,6 +69,9 @@ game** lists the saves; a game saved in Street View resumes where you stood.
 
 The pause menu can also go back to the previous step or skip to the next one.
 
+**Main menu → Credits** lists who made the music, the voices, the ride videos, the map data, the
+fonts and every stop photo, with their licences (the D-pad scrolls, L and R jump a page).
+
 The game opens with a short cutscene: the view from a train window as the cities go by, each guide waving from the platform. Any button or a click skips it.
 
 ## Controls
@@ -194,7 +197,7 @@ src/
   infrastructure/  localStorage saves, gamepad / keyboard / pointer sources, the extension
                    link (postMessage), the YouTube IFrame player, the voice player, the browser's location
   presentation/    web components: <vv-app> (screen flow), splash, menus, load, journey
-                   select, controls, day intro, ride, walk, visit, wrap-up, pause, and the parts:
+                   select, controls, credits, day intro, ride, walk, visit, wrap-up, pause, and the parts:
                    <vv-guide> (all twelve guides in pure CSS), <vv-speech>, <vv-menu>, <vv-pad-hint>, <vv-route-map>
   content/         journeys: Tokyo, Beijing, Moscow, Bogotá, Rio, New York, Ulaanbaatar, Cape Town,
                    Cairo, Nairobi, Kingston, Hobbiton (days, legs, guide lines, ride videos), Tokyo's rail map,

@@ -58,11 +58,13 @@ export class VvMainMenu extends Screen {
         disabled: !saves.length,
       },
       { label: "Settings", value: "settings", sub: "Gamepad, Street View, sound" },
+      { label: "Credits", value: "credits", sub: "Music, voices, photos, maps" },
     ]);
     menu.addEventListener("choose", (e) => {
       const v = /** @type {CustomEvent} */ (e).detail;
       if (v === "new") this.app.journeySelect();
       else if (v === "settings") this.app.settingsScreen();
+      else if (v === "credits") this.app.creditsScreen();
       else this.app.loadScreen();
     });
     /** @type {VvPadHint} */ (this.$("vv-pad-hint")).hints = [
