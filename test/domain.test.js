@@ -6,6 +6,7 @@ import { bearing } from "../src/domain/geo.js";
 import { Button, FINISH, pressedBetween } from "../src/domain/input.js";
 import { seekTarget, StepType } from "../src/domain/journey.js";
 import { panoramaUrl, routeUrl } from "../src/domain/maps-links.js";
+import { INTRO_CAST } from "../src/content/intro-cast.js";
 import { JOURNEYS } from "../src/content/journeys.js";
 
 const tokyo = JOURNEYS[0];
@@ -168,4 +169,9 @@ test("content: every ride outside Tokyo has a route for its map, near where its 
       const km = Math.hypot((lat - end[0]) * 111, (lng - end[1]) * 111 * Math.cos((lat * Math.PI) / 180));
       assert.ok(km < 7, `${j.id} ${s.id}: ride ends ${km.toFixed(1)} km from the walk`); // some end at a station a few km off (Beijing South)
     }
+});
+
+test("opening cutscene: every journey's guide is in the cast, once", () => {
+  assert.deepEqual(INTRO_CAST.map((c) => c.id).sort(), JOURNEYS.map((j) => j.guide.id).sort());
+  for (const c of INTRO_CAST) assert.ok(c.hello, c.id);
 });
